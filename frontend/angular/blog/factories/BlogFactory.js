@@ -18,6 +18,9 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 				media: []
 			};
 
+			// Clean Copy
+			this.clean = {};
+
 			// Initialize all fields
 			this.set(this.fields);
 			// Populate with arguments
@@ -65,7 +68,7 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 
 		Entry.prototype.validate = function( key, value ) {
 			// If the rendered field gets set, trust it
-			if( key == 'rendered' ) {
+			if( key == 'rendered' && typeof value == "string" ) {
 				value = $sce.trustAsHtml(value);
 			}
 
@@ -91,6 +94,7 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 
 		Entry.prototype.set = function( args ) {
 			for( var key in args ) {
+				this.clean[key] = this.validate(key, args[key]);
 				this[key] = this.validate(key, args[key]);
 			}
 		};

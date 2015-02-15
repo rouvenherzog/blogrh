@@ -63,6 +63,7 @@ BlogModule.service('rouvenherzog.Blog.BlogService', [
 				.then(function() {
 					delete entries_index[entry._id];
 					entries.splice(entries.indexOf(entry), 1);
+					a.resolve();
 				});
 
 			return a.promise;

@@ -1,0 +1,48 @@
+div.col-xs-5.col-sm-4.col-md-3.entry-list-wrapper
+	div.navbar.navbar-default.navbar-fixed-top.col-xs-5.col-sm-4.col-md-3
+		ul.nav.navbar-nav
+			li
+				button.btn.btn-primary.navbar-btn(ng-click="create()")
+					i.fa.fa-plus-circle &nbsp;
+					| Create
+
+	ul.list-group.entry-list
+		li.list-group-item.entry-list-item(ng-repeat="entry in entries", ng-class="{'active': entry==selected_entry}", ng-click="open(entry)")
+			div.info
+				span.label(ng-class="{'label-success' : entry.published, 'label-info': !entry.published}")
+					{{ entry.published ? 'Published': 'Draft' }}
+				{{ entry.modified_at | date : 'short' }}
+			h4
+				{{ entry.clean.title || 'Untitled' }}
+
+div.col-xs-7.col-sm-8.col-md-9.entry-detail-wrapper
+	div(ng-if="!selected_entry")
+		h1.
+			Select an Item from the list
+
+	div.selected(ng-if="selected_entry")
+		div.navbar.navbar-default.navbar-fixed-top
+			div.col-xs-7.col-xs-offset-5.col.sm-8.col-sm-offset-4.col-md-9.col-md-offset-3
+				ul.nav.navbar-nav
+					li
+						button.btn.btn-default.navbar-btn(ng-click="open(null)")
+							i.fa.fa-times &nbsp;
+							| Close
+					li &nbsp;
+					li
+						div.btn-group
+							button.btn.btn-default.navbar-btn(ng-click="save()")
+								i.fa.fa-check &nbsp;
+								| Save
+							button.btn.btn-default.navbar-btn(ng-click="publish()")
+								i.fa(ng-class="{'fa-upload': !selected_entry.published, 'fa-ban': selected_entry.published}") &nbsp;
+								{{ selected_entry.published ? 'Unpublish' : 'Publish' }}
+					li &nbsp;
+					li
+						button.btn.btn-default.navbar-btn(ng-click="delete()")
+							i.fa.fa-trash &nbsp;
+							| Delete
+
+		rouvenherzog-blog-edit-entry-form(entry="selected_entry")
+
+div.clearfix

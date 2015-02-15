@@ -9,7 +9,10 @@ BlogModule.directive('rouvenherzogBlogQuill', [
 			templateUrl: '/angular/blog/tmpls/quill.tmpl',
 			link: function( $scope, element, attrs ) {
 				// Initialize the editor
-				var quill = new Quill(element[0].getElementsByClassName('editor').item(0));
+				var quill = new Quill(
+					element[0].getElementsByClassName('editor').item(0), {
+						theme: 'snow'
+					});
 				quill.addModule('toolbar', { container: element[0].getElementsByClassName('toolbar').item(0) });
 
 				// Initialize quill after model loaded

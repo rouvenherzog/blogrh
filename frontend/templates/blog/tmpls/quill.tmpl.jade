@@ -1,12 +1,42 @@
-div.toolbar
-	button.ql-bold.btn.btn-default Bold
-	button.ql-italic.btn.btn-default Italic
-	button.ql-list.btn.btn-default List
-	button.ql-bullet.btn.btn-default Bullet
-	select.ql-size
-		option(value="10px") small
-		option(value="14px", selected) normal
-		option(value="18px") large
-		option(value="24px") huge
+div.ql-wrapper
+	div.toolbar
+		div.ql-format-group
+			select.ql-size
+				option(value="10px") small
+				option(value="14px", selected) normal
+				option(value="18px") large
+				option(value="24px") huge
+		div.ql-format-group
+			span.ql-format-button.ql-bold
+			span.ql-format-separator
+			span.ql-format-button.ql-italic
+			span.ql-format-separator
+			span.ql-format-button.ql-underline
+			span.ql-format-separator
+			span.ql-format-button.ql-strike
 
-div.editor
+		div.ql-format-group
+			select.ql-color
+				option(value="rgb(0,0,0)", label="rgb(0,0,0)", selected)
+				option(value="rgb(64,64,64)", label="rgb(64,64,64)")
+				option(value="rgb(128,128,128)", label="rgb(128,128,128)")
+				option(value="rgb(192,192,192)", label="rgb(192,192,192)")
+			span.ql-format-separator
+			select.ql-background
+				option(value="rgb(64,64,64)", label="rgb(64,64,64)")
+				option(value="rgb(128,128,128)", label="rgb(128,128,128)")
+				option(value="rgb(192,192,192)", label="rgb(192,192,192)")
+				option(value="rgb(255,255,255)", label="rgb(255,255,255)", selected)
+
+		div.ql-format-group
+			span.ql-format-button.ql-list
+			span.ql-format-separator
+			span.ql-format-button.ql-bullet
+			span.ql-format-separator
+			select.ql-align
+				option(value="left", label="Left", selected)
+				option(value="center", label="center")
+				option(value="right", label="right")
+				option(value="justify", label="justify")
+
+	div.editor.ql-editor

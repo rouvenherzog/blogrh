@@ -1,10 +1,17 @@
-ul
-	li(ng-repeat="entry in entries")
-		h6 {{ entry.title }}
-		div(ng-bind-html="entry.rendered")
+div.entry-index-wrapper
+	ul.list-group
+		li.list-group-item(ng-repeat="entry in entries")
+			a(role="button", ng-href="/admin/blog/{{ entry._id }}")
+				div.info
+					span.label(ng-class="{'label-success' : entry.published, 'label-info': !entry.published}")
+						{{ entry.published ? 'Published': 'Draft' }}
+					{{ entry.modified_at | date : 'short' }}
 
-		a(class="btn btn-default", role="button", ng-href="/admin/blog/{{ entry._id }}") Edit
+				h3
+					{{ entry.clean.title || 'Untitled' }}
 
-	li
-		button.btn.btn-primary(ng-click="create()").
-			New Entry
+	div.navbar.navbar-default.navbar-fixed-bottom
+		ul.nav.navbar-nav
+			li
+				button.btn.btn-primary.navbar-btn(ng-click="create()").
+					New Entry
