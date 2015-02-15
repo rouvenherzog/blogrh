@@ -1,0 +1,4 @@
+ul
+	li.panel.panel-default(ng-repeat="notification in notifications", ng-class="notification.type")
+		div.panel-body
+			{{ notification.text }}

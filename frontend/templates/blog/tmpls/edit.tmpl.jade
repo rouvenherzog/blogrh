@@ -1,0 +1,12 @@
+input(ng-model="entry.title")
+
+rouvenherzog-blog-quill(ng-model="entry", field="delta")
+
+button.btn.btn-success(ng-click="save()").
+	Save
+
+button.btn.btn-success(ng-click="togglePublish()")
+	{{ entry.published ? 'published' : 'not published' }}
+
+button.btn.btn-default(ng-click="back()").
+	Back

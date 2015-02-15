@@ -1,0 +1,10 @@
+ul
+	li(ng-repeat="entry in entries")
+		h6 {{ entry.title }}
+		div(ng-bind-html="entry.rendered")
+
+		a(class="btn btn-default", role="button", ng-href="/admin/blog/{{ entry._id }}") Edit
+
+	li
+		button.btn.btn-primary(ng-click="create()").
+			New Entry
