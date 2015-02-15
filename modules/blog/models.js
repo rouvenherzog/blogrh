@@ -1,4 +1,3 @@
-var Media = require('backend/modules/media/models');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var helpers = require('./helpers');
