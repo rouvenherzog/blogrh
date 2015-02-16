@@ -7,6 +7,10 @@ NotificationModule.directive( 'rouvenherzogNotificationList', [
 			templateUrl: '/angular/notifications/tmpls/list.tmpl',
 			link: function( $scope ) {
 				$scope.notifications = NotificationService.getNotifications();
+
+				$scope.close = function( notification ) {
+					NotificationService.closeNotification(notification);
+				};
 			}
 		}
 	}
