@@ -1,0 +1,39 @@
+div.modal
+	div.modal-dialog
+		div.modal-content
+			div.modal-header
+				button.close(data-dismiss="modal")
+					i.fa.fa-times
+
+				h4.
+					Uploading {{ files.length }} Image{{ files.length > 1 ? 's' : '' }}
+
+			div.modal-body
+				ul
+					li
+
+				div
+					img
+
+				div
+					div
+						{{ selected_file.path }}
+						button
+							i.fa.fa-times &nbsp;
+					div
+						input(placeholder="Title")
+					div
+						select
+							option(value="123") Tagname
+							option(value="123") Tagname
+							option(value="123") Tagname
+							option(value="123") Tagname
+
+
+			div.modal-footer
+				button.btn.btn-default(data-dismiss="modal")
+					i.fa.fa-times &nbsp;
+					| Close
+				button.btn.btn-primary
+					i.fa.fa-check &nbsp;
+					| Save chages

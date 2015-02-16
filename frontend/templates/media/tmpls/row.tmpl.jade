@@ -1,0 +1,21 @@
+div( ng-if="uploadEnabled || media.length > 0")
+	div.col-sm-4.col-md-3(ng-repeat="m in media")
+		div.thumbnail
+			img(ng-src="{{ m.url }}")
+		div.caption.
+			Thumbnail.
+
+	div.col-sm-4.col-md-3.upload-wrapper
+		div.thumbnail
+			| Drop here
+		div.caption
+			| Or click here to
+			button.btn.btn-primary
+				i.fa.fa-upload &nbsp;
+				| Upload media
+
+				input(type="file", rouvenherzog-media-input-notify="upload_files")
+
+div( ng-if="!uploadEnabled && media.length == 0")
+	div.well.well-sm
+		h4 No Media Attached.

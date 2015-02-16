@@ -2,6 +2,10 @@ input.title(ng-model="entry.title", placeholder="Blog Title")
 
 rouvenherzog-blog-quill(ng-model="entry", field="delta")
 
-hr
-h4.
+h3.media-title.
 	Media
+
+rouvenherzog-media-row(
+	media-array="entry.media",
+	upload-path="\"/admin/api/blog/\" + entry._id + \"/media\""
+)

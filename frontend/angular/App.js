@@ -2,6 +2,7 @@ var App = angular.module(
 	'rouvenherzog',
 	[
 		'rouvenherzog.Blog',
-		'rouvenherzog.Notification'
+		'rouvenherzog.Notification',
+		'rouvenherzog.Media'
 	]
 );
