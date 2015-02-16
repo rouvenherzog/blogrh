@@ -3,19 +3,26 @@ html
 	head
 		base(href="/" + app.get('backend').name)
 		link(rel="stylesheet", href="/static/"+ app.get('backend').name +"/bower_components/bootstrap/dist/css/bootstrap.css")
+		link(rel="stylesheet", href="/static/"+ app.get('backend').name +"/bower_components/quill/dist/quill.snow.css")
+		link(rel="stylesheet", href="/static/"+ app.get('backend').name +"/bower_components/font-awesome/css/font-awesome.css")
 		link(rel="stylesheet", href="/static/"+ app.get('backend').name +"/css/rouvenherzog.css")
 		block head
 	body(ng-app="rouvenherzog")
 		nav.navbar.navbar-inverse
-			ul.nav.navbar-nav
-				each module in app.get('backend').modules
-					li(class={active: module.root == url})
-						a(href=module.root, target="_self")= module.name
+			button.navbar-toggle.collapsed(data-toggle="collapse", data-target="#app-navbar")
+				i.fa.fa-navicon
+			div.collapse.navbar-collapse#app-navbar
+				ul.nav.navbar-nav
+					each module in app.get('backend').modules
+						li(class={active: module.root == url})
+							a(href=module.root, target="_self")= module.name
 
 		block body
 
 		rouvenherzog-notification-list
 
+		script(type="text/javascript", src="/static/"+ app.get('backend').name +"/bower_components/jquery/dist/jquery.js")
+		script(type="text/javascript", src="/static/"+ app.get('backend').name +"/bower_components/bootstrap/dist/js/bootstrap.js")
 		script(type="text/javascript", src="/static/"+ app.get('backend').name +"/bower_components/angular/angular.js")
 		script(type="text/javascript", src="/static/"+ app.get('backend').name +"/bower_components/angular-sanitize/angular-sanitize.js")
 		script(type="text/javascript", src="/static/"+ app.get('backend').name +"/bower_components/angular-route/angular-route.js")

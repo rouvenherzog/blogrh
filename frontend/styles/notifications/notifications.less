@@ -1,0 +1,45 @@
+rouvenherzog-notification-list {
+	position: fixed;
+	z-index: 300;
+	left: 20px;
+	bottom: 20px;
+
+	ul {
+		list-style: none;
+		margin: 0px;
+		padding: 0px;
+
+		li {
+			width: 400px;
+			display: table;
+			position: relative;
+
+			.close {
+				position: absolute;
+				right: 10px;
+				top: 5px;
+			}
+
+			div {
+				display: table-cell;
+				vertical-align: middle;
+
+				&.icon {
+					width: 32px;
+
+					i {
+						font-size: 28px;
+					}
+				}
+
+				&.text {
+					font-size: 18px;
+				}
+			}
+
+			&:last-child {
+				margin-bottom: 0px;
+			}
+		}
+	}
+}

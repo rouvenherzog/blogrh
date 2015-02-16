@@ -26,11 +26,24 @@ BlogModule.controller('rouvenherzog.Blog.editController', [
 			$scope.entry.set( saved_state );
 		};
 
-		$scope.togglePublish = function() {
-			$scope.entry.publish();
+		$scope.publish = function() {
+			$scope.entry
+				.publish()
+				.then(function() {
+					saved_state = $scope.entry.toJSON();
+				});
+		};
+
+		$scope.delete = function() {
+			BlogService
+				.deleteEntry($scope.entry)
+				.then(function() {
+					$scope.back();
+				});
 		};
 
 		$scope.back = function() {
+			$scope.reset();
 			$location.path('/admin/blog');
 		};
 	}

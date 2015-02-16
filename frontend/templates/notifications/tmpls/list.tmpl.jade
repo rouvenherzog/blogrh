@@ -1,4 +1,9 @@
 ul
-	li.panel.panel-default(ng-repeat="notification in notifications", ng-class="notification.type")
-		div.panel-body
+	li.alert(ng-repeat="notification in notifications", ng-class="notification.class")
+		button.close(ng-click="close(notification)")
+			i.fa.fa-times
+
+		div.icon
+			i(ng-class="notification.icon")
+		div.text
 			{{ notification.text }}

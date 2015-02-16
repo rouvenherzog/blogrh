@@ -1,12 +1,24 @@
-input(ng-model="entry.title")
+div.entry-edit-wrapper
+	rouvenherzog-blog-edit-entry-form(entry="entry")
 
-rouvenherzog-blog-quill(ng-model="entry", field="delta")
-
-button.btn.btn-success(ng-click="save()").
-	Save
-
-button.btn.btn-success(ng-click="togglePublish()")
-	{{ entry.published ? 'published' : 'not published' }}
-
-button.btn.btn-default(ng-click="back()").
-	Back
+	div.navbar.navbar-default.navbar-fixed-bottom
+		div.col-xs-12
+			ul.nav.navbar-nav
+				li
+					button.btn.btn-default.navbar-btn(ng-click="back()")
+						i.fa.fa-chevron-left &nbsp;
+						| Back
+				li &nbsp;
+				li
+					div.btn-group
+						button.btn.btn-default.navbar-btn(ng-click="save()")
+							i.fa.fa-check &nbsp;
+							| Save
+						button.btn.btn-default.navbar-btn(ng-click="publish()")
+							i.fa(ng-class="{'fa-upload': !entry.published, 'fa-ban': entry.published}") &nbsp;
+							{{ entry.published ? 'Unpublish' : 'Publish' }}
+				li &nbsp;
+				li
+					button.btn.btn-default.navbar-btn(ng-click="delete()")
+						i.fa.fa-trash &nbsp;
+						| Delete

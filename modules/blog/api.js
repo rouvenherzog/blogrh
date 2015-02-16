@@ -58,7 +58,12 @@ router.route('/blog/:id')
 	})
 
 	.delete(function( request, response ) {
-		response.json({})
+		request.entry.remove(function( error ) {
+			if( error )
+				console.log(error);
+
+			response.json({})
+		})
 	});
 
 router.route('/blog/:id/publish')

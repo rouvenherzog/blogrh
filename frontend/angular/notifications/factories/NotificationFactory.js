@@ -1,7 +1,12 @@
 NotificationModule.factory('rouvenherzog.Notification.NotificationFactory', [
 	function() {
-		icons = {
-			'error': 'fa fa-exclamationmark',
+		var classes = {
+			'error': 'alert-danger',
+			'success': 'alert-success',
+			'default': 'alert-info',
+		};
+		var icons = {
+			'error': 'fa fa-exclamation',
 			'success': 'fa fa-check',
 			'default': 'fa fa-info'
 		};
@@ -10,6 +15,7 @@ NotificationModule.factory('rouvenherzog.Notification.NotificationFactory', [
 			this.type = type;
 			this.text = text;
 			this.icon = icons[type];
+			this.class = classes[type];
 		};
 
 		Notification.setText = function( text ) {

@@ -1,3 +1,32 @@
-.navbar {
-	border-radius: 0px;
+html, body {
+	height: 100%;
+	overflow: hidden;
+
+	&> nav.navbar {
+		position: relative;
+		z-index: 100;
+		border-radius: 0px;
+		margin-bottom: 0px;
+		border-bottom: 0px;
+	}
+}
+
+ng-view {
+	margin-top: -50px;
+	padding-top: 50px;
+	height: 100%;
+	display: block;
+}
+
+.clearfix {
+	clear: both;
+	height: 0px;
+	width: 0px;
+	margin: 0px;
+	padding: 0px;
+}
+
+.btn-inverse {
+	background-color: #080808;
+	color: #FFF;
 }
