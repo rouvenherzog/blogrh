@@ -14,7 +14,11 @@ div( ng-if="uploadEnabled || media.length > 0")
 				i.fa.fa-upload &nbsp;
 				| Upload media
 
-				input(type="file", rouvenherzog-media-input-notify="upload_files")
+				input(
+					type="file",
+					multiple,
+					rouvenherzog-media-input-notify="upload_files"
+				)
 
 div( ng-if="!uploadEnabled && media.length == 0")
 	div.well.well-sm

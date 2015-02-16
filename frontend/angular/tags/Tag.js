@@ -1,0 +1,1 @@
+var TagModule = angular.module('rouvenherzog.Tag', []);

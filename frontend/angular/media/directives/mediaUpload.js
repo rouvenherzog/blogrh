@@ -8,9 +8,7 @@ MediaModule.directive('rouvenherzogMediaUpload', [
 				uploadPath: "="
 			},
 			templateUrl: '/angular/media/tmpls/upload-modal.tmpl',
-			link: function( $scope, element ) {
-				var medias
-			}
+			controller: 'uploadController'
 		};
 	}
 ]);

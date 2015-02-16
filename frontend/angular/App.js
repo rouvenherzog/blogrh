@@ -3,6 +3,7 @@ var App = angular.module(
 	[
 		'rouvenherzog.Blog',
 		'rouvenherzog.Notification',
-		'rouvenherzog.Media'
+		'rouvenherzog.Media',
+		'rouvenherzog.Tag'
 	]
 );

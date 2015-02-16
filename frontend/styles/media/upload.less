@@ -7,14 +7,132 @@ rouvenherzog-media-upload {
 	background-color: rgba(0,0,0,.7);
 	z-index: 300;
 
-	div.modal {
-		margin: 20px auto;
+	.modal {
 		display: block;
 
-		.modal-wrapper {
+		.modal-dialog {
 			.modal-content {
 				box-shadow: none;
 				border-radius: 0px;
+
+				.modal-header {
+					padding: 0px 15px;
+				}
+
+				.modal-body {
+					padding: 15px 30px;
+
+					.media-list {
+						width: 100%;
+						margin-top: -15px;
+						border-bottom: 1px solid #DDD;
+						display: table;
+
+						.media-list-item {
+							display: table-cell;
+							vertical-align: middle;
+							cursor: pointer;
+
+							text-align: center;
+							height: 64px;
+							border-bottom: 0px;
+							border-top: 0px;
+							border-radius: 0px;
+							border-color: #DDD;
+							padding: 2px;
+
+							.preview-loading {
+								i {
+									font-size: 18px;
+								}
+							}
+
+							img {
+								max-width: 100%;
+								max-height: 100%;
+								display: block;
+								margin: 0px auto;
+							}
+
+							&.active {
+								background-color: rgba(200,200,200,.25);
+
+								&:after, &:before {
+									bottom: 0px;
+									left: 50%;
+									border: solid transparent;
+									content: " ";
+									height: 0;
+									width: 0;
+									position: absolute;
+									pointer-events: none;
+								}
+
+								&:before {
+									border-color: transparent;
+									border-bottom-color: #CCC;
+									border-width: 12px;
+									margin-left: -12px;
+								}
+							}
+						}
+					}
+
+					.selected-media-preview {
+						border: 1px solid #ddd;
+
+						.preview-loading {
+							padding: 25px;
+							text-align: center;
+
+							i {
+								font-size: 42px;
+							}
+						}
+
+						img {
+							max-width: 100%;
+							max-height: 250px;
+
+							display: block;
+							margin: 0px auto;
+						}
+					}
+
+					.selected-media-information-wrapper {
+						.selected-media-field {
+							margin-bottom: 5px;
+
+							label {
+								display: block;
+								margin-bottom: 0px;
+							}
+
+							input {
+								border: none;
+								border-bottom: 1px solid #DDD;
+								transition: border-color .25s;
+								width: 100%;
+
+								&:hover,
+								&:focus {
+									outline: none;
+								}
+							}
+
+							.ui-select-container {
+								border: none;
+								box-shadow: none;
+							}
+
+							&.selected-media-name {
+								word-break: break-all;
+								padding-bottom: 10px;
+								margin-bottom: 10px;
+							}
+						}
+					}
+				}
 			}
 		}
 	}

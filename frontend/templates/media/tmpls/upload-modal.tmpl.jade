@@ -1,39 +1,47 @@
 div.modal
-	div.modal-dialog
+	div.modal-dialog.modal-lg
 		div.modal-content
 			div.modal-header
-				button.close(data-dismiss="modal")
+				button.close(ng-click="close()")
 					i.fa.fa-times
 
 				h4.
 					Uploading {{ files.length }} Image{{ files.length > 1 ? 's' : '' }}
 
 			div.modal-body
-				ul
-					li
+				div.row
+					ul.media-list.list-group(ng-if="media.length > 1")
+						li.media-list-item.list-group-item.col-xs-2(ng-repeat="m in media", ng-class="{'active': m==selected_media}", ng-click="select(m)")
+							div(ng-if="!m.preview").preview-loading
+								i.fa.fa-circle-o-notch.fa-spin
+							img(ng-src="{{ m.preview }}", ng-if="m.preview")
 
-				div
-					img
+				div.row
+					div.selected-media-preview.col-xs-5
+						div(ng-if="!selected_media.preview").preview-loading
+							i.fa.fa-circle-o-notch.fa-spin
+						img(ng-src="{{ selected_media.preview }}", ng-if="selected_media.preview")
 
-				div
-					div
-						{{ selected_file.path }}
-						button
-							i.fa.fa-times &nbsp;
-					div
-						input(placeholder="Title")
-					div
-						select
-							option(value="123") Tagname
-							option(value="123") Tagname
-							option(value="123") Tagname
-							option(value="123") Tagname
+					div.selected-media-information-wrapper.col-xs-7
+						div.selected-media-field.selected-media-name
+							span.lead
+								{{ selected_media.name }}
+						div.selected-media-field.selected-media-title
+							label Title
+							input(placeholder="Title", ng-model="selected_media.title")
+						div.selected-media-field.selected-media-tags
+							label Tags
+							ui-select(multiple, ng-model="selected_media.tags")
+								ui-select-match(placeholder="Select a Tag")
+									{{ $item.name }}
+								ui-select-choices(repeat="tag in tags | filter: $select.search")
+									{{ tag.name }}
 
 
 			div.modal-footer
-				button.btn.btn-default(data-dismiss="modal")
+				button.btn.btn-default(ng-click="close()")
 					i.fa.fa-times &nbsp;
 					| Close
-				button.btn.btn-primary
+				button.btn.btn-primary(ng-click="upload()")
 					i.fa.fa-check &nbsp;
 					| Save chages
