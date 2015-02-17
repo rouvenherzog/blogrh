@@ -2,10 +2,20 @@ input.title(ng-model="entry.title", placeholder="Blog Title")
 
 rouvenherzog-blog-quill(ng-model="entry", field="delta")
 
-h3.media-title.
-	Media
+h3.media-title
+	| Media 
+
+	button.btn.btn-primary.btn-sm
+		i.fa.fa-upload &nbsp;
+		| Upload media
+
+		input(
+			type="file",
+			multiple,
+			rouvenherzog-media-input-notify="upload_files"
+		)
 
 rouvenherzog-media-row(
 	media-array="entry.media",
-	upload-path="\"/admin/api/blog/\" + entry._id + \"/media\""
+	delete-path="\"/admin/api/blog/\" + entry._id + \"/media/\""
 )

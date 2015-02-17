@@ -19,6 +19,21 @@ router
 				request.entry = entry;
 				next();
 			});
+	})
+
+	.param('mediaid', function( request, response, next, id ) {
+		Media
+			.findById(id)
+			.exec(function(error, media) {
+				if( error )
+					console.log(error);
+
+				if( media == null )
+					console.log("MEDIA NULL");
+
+				request.media = media;
+				next();
+			});
 	});
 
 router.route('/blog')
@@ -89,6 +104,7 @@ router.route('/blog/:id/publish')
 router.route('/blog/:id/media')
 	.post(function( request, response ) {
 		var file = request.files.file;
+		console.log("request", request.body);
 		Media.fromFile(file, {
 			title: request.body.title,
 			uploadRoot: request.app.get('uploadroot')
@@ -96,6 +112,22 @@ router.route('/blog/:id/media')
 			request.entry.media.push(media);
 			request.entry.save(function(error) {
 				response.json(media);
+			});
+		});
+	});
+
+router.route('/blog/:id/media/:mediaid')
+	.delete(function( request, response ) {
+		request.media.remove(function( error ) {
+			if( error )
+				console.log(error);
+
+			request.entry.media.pull(request.media._id);
+			request.entry.save(function(error) {
+				if( error )
+					console.log(error);
+
+				response.json({});
 			});
 		});
 	});

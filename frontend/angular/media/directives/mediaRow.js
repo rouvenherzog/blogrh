@@ -7,7 +7,8 @@ MediaModule.directive('rouvenherzogMediaRow', [
 			scope: {
 				mediaArray: "=",
 				disableUpload: "=",
-				uploadPath: "="
+				uploadPath: "=",
+				deletePath: "="
 			}
 		}
 	}

@@ -1,73 +1,78 @@
 MediaModule.factory('rouvenherzog.Media.MediaFactory', [
 	'$rootScope',
-	function( $rootScope ) {
-
+	'$http',
+	'$q',
+	function( $rootScope, $http, $q ) {
 		var Media = function( args ) {
-			// Create a temporary media object from a file entry
-			if( args.file ) {
-				this.file = args.file;
-				this.persisted = false;
-				this.name = args.file.name;
-				this.size = args.file.size;
-				this.type = args.file.type;
+			// Specify fields for this model
+			this.fields = {
+				path: null,
+				tags: [],
+				title: null
+			};
 
-				this.preview = undefined;
-				this.loading_progress = 0;
+			// Clean Copy
+			this.clean = {};
 
-				this.title = undefined;
-				this.tags = [];
+			// Initialize all fields
+			this.set(this.fields);
+			// Populate with arguments
+			this.set(args);
+		};
 
-				this._loadPreview();
+		Media.prototype.save = function() {
+			var a = $q.defer();
+			var self = this;
+
+			$http
+				.put(
+					'/admin/api/media/' + this._id,
+					this.toJSON()
+				)
+				.success(function( data ) {
+					self.set(data);
+					a.resolve();
+				});
+
+			return a.promise;
+		};
+
+		Media.prototype.delete = function( root ) {
+			var a = $q.defer();
+
+			$http
+				.delete((root || '/admin/api/media/') + this._id )
+				.success(function() {
+					a.resolve();
+				});
+
+			return a.promise;
+		};
+
+		Media.prototype.toJSON = function() {
+			var result = {};
+			for( var key in this.fields ) {
+				result[key] = this[key];
 			}
 
-			// Create a persisted media object
-			else {
-				this.persisted = true;
-			}
+			return result;
 		};
 
 		Media.prototype.set = function( args ) {
 			for( var key in args ) {
+				this.clean[key] = args[key];
 				this[key] = args[key];
 			}
 		};
 
-		Media.prototype.setPersisted = function( persisted ) {
-			this.persisted = persisted || false;
-		};
-
-		Media.prototype._loadPreview = function( ) {
-			var reader = new FileReader();
-			var self = this;
-
-			reader.onload = function( e ) {
-				$rootScope.$apply(function() {
-					self.preview = e.target.result;
-				});
-			};
-
-			reader.readAsDataURL(this.file);
-		};
-
-		Media.prototype.toFormData = function() {
-			var data = new FormData();
-			data.append('file', this.file);
-			data.append('title', this.title);
-			data.append('tags', this.tags);
-
-			return data;
+		Media.prototype.clear = function() {
+			this.set(this.clean);
 		};
 
 		return {
-			fromFile: function( file ) {
-				return new Media({
-					file: file
-				})
-			},
-
-			fromMedia: function( args ) {
-				return new Media(args);
+			construct: function( args ) {
+				return new Media( args );
 			}
-		}
+		};
 	}
 ]);

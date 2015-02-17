@@ -1,22 +1,24 @@
 div.modal
-	div.modal-dialog.modal-lg
+	div.modal-dialog.modal
 		div.modal-content
 			div.modal-header
 				button.close(ng-click="close()")
 					i.fa.fa-times
 
 				h4.
-					Uploading {{ files.length }} Image{{ files.length > 1 ? 's' : '' }}
+					Uploading {{ media.length }} Image{{ media.length > 1 ? 's' : '' }}
 
 			div.modal-body
 				div.row
 					ul.media-list.list-group(ng-if="media.length > 1")
 						li.media-list-item.list-group-item.col-xs-2(ng-repeat="m in media", ng-class="{'active': m==selected_media}", ng-click="select(m)")
-							div(ng-if="!m.preview").preview-loading
+							div(ng-if="!m.preview || m.uploading").preview-loading
 								i.fa.fa-circle-o-notch.fa-spin
 							img(ng-src="{{ m.preview }}", ng-if="m.preview")
+							div(ng-if="m.uploaded").upload-complete
+								i.fa.fa-check
 
-				div.row
+				div.row(ng-if="!uploading")
 					div.selected-media-preview.col-xs-5
 						div(ng-if="!selected_media.preview").preview-loading
 							i.fa.fa-circle-o-notch.fa-spin
@@ -37,11 +39,21 @@ div.modal
 								ui-select-choices(repeat="tag in tags | filter: $select.search")
 									{{ tag.name }}
 
+				div.row(ng-if="uploading")
+					div.col-xs-12
+						h1.
+							Uploaded {{ amount_uploaded }} of {{ media.length }} Files.
+
 
 			div.modal-footer
-				button.btn.btn-default(ng-click="close()")
-					i.fa.fa-times &nbsp;
-					| Close
-				button.btn.btn-primary(ng-click="upload()")
-					i.fa.fa-check &nbsp;
-					| Upload File{{ files.length > 1 ? 's' : '' }}
+				div(ng-if="!uploading")
+					button.btn.btn-default(ng-click="close()")
+						i.fa.fa-times &nbsp;
+						| Close
+					button.btn.btn-primary(ng-click="upload()")
+						i.fa.fa-check &nbsp;
+						| Upload File{{ files.length > 1 ? 's' : '' }}
+				div(ng-if="uploading")
+					button.btn.btn-primary
+						i.fa.fa-circle-o-notch.fa-spin &nbsp;
+						| Uploading ...

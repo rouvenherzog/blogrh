@@ -1,6 +1,7 @@
 var gm = require('gm').subClass({imageMagick: true});
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var fs = require('fs');
 var q = require('q');
 
 var MediaSchema = new Schema({
@@ -8,6 +9,7 @@ var MediaSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+	localPath: String,
 	path: String,
 	title: String,
 
@@ -15,6 +17,26 @@ var MediaSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'Tag'
 	}]
+});
+
+MediaSchema.pre('remove', function(next) {
+	if( !this.localPath ) {
+		next();
+		return;
+	}
+
+	fs.unlink(this.localPath, function(err) {
+		if( err )
+			console.log(err);
+
+		next();
+	});
+});
+
+MediaSchema.set( 'toJSON', {
+	transform: function( doc, ret, options ) {
+		delete ret['localPath'];
+	}
 });
 
 MediaSchema.statics.fromFile = function( file, args ) {
@@ -28,8 +50,9 @@ MediaSchema.statics.fromFile = function( file, args ) {
 
 			this.write(file.path, function(err) {
 				var media = new Media({
+					localPath: file.path,
 					path: args.uploadRoot ? args.uploadRoot + '/' + file.name : file.name,
-					title: args.title || "",
+					title: args.title || '',
 					tags: args.tags || []
 				});
 

@@ -1,24 +1,25 @@
-div( ng-if="uploadEnabled || media.length > 0")
-	div.col-sm-4.col-md-3(ng-repeat="m in media")
-		div.thumbnail
-			img(ng-src="{{ m.path }}")
-		div.caption.
-			Thumbnail.
+div.media-row-wrapper( ng-if="uploadEnabled || media.length > 0" )
+	div.media-row-scroll
+		div.media-row( ng-style="rowStyle" )
+			div.media-row-item(ng-repeat="m in media")
+				div.thumbnail
+					img(ng-src="{{ m.clean.path }}")
 
-	div.col-sm-4.col-md-3.upload-wrapper
-		div.thumbnail
-			| Drop here
-		div.caption
-			| Or click here to
-			button.btn.btn-primary
-				i.fa.fa-upload &nbsp;
-				| Upload media
+					div.actions
+						div.btn-group
+							button.btn.btn-default.btn-sm(title="Edit", ng-click="edit(m)")
+								i.fa.fa-pencil
+							button.btn.btn-danger.btn-sm(title="Delete", ng-click="delete(m)")
+								i.fa.fa-trash
+				div.caption
+					h5(ng-class="{'no-title': !m.title}") {{ m.clean.title || 'Untitled' }}
+					ul.tag-list
+						li.tag-entry(ng-repeat="tag in m.clean.tags")
+							{{ tag.title }}
+						li.tag-list-empty(ng-if="m.clean.tags.length == 0").
+							No Tags assigned.
 
-				input(
-					type="file",
-					multiple,
-					rouvenherzog-media-input-notify="upload_files"
-				)
+			div.clearfix
 
 div( ng-if="!uploadEnabled && media.length == 0")
 	div.well.well-sm

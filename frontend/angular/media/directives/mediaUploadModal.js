@@ -1,4 +1,4 @@
-MediaModule.directive('rouvenherzogMediaUpload', [
+MediaModule.directive('rouvenherzogMediaUploadModal', [
 	function() {
 		return {
 			restrict: 'E',

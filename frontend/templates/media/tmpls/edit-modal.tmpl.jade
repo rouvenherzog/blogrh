@@ -1,0 +1,38 @@
+div.modal
+	div.modal-dialog.modal-lg
+		div.modal-content
+			div.modal-header
+				button.close(ng-click="close()")
+					i.fa.fa-times
+
+				h4.
+					Edit Media
+
+			div.modal-body
+				div.row
+					div.selected-media-preview.col-xs-5
+						img(ng-src="{{ media.path }}")
+
+					div.selected-media-information-wrapper.col-xs-7
+						div.selected-media-field.selected-media-name
+							span.lead
+								{{ media.name }}
+						div.selected-media-field.selected-media-title
+							label Title
+							input(placeholder="Title", ng-model="media.title")
+						div.selected-media-field.selected-media-tags
+							label Tags
+							ui-select(multiple, ng-model="media.tags")
+								ui-select-match(placeholder="Select a Tag")
+									{{ $item.name }}
+								ui-select-choices(repeat="tag in tags | filter: $select.search")
+									{{ tag.name }}
+
+
+			div.modal-footer
+				button.btn.btn-default(ng-click="close()")
+					i.fa.fa-times &nbsp;
+					| Close
+				button.btn.btn-primary(ng-click="save()")
+					i.fa.fa-check &nbsp;
+					| Save Changes

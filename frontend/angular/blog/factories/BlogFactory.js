@@ -2,8 +2,9 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 	'$q',
 	'$http',
 	'$sce',
+	'rouvenherzog.Media.MediaFactory',
 	'rouvenherzog.Notification.NotificationService',
-	function( $q, $http, $sce, NotificationService ) {
+	function( $q, $http, $sce, MediaFactory, NotificationService ) {
 		var Entry = function( args ) {
 			// Specify fields for this model
 			this.fields = {
@@ -25,6 +26,14 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 			this.set(this.fields);
 			// Populate with arguments
 			this.set(args);
+
+			// Populate Media
+			this.replaceMedia();
+		};
+
+		Entry.prototype.replaceMedia = function() {
+			for( var index in this.media )
+				this.media[index] = MediaFactory.construct(this.media[index]);
 		};
 
 		Entry.prototype.save = function() {

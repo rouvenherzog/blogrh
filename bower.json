@@ -18,7 +18,8 @@
     "fontawesome": "~4.3.0",
     "angular": "~1.3.11",
     "angular-route": "~1.3.11",
-    "font-awesome": "~4.3.0"
+    "font-awesome": "~4.3.0",
+    "angular-bootstrap": "~0.12.0"
   },
   "resolutions": {
     "angular": "~1.3.11"

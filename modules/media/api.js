@@ -35,10 +35,25 @@ router.route('/media/:id')
 	})
 
 	.put(function( request, response ) {
+		request.media.set({
+			title: request.body.title,
+			tags: request.body.tags
+		});
+		request.media.save(function(error) {
+			if( error )
+				console.log(error);
+
+			response.json(request.media);
+		});
 	})
 
 	.delete(function( request, response ) {
-		response.json({})
+		request.media.remove().then(function( error ) {
+			if( error )
+				console.log(error);
+
+			response.json({});
+		});
 	});
 
 module.exports = function(app) {
