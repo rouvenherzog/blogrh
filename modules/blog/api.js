@@ -1,30 +1,37 @@
 var express = require('express');
 var router = express.Router();
 var Entry = require('./models').Entry;
+var Media = require('backend/modules/media/models').Media;
 var prefix_views = '';
 
 router
 	.param('id', function( request, response, next, id ) {
-		Entry.findById(id).exec(function(error, entry) {
-			if( error )
-				console.log(error);
+		Entry
+			.findById(id)
+			.populate('media')
+			.exec(function(error, entry) {
+				if( error )
+					console.log(error);
 
-			if( entry == null )
-				console.log("ENTRY NULL");
+				if( entry == null )
+					console.log("ENTRY NULL");
 
-			request.entry = entry;
-			next();
-		});
+				request.entry = entry;
+				next();
+			});
 	});
 
 router.route('/blog')
 		.get(function( request, response ) {
-			Entry.find().exec(function(error, entries) {
-				if( error )
-					console.log(error);
+			Entry
+				.find()
+				.populate('media')
+				.exec(function(error, entries) {
+					if( error )
+						console.log(error);
 
-				response.json(entries);
-			});
+					response.json(entries);
+				});
 		})
 
 		.post(function( request, response ) {
@@ -76,6 +83,20 @@ router.route('/blog/:id/publish')
 				console.log(error);
 
 			response.json(request.entry);
+		});
+	});
+
+router.route('/blog/:id/media')
+	.post(function( request, response ) {
+		var file = request.files.file;
+		Media.fromFile(file, {
+			title: request.body.title,
+			uploadRoot: request.app.get('uploadroot')
+		}).then(function( media ) {
+			request.entry.media.push(media);
+			request.entry.save(function(error) {
+				response.json(media);
+			});
 		});
 	});
 

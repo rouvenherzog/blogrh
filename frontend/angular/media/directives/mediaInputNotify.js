@@ -8,7 +8,8 @@ MediaModule.directive('rouvenherzogMediaInputNotify', [
 			link: function( $scope, element ) {
 				element.on('change', function(event) {
 					$scope.$apply(function() {
-						$scope.callback(event.target.files);
+						if( event.target.files.length > 0 )
+							$scope.callback(event.target.files);
 					});
 				});
 			}

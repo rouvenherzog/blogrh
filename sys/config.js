@@ -27,7 +27,10 @@ module.exports = {
 		// Add Content Parser
 		app.use(bodyParser.urlencoded({ extended: true }));
 		app.use(bodyParser.json());
-		app.use(multer());
+		app.use(multer({
+			dest: app.get('uploaddir'),
+			inMemory: true
+		}));
 
 		// Add logger
 		app.use(logger('dev'));

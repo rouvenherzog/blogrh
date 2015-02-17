@@ -13,6 +13,11 @@
     "grunt-contrib-concat": "~0.5.0",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-contrib-less": "~1.0.0",
-    "morgan": "~1.5.1"
+    "morgan": "~1.5.1",
+    "convert-rich-text": "~0.1.2",
+    "multer": "~0.1.7",
+    "mongoose": "~3.8.23",
+    "gm": "~1.17.0",
+    "q": "~1.1.2"
   }
 }

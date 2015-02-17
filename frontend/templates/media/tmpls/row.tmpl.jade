@@ -1,7 +1,7 @@
 div( ng-if="uploadEnabled || media.length > 0")
 	div.col-sm-4.col-md-3(ng-repeat="m in media")
 		div.thumbnail
-			img(ng-src="{{ m.url }}")
+			img(ng-src="{{ m.path }}")
 		div.caption.
 			Thumbnail.
 

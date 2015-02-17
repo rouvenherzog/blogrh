@@ -9,7 +9,7 @@ MediaModule.controller('rouvenherzog.Media.rowController', [
 
 		$scope.upload_files = function( files ) {
 			var scope = $rootScope.$new(true);
-				scope.mediaArray = scope.media;
+				scope.mediaArray = $scope.media;
 				scope.files = files;
 				scope.uploadPath = $scope.uploadPath;
 
