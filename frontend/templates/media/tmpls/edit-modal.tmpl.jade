@@ -22,11 +22,7 @@ div.modal
 							input(placeholder="Title", ng-model="media.title")
 						div.selected-media-field.selected-media-tags
 							label Tags
-							ui-select(multiple, ng-model="media.tags")
-								ui-select-match(placeholder="Select a Tag")
-									{{ $item.name }}
-								ui-select-choices(repeat="tag in tags | filter: $select.search")
-									{{ tag.name }}
+							rouvenherzog-tag-select(model="media", field="tags")
 
 
 			div.modal-footer

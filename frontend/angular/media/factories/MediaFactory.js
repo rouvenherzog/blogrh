@@ -54,7 +54,6 @@ MediaModule.factory('rouvenherzog.Media.MediaFactory', [
 			for( var key in this.fields ) {
 				result[key] = this[key];
 			}
-
 			return result;
 		};
 

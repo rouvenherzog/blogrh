@@ -3,12 +3,15 @@ MediaModule.controller('rouvenherzog.Media.rowController', [
 	'$element',
 	'$compile',
 	'$rootScope',
-	function( $scope, $element, $compile, $rootScope ) {
+	'rouvenherzog.Tag.TagService',
+	function( $scope, $element, $compile, $rootScope, TagService ) {
 		$scope.uploadEnabled = (!$scope.disableUpload && $scope.uploadPath) ? true : false;
 		$scope.media = $scope.mediaArray;
 
-		$scope.rowStyle = {
-			width: ($scope.media.length*135) + "px"
+		$scope.rowStyle = function() {
+			return {
+				width: ($scope.media.length*205) + "px"
+			};
 		};
 
 		$scope.edit = function( media ) {
@@ -30,5 +33,10 @@ MediaModule.controller('rouvenherzog.Media.rowController', [
 					}
 				});
 		};
+
+		$scope.getName = function( tagid ) {
+			var tag = TagService.get(tagid);
+			return tag ? tag.name : null;
+		}
 	}
 ]);

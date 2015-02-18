@@ -1,6 +1,6 @@
 div.media-row-wrapper( ng-if="uploadEnabled || media.length > 0" )
 	div.media-row-scroll
-		div.media-row( ng-style="rowStyle" )
+		div.media-row( ng-style="rowStyle()" )
 			div.media-row-item(ng-repeat="m in media")
 				div.thumbnail
 					img(ng-src="{{ m.clean.path }}")
@@ -15,7 +15,9 @@ div.media-row-wrapper( ng-if="uploadEnabled || media.length > 0" )
 					h5(ng-class="{'no-title': !m.title}") {{ m.clean.title || 'Untitled' }}
 					ul.tag-list
 						li.tag-entry(ng-repeat="tag in m.clean.tags")
-							{{ tag.title }}
+							small(ng-if="getName(tag)")
+								{{ getName(tag) }}
+							i.fa.fa-circle-o-notch.fa-spin(ng-if="!getName(tag)")
 						li.tag-list-empty(ng-if="m.clean.tags.length == 0").
 							No Tags assigned.
 
