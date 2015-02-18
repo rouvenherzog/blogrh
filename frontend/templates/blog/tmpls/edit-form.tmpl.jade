@@ -5,7 +5,7 @@ rouvenherzog-blog-quill(ng-model="entry", field="delta")
 h3.media-title
 	| Media 
 
-	button.btn.btn-primary.btn-sm
+	button.btn.btn-primary.btn-sm.upload-btn
 		i.fa.fa-upload &nbsp;
 		| Upload media
 
@@ -16,6 +16,5 @@ h3.media-title
 		)
 
 rouvenherzog-media-row(
-	media-array="entry.media",
-	delete-path="\"/admin/api/blog/\" + entry._id + \"/media/\""
+	media="entry.media"
 )

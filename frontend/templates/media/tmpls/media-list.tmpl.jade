@@ -1,0 +1,32 @@
+nav.navbar.navbar-default.navbar-fixed-top.media-sub-nav
+	div.col-xs-12
+		ul.nav.navbar-nav
+			li
+				button.btn.btn-primary.navbar-btn.upload-btn
+					i.fa.fa-upload &nbsp;
+					| Upload media
+
+					input(
+						type="file",
+						multiple,
+						rouvenherzog-media-input-notify="upload_files"
+					)
+			li.divider
+			li
+				label Filter by Tag:
+				form.navbar-form
+					div.form-group
+						rouvenherzog-tag-select(
+							single="true",
+							model="filter",
+							field="tag",
+							placeholder="Select Tag"
+						)
+
+		form.navbar-form.navbar-right
+			div.form-group
+				input.form-control(ng-model="filter.query", placeholder="Search Query")
+
+div.media-view-list
+	rouvenherzog-media-list-row(media="media", tag="notag", ng-if="!filter.tag")
+	rouvenherzog-media-list-row(media="media", tag="tag", ng-repeat="tag in tags | filter:filter.tag")

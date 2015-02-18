@@ -5,10 +5,8 @@ MediaModule.directive('rouvenherzogMediaRow', [
 			templateUrl: 'angular/media/tmpls/row.tmpl',
 			controller: 'rouvenherzog.Media.rowController',
 			scope: {
-				mediaArray: "=",
-				disableUpload: "=",
-				uploadPath: "=",
-				deletePath: "="
+				media: "=",
+				tag: "="
 			}
 		}
 	}

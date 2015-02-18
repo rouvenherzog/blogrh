@@ -7,8 +7,6 @@ BlogModule.config([
 	'$routeProvider',
 	'$locationProvider',
 	function( $routeProvider, $locationProvider ) {
-		$locationProvider.html5Mode(true);
-
 		var base = document.getElementsByTagName('base').item(0).getAttribute('href') + '/blog';
 		if( window.innerWidth < 768 ) {
 			$routeProvider

@@ -13,6 +13,11 @@ var MediaSchema = new Schema({
 	path: String,
 	title: String,
 
+	entry: {
+		type: Schema.Types.ObjectId,
+		ref: 'Entry'
+	},
+
 	tags: [{
 		type: Schema.Types.ObjectId,
 		ref: 'Tag'
@@ -53,7 +58,8 @@ MediaSchema.statics.fromFile = function( file, args ) {
 					localPath: file.path,
 					path: args.uploadRoot ? args.uploadRoot + '/' + file.name : file.name,
 					title: args.title || '',
-					tags: args.tags || []
+					tags: args.tags || [],
+					entry: args.entry || null
 				});
 
 				if( !args.skipPersist )

@@ -107,7 +107,9 @@ router.route('/blog/:id/media')
 		console.log("request", request.body);
 		Media.fromFile(file, {
 			title: request.body.title,
-			uploadRoot: request.app.get('uploadroot')
+			tags: request.body.tags,
+			uploadRoot: request.app.get('uploadroot'),
+			entry: request.entry
 		}).then(function( media ) {
 			request.entry.media.push(media);
 			request.entry.save(function(error) {

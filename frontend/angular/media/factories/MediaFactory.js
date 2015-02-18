@@ -4,6 +4,10 @@ MediaModule.factory('rouvenherzog.Media.MediaFactory', [
 	'$q',
 	function( $rootScope, $http, $q ) {
 		var Media = function( args ) {
+			this.listeners = {
+				'change': []
+			};
+
 			// Specify fields for this model
 			this.fields = {
 				path: null,
@@ -18,6 +22,21 @@ MediaModule.factory('rouvenherzog.Media.MediaFactory', [
 			this.set(this.fields);
 			// Populate with arguments
 			this.set(args);
+		};
+
+		Media.prototype.on = function( event, callback ) {
+			this.listeners[event].push(callback);
+		};
+
+		Media.prototype.off = function( event, callback ) {
+			var index = this.listeners[event].indexOf(callback);
+			if( index != -1 )
+				this.listeners[event].splice(index, 1);
+		};
+
+		Media.prototype.dispatchEvent = function( event ) {
+			for( var index in this.listeners[event] )
+				this.listeners[event][index](this);
 		};
 
 		Media.prototype.save = function() {
@@ -37,11 +56,11 @@ MediaModule.factory('rouvenherzog.Media.MediaFactory', [
 			return a.promise;
 		};
 
-		Media.prototype.delete = function( root ) {
+		Media.prototype.delete = function() {
 			var a = $q.defer();
 
 			$http
-				.delete((root || '/admin/api/media/') + this._id )
+				.delete('/admin/api/media/' + this._id )
 				.success(function() {
 					a.resolve();
 				});
@@ -62,6 +81,8 @@ MediaModule.factory('rouvenherzog.Media.MediaFactory', [
 				this.clean[key] = args[key];
 				this[key] = args[key];
 			}
+
+			this.dispatchEvent('change');
 		};
 
 		Media.prototype.clear = function() {

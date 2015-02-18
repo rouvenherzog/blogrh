@@ -2,15 +2,24 @@ MediaModule.controller('rouvenherzog.Media.rowController', [
 	'$scope',
 	'$element',
 	'$compile',
+	'$filter',
 	'$rootScope',
 	'rouvenherzog.Tag.TagService',
-	function( $scope, $element, $compile, $rootScope, TagService ) {
-		$scope.uploadEnabled = (!$scope.disableUpload && $scope.uploadPath) ? true : false;
-		$scope.media = $scope.mediaArray;
+	function( $scope, $element, $compile, $filter, $rootScope, TagService ) {
+		$scope.filtered = ($scope.tag === undefined) ?
+			$scope.media :
+			$filter('mediaHasTag')($scope.media, $scope.tag);
+
+		if( $scope.tag !== undefined )
+			$scope.$watch('media', function( n ) {
+				$scope.filtered = ($scope.tag === undefined) ?
+					$scope.media :
+					$filter('mediaHasTag')($scope.media, $scope.tag);
+			}, true);
 
 		$scope.rowStyle = function() {
 			return {
-				width: ($scope.media.length*205) + "px"
+				width: ($scope.filtered.length*205) + "px"
 			};
 		};
 
@@ -24,13 +33,11 @@ MediaModule.controller('rouvenherzog.Media.rowController', [
 
 		$scope.delete = function( media ) {
 			media
-				.delete($scope.deletePath)
+				.delete()
 				.then(function() {
-					if( $scope.media ) {
-						var index = $scope.media.indexOf( media );
-						if( index != -1 )
-							$scope.media.splice(index, 1);
-					}
+					var index = $scope.media.indexOf( media );
+					if( index != -1 )
+						$scope.media.splice(index, 1);
 				});
 		};
 

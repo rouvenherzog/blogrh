@@ -4,7 +4,10 @@ var Media = require('./models').Media;
 
 router
 	.param('id', function( request, response, next, id ) {
-		Media.findById(id).exec(function(error, media) {
+		Media
+			.findById(id)
+			.populate('entry')
+			.exec(function(error, media) {
 			if( error )
 				console.log(error);
 
@@ -18,15 +21,26 @@ router
 
 router.route('/media')
 		.get(function( request, response ) {
-			Media.find().exec(function(error, media) {
-				if( error )
-					console.log(error);
+			Media
+				.find()
+				.populate('entry')
+					.exec(function(error, media) {
+					if( error )
+						console.log(error);
 
-				response.json(media);
-			});
-		})
+					response.json(media);
+				});
+			})
 
 		.post(function( request, response ) {
+			var file = request.files.file;
+			Media.fromFile(file, {
+				title: request.body.title,
+				uploadRoot: request.app.get('uploadroot'),
+				tags: request.body.tags,
+			}).then(function( media ) {
+				response.json(media);
+			});
 		})
 
 router.route('/media/:id')
@@ -48,11 +62,22 @@ router.route('/media/:id')
 	})
 
 	.delete(function( request, response ) {
-		request.media.remove().then(function( error ) {
+		var entry = request.media.entry;
+		request.media.remove(function( error ) {
 			if( error )
 				console.log(error);
 
-			response.json({});
+			if( entry ) {
+				entry.media.pull(request.media._id);
+				entry.save(function( error ) {
+					if( error )
+						console.log(error);
+
+					response.json({});
+				});
+			} else {
+				response.json({});
+			}
 		});
 	});
 

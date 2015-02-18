@@ -1,7 +1,7 @@
-div.media-row-wrapper( ng-if="uploadEnabled || media.length > 0" )
+div.media-row-wrapper( ng-if="filtered.length > 0" )
 	div.media-row-scroll
 		div.media-row( ng-style="rowStyle()" )
-			div.media-row-item(ng-repeat="m in media")
+			div.media-row-item(ng-repeat="m in filtered")
 				div.thumbnail
 					img(ng-src="{{ m.clean.path }}")
 
@@ -23,6 +23,6 @@ div.media-row-wrapper( ng-if="uploadEnabled || media.length > 0" )
 
 			div.clearfix
 
-div( ng-if="!uploadEnabled && media.length == 0")
+div( ng-if="filtered.length == 0")
 	div.well.well-sm
-		h4 No Media Attached.
+		h4 No Media.
