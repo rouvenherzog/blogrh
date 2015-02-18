@@ -3,22 +3,16 @@ div.entry-edit-wrapper
 
 	div.navbar.navbar-default.navbar-fixed-bottom
 		div.col-xs-12
-			ul.nav.navbar-nav
-				li
-					button.btn.btn-default.navbar-btn(ng-click="back()")
-						i.fa.fa-chevron-left &nbsp;
-						| Back
-				li &nbsp;
-				li
-					div.btn-group
-						button.btn.btn-default.navbar-btn(ng-click="save()")
-							i.fa.fa-check &nbsp;
-							| Save
-						button.btn.btn-default.navbar-btn(ng-click="publish()")
-							i.fa(ng-class="{'fa-upload': !entry.published, 'fa-ban': entry.published}") &nbsp;
-							{{ entry.published ? 'Unpublish' : 'Publish' }}
-				li &nbsp;
-				li
-					button.btn.btn-default.navbar-btn(ng-click="delete()")
-						i.fa.fa-trash &nbsp;
-						| Delete
+			button.btn.btn-default.navbar-btn(ng-click="back()")
+				i.fa.fa-chevron-left &nbsp;
+				| Back
+			button.btn.btn-default.navbar-btn.pull-right(ng-click="delete()")
+				i.fa.fa-trash &nbsp;
+				| Delete
+			div.btn-group.pull-right
+				button.btn.btn-default.navbar-btn(ng-click="save()")
+					i.fa.fa-check &nbsp;
+					| Save
+				button.btn.btn-default.navbar-btn(ng-click="publish()")
+					i.fa(ng-class="{'fa-upload': !entry.published, 'fa-ban': entry.published}") &nbsp;
+					{{ entry.published ? 'Unpublish' : 'Publish' }}
