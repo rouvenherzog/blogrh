@@ -38,6 +38,7 @@ router.route('/media')
 				title: request.body.title,
 				uploadRoot: request.app.get('uploadroot'),
 				tags: request.body.tags,
+				uploaded_by: request.user
 			}).then(function( media ) {
 				response.json(media);
 			});

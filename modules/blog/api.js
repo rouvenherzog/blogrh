@@ -49,7 +49,10 @@ router.route('/blog')
 		})
 
 		.post(function( request, response ) {
-			var entry = new Entry();
+			var entry = new Entry({
+				created_by: request.user,
+				account: request.user.account
+			});
 			entry.save(function(error) {
 				if( error )
 					console.log(error);
@@ -68,7 +71,8 @@ router.route('/blog/:id')
 			title: request.body.title,
 			summery: request.body.summery,
 			keywords: request.body.keywords,
-			delta: request.body.delta
+			delta: request.body.delta,
+			modified_by: request.user
 		});
 		request.entry.save(function(error) {
 			if( error )
@@ -90,7 +94,8 @@ router.route('/blog/:id')
 router.route('/blog/:id/publish')
 	.put(function( request, response ) {
 		request.entry.set({
-			published: !request.entry.published
+			published: !request.entry.published,
+			modified_by: request.user
 		});
 		request.entry.save(function(error) {
 			if( error )
@@ -108,7 +113,8 @@ router.route('/blog/:id/media')
 			title: request.body.title,
 			tags: request.body.tags,
 			uploadRoot: request.app.get('uploadroot'),
-			entry: request.entry
+			entry: request.entry,
+			uploaded_by: request.user
 		}).then(function( media ) {
 			request.entry.media.push(media);
 			request.entry.save(function(error) {

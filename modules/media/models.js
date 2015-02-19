@@ -5,6 +5,15 @@ var fs = require('fs');
 var q = require('q');
 
 var MediaSchema = new Schema({
+	account: {
+		type: Schema.Types.ObjectId,
+		ref: 'Account',
+		required: true
+	},
+	uploaded_by: {
+		type: Schema.Types.ObjectId,
+		ref: 'User'
+	},
 	uploaded_at: {
 		type: Date,
 		default: Date.now
@@ -59,7 +68,9 @@ MediaSchema.statics.fromFile = function( file, args ) {
 					path: args.uploadRoot ? args.uploadRoot + '/' + file.name : file.name,
 					title: args.title || '',
 					tags: args.tags || [],
-					entry: args.entry || null
+					entry: args.entry || null,
+					uploaded_by: args.uploaded_by,
+					account: args.uploaded_by.account
 				});
 
 				if( !args.skipPersist )

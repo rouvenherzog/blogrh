@@ -3,9 +3,22 @@ var Schema = mongoose.Schema;
 var helpers = require('./helpers');
 
 var EntrySchema = new Schema({
+	account: {
+		type: Schema.Types.ObjectId,
+		ref: 'Account',
+		required: true
+	},
+	created_by: {
+		type: Schema.Types.ObjectId,
+		ref: 'User'
+	},
 	created_at: {
 		type: Date,
 		default: Date.now
+	},
+	modified_by: {
+		type: Schema.Types.ObjectId,
+		ref: 'User'
 	},
 	modified_at: Date,
 
