@@ -6,7 +6,7 @@ ui-select(multiple, ng-model="model[field]", ng-if="!single")
 
 ui-select(ng-model="model[field]", ng-if="single")
 	ui-select-match(placeholder="{{ placeholder || 'Select a Tag' }}")
-		{{ $select.selected.name }}
-		i.fa.fa-times
+		{{ $select.selected.name }} 
+		i.fa.fa-times(ng-click="unselect()")
 	ui-select-choices(repeat="tag._id as tag in tags | filter: $select.search")
 		{{ tag ? tag.name : 'No Tag' }}

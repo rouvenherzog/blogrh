@@ -7,6 +7,5 @@ router
 	})
 
 module.exports = function(app) {
-	var prefix = '/' + app.get('backend').name + '/';
-	app.use(prefix, router);
+	app.use('/admin/', router);
 };

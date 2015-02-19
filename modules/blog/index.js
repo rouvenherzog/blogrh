@@ -10,7 +10,7 @@ module.exports = function( app ) {
 		.modules
 		.push({
 			name: 'Blog',
-			root: '/'+ app.get('backend').name + '/blog'
+			root: '/admin/blog'
 		})
 
 	return app;

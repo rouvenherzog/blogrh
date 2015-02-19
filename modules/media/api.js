@@ -82,5 +82,5 @@ router.route('/media/:id')
 	});
 
 module.exports = function(app) {
-	app.use('/' + app.get('backend').api, router);
+	app.use(app.get('backend').api, router);
 };

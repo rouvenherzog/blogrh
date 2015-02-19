@@ -1,14 +1,17 @@
 var express = require('express');
 var router = express.Router();
 var Entry = require('./models').Entry;
-var prefix = '';
+var passport = require('passport');
 
 router
-	.get('/:id?', function( request, response ) {
-		response.render('blog/views/index');
-	})
+	.use(passport.authenticate('local', { failureRedirect: '/admin/login' }))
+	.get(
+		'/:id?',
+		function( request, response ) {
+			response.render('blog/views/index');
+		}
+	);
 
 module.exports = function(app) {
-	prefix = '/' + app.get('backend').name + '/blog/';
-	app.use(prefix, router);
+	app.use('/admin/blog/', router);
 };

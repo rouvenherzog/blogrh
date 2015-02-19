@@ -21,6 +21,13 @@ module.exports = function(grunt) {
 				files: {
 					'frontend/static/css/rouvenherzog.css': 'frontend/styles/**/*.less'
 				}
+			},
+
+			login: {
+				options: {},
+				files: {
+					'frontend/static/css/login.css': 'frontend/styles/users/login.less'
+				}
 			}
 		},
 

@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var Entry = require('./models').Entry;
 var Media = require('backend/modules/media/models').Media;
-var prefix_views = '';
 
 router
 	.param('id', function( request, response, next, id ) {
@@ -57,7 +56,7 @@ router.route('/blog')
 
 				response.json(entry);
 			});
-		})
+		});
 
 router.route('/blog/:id')
 	.get(function( request, response ) {
@@ -135,6 +134,5 @@ router.route('/blog/:id/media/:mediaid')
 	});
 
 module.exports = function(app) {
-	prefix_views = '/' + app.get('backend').name + '/blog/';
-	app.use('/' + app.get('backend').api, router);
+	app.use(app.get('backend').api, router);
 };

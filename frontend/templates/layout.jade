@@ -1,12 +1,12 @@
 doctype html
 html
 	head
-		base(href="/" + app.get('backend').name)
-		link(rel="stylesheet", href="/static/" + app.get('backend').name + "/bower_components/bootstrap/dist/css/bootstrap.css")
-		link(rel="stylesheet", href="/static/" + app.get('backend').name + "/bower_components/quill/dist/quill.snow.css")
-		link(rel="stylesheet", href="/static/" + app.get('backend').name + "/bower_components/font-awesome/css/font-awesome.css")
-		link(rel="stylesheet", href="/static/" + app.get('backend').name + "/bower_components/angular-ui-select/dist/select.css")
-		link(rel="stylesheet", href="/static/" + app.get('backend').name + "/css/rouvenherzog.css")
+		base(href="/admin")
+		link(rel="stylesheet", href="/static/admin/bower_components/bootstrap/dist/css/bootstrap.css")
+		link(rel="stylesheet", href="/static/admin/bower_components/quill/dist/quill.snow.css")
+		link(rel="stylesheet", href="/static/admin/bower_components/font-awesome/css/font-awesome.css")
+		link(rel="stylesheet", href="/static/admin/bower_components/angular-ui-select/dist/select.css")
+		link(rel="stylesheet", href="/static/admin/css/rouvenherzog.css")
 		block head
 	body(ng-app="rouvenherzog")
 		nav.navbar.navbar-inverse
@@ -22,12 +22,12 @@ html
 
 		rouvenherzog-notification-list
 
-		script(type="text/javascript", src="/static/"+ app.get('backend').name +"/bower_components/jquery/dist/jquery.js")
-		script(type="text/javascript", src="/static/"+ app.get('backend').name +"/bower_components/bootstrap/dist/js/bootstrap.js")
-		script(type="text/javascript", src="/static/"+ app.get('backend').name +"/bower_components/angular/angular.js")
-		script(type="text/javascript", src="/static/"+ app.get('backend').name +"/bower_components/angular-sanitize/angular-sanitize.js")
-		script(type="text/javascript", src="/static/"+ app.get('backend').name +"/bower_components/angular-route/angular-route.js")
-		script(type="text/javascript", src="/static/"+ app.get('backend').name +"/bower_components/angular-ui-select/dist/select.js")
-		script(type="text/javascript", src="/static/"+ app.get('backend').name +"/bower_components/quill/dist/quill.js")
-		script(type="text/javascript", src="/static/"+ app.get('backend').name +"/js/rouvenherzog.js")
+		script(type="text/javascript", src="/static/admin/bower_components/jquery/dist/jquery.js")
+		script(type="text/javascript", src="/static/admin/bower_components/bootstrap/dist/js/bootstrap.js")
+		script(type="text/javascript", src="/static/admin/bower_components/angular/angular.js")
+		script(type="text/javascript", src="/static/admin/bower_components/angular-sanitize/angular-sanitize.js")
+		script(type="text/javascript", src="/static/admin/bower_components/angular-route/angular-route.js")
+		script(type="text/javascript", src="/static/admin/bower_components/angular-ui-select/dist/select.js")
+		script(type="text/javascript", src="/static/admin/bower_components/quill/dist/quill.js")
+		script(type="text/javascript", src="/static/admin/js/rouvenherzog.js")
 		block footer

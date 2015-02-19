@@ -8,7 +8,7 @@ module.exports = function( app ) {
 		.modules
 		.push({
 			name: 'Home',
-			root: '/'+ app.get('backend').name + '/'
+			root: '/admin/'
 		})
 
 	return app;

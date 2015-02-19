@@ -10,7 +10,7 @@ module.exports = function( app ) {
 		.modules
 		.push({
 			name: 'Media',
-			root: '/'+ app.get('backend').name + '/media'
+			root: '/admin/media'
 		})
 
 	return app;

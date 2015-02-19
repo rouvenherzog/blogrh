@@ -13,6 +13,10 @@ TagModule.directive('rouvenherzogTagSelect', [
 			link: function( $scope ) {
 				$scope.tags = TagService.get();
 				$scope.single = $scope.single == "true" ? true : false;
+
+				$scope.unselect = function() {
+					$scope.model[$scope.field] = null;
+				}
 			}
 		}
 	}
