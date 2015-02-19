@@ -2,31 +2,40 @@ extends ../layout.jade
 
 block body
 	div.container-fluid.dashboard-wrapper
-		div.visible-xs-block
-			div.jumbotron
-				h1 Welcome, #{user.name}!
-				p.lead What do you want to do today?
+		div.jumbotron
+			h1 Welcome, #{user.name}!
+			p.lead &nbsp;What do you want to do today ?
 
-		div.hidden-xs
-			h1 Welcome, #{user.name}! 
-				small What do you want to do today?
-			hr
+			a.btn.btn-primary.btn-lg(href="/admin/blog/") Create or Edit a Post
+			| 
+			a.btn.btn-primary.btn-lg(href="/admin/media/") Create or Edit Media
 
-		div.row
-			div.col-xs-12.col-sm-6
-				div.panel.panel-default
-					div.panel-heading
-						h3 Post Drafts
+	//- div.container-fluid.dashboard-wrapper
+	//- 	div.visible-xs-block
+	//- 		div.jumbotron
+	//- 			h1 Welcome, #{user.name}!
+	//- 			p.lead What do you want to do today?
 
-					ul.list-group
-						li.list-group-item Post 1
-						li.list-group-item Post 1
-						li.list-group-item Post 1
+	//- 	div.hidden-xs
+	//- 		h1 Welcome, #{user.name}! 
+	//- 			small What do you want to do today?
+	//- 		hr
 
-			div.col-xs-12.col-sm-6
-				div.panel.panel-default
-					div.panel-heading
-						h3 Upload Media
+	//- 	div.row
+	//- 		div.col-xs-12.col-sm-6
+	//- 			div.panel.panel-default
+	//- 				div.panel-heading
+	//- 					h3 Post Drafts
 
-					div.panel-body
-						button.btn.btn-primary Upload
+	//- 				ul.list-group
+	//- 					li.list-group-item Post 1
+	//- 					li.list-group-item Post 1
+	//- 					li.list-group-item Post 1
+
+	//- 		div.col-xs-12.col-sm-6
+	//- 			div.panel.panel-default
+	//- 				div.panel-heading
+	//- 					h3 Upload Media
+
+	//- 				div.panel-body
+	//- 					button.btn.btn-primary Upload
