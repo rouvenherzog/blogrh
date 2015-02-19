@@ -19,7 +19,7 @@ module.exports = function(grunt) {
 			development: {
 				options: {},
 				files: {
-					'frontend/static/css/rouvenherzog.css': 'frontend/styles/**/*.less'
+					'frontend/static/css/rouvenherzog.css': 'frontend/styles/**/!(login).less'
 				}
 			},
 

@@ -5,7 +5,7 @@ html
 		link(rel="stylesheet", href="/static/admin/bower_components/font-awesome/css/font-awesome.css")
 		link(rel="stylesheet", href="/static/admin/css/login.css")
 	body(class="background-" + backgroundNumber)
-		form.col-md-4.col-md-offset-4.col-sm-6.col-sm-offset-3.col-xs-10.col-xs-offset-1(method="POST", action="/admin/login")
+		form.col-md-4.col-md-offset-4.col-sm-6.col-sm-offset-3.col-xs-10.col-xs-offset-1(method="POST", action="/admin/login?next=#{next || ''}")
 			p.lead Hello, please login to continue ..
 			div.form-group
 				input.form-control(placeholder="Email or Username", name="username")

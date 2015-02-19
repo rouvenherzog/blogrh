@@ -4,7 +4,6 @@ var Entry = require('./models').Entry;
 var passport = require('passport');
 
 router
-	.use(passport.authenticate('local', { failureRedirect: '/admin/login' }))
 	.get(
 		'/:id?',
 		function( request, response ) {

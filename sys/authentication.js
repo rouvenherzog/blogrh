@@ -25,15 +25,35 @@ module.exports = function( app ) {
 	));
 
 	passport.serializeUser(function(user, done) {
-		done(null, user._id);
+		return done(null, user._id);
 	});
 
 	passport.deserializeUser(function(id, done) {
+		console.log("DES", id);
 		User.findById(id, function(error, user){
-			done(null, user);
+			return done(null, user);
 		});
 	});
 
 	app.use(passport.initialize());
 	app.use(passport.session());
+
+	app.use('/admin', function(req, res, next) {
+		var auth = req.isAuthenticated();
+		var loginrequest = (req.originalUrl.indexOf('/admin/login') == 0);
+		var apirequest = (req.originalUrl.indexOf('/admin/api') == 0);
+
+		if( loginrequest ) {
+			next();
+		} else if( !auth ) {
+			if( apirequest )
+				return res.send(400, 'Not authorized');
+			else
+				return res.redirect(
+					'/admin/login?next='+req.originalUrl
+				);
+		} else {
+			next();
+		}
+	})
 };

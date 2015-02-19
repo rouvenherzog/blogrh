@@ -7,6 +7,7 @@ var authentication = require('./authentication');
 var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
 
 module.exports = {
 	database: 'mongodb://localhost/abc',
@@ -42,15 +43,17 @@ module.exports = {
 		// Set Assets Directory
 		app.use( '/static/admin', express.static(frontend_dir + 'static') );
 
-		// Make the app available in Jade
-		app.locals.app = app;
-
 		// Add Content Parser
 		app.use(cookieParser("asd"));
 		app.use(session({
 			secret: 'theworldisyours',
 			resave: false,
-			saveUninitialized: true
+			saveUninitialized: true,
+			store: new RedisStore({
+				host: '127.0.0.1',
+				port: 6379,
+				prefix: 'rouvenherzog:'
+			})
 		}));
 		app.use(bodyParser.urlencoded({ extended: true }));
 		app.use(bodyParser.json());
@@ -72,5 +75,12 @@ module.exports = {
 
 		// authenticate
 		authentication(app);
+
+		// Make the app available in Jade
+		app.locals.app = app;
+		app.use(function(req, res, next) {
+			res.locals.user = req.user || {};
+			next();
+		});
 	}
 };
