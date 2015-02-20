@@ -50,7 +50,7 @@ var CreateUser = function() {
 			})
 		else
 			Account
-				.findById(accountid)
+				.findById(result.accountid)
 				.exec(function(error, account) {
 					if( error ) _Error(error);
 
