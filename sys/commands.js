@@ -54,7 +54,7 @@ var CreateUser = function() {
 				.exec(function(error, account) {
 					if( error ) _Error(error);
 
-					if( media == null ) {
+					if( account == null ) {
 						console.log("Account not found.");
 						return;
 					}
