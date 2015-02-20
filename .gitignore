@@ -1,3 +1,4 @@
 .DS_STORE
-frontend/static/
+frontend/static/*
+!frontend/static/img
 node_modules/
