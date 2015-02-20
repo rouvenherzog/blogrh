@@ -1,7 +1,19 @@
 div.col-xs-12.media-list-row
-	h3 {{ tag && tag.name || 'No Tag' }}
+	h3 {{ tag && tag.name || 'No Tag' }} 
+		small
+			{{ (media | mediaHasTag : tag).length }} Media
 
-	rouvenherzog-media-row(
+		button.btn.btn-default.btn-sm.pull-right(
+			data-toggle="collapse",
+			data-target="{{ '#' + (tag && tag._id || 'notag') }}",
+			aria-expanded="true"
+			aria-controls="{{ (tag && tag._id || 'notag') }}"
+			ng-click="collapsed = !collapsed"
+		)
+			i.fa(ng-class="{'fa-angle-up': !collapsed, 'fa-angle-down': collapsed}")
+
+	rouvenherzog-media-row.collapse.in(
 		media="media",
-		tag="tag"
+		tag="tag",
+		id="{{ tag && tag._id || 'notag' }}"
 	)

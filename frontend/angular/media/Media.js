@@ -10,7 +10,7 @@ MediaModule.config([
 		var base = document.getElementsByTagName('base').item(0).getAttribute('href') + '/media';
 		// Default index
 		$routeProvider
-			.otherwise({
+			.when(base, {
 				templateUrl: '/angular/media/tmpls/media-list.tmpl',
 				controller: 'mediaListController'
 			});

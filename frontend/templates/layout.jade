@@ -18,9 +18,18 @@ html
 						li(class={active: module.root == url})
 							a(href=module.root, target="_self")= module.name
 
-				div.pull-right
-					p.navbar-text Hello, #{user.name}
-					a.btn.btn-default.navbar-btn(href="/admin/logout", target="_self") Logout
+				ul.nav.navbar-nav.navbar-right
+					li.navbar-text
+						| Hello, 
+						rouvenherzog-user-name
+						| !
+					li
+						a.text-primary(href="", rouvenherzog-open-profile-form)
+							i.fa.fa-cogs
+					li
+						a(href="/admin/logout", target="_self")
+							i.fa.fa-leave
+							| Logout
 
 		block body
 

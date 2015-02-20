@@ -4,7 +4,8 @@ var App = angular.module(
 		'rouvenherzog.Blog',
 		'rouvenherzog.Notification',
 		'rouvenherzog.Media',
-		'rouvenherzog.Tag'
+		'rouvenherzog.Tag',
+		'rouvenherzog.User'
 	]
 );
 

@@ -1,0 +1,76 @@
+div.modal
+	div.modal-dialog
+		div.modal-content
+			div.modal-header
+				button.close(ng-click="close()")
+					i.fa.fa-times
+
+				h4.
+					Edit Profile
+
+			div.modal-body
+				h4 Profile information
+				div.form-group
+					label name
+					input.form-control(
+						type="text",
+						ng-model="user.name",
+						ng-change="validate('name')"
+					)
+					div(ng-if="errors['name']")
+						{{ errors['name'] }}
+				div.form-group
+					label Email
+					input.form-control(
+						type="email",
+						ng-model="user.email",
+						ng-change="validate('email')"
+					)
+					div(ng-if="errors['email']")
+						{{ errors['email'] }}
+				div.form-group
+					label username
+					input.form-control(
+						type="text",
+						ng-model="user.username",
+						ng-change="validate('username')"
+					)
+					div(ng-if="errors['username']")
+						{{ errors['username'] }}
+				div.form-group
+					label old password
+					input.form-control(
+						type="password",
+						ng-model="user.old_password",
+						ng-change="validate('old_password')"
+					)
+				div(ng-if="errors['old_password']")
+					{{ errors['old_password'] }}
+				
+				h4 Change password 
+					input(type="checkbox", ng-model="user.change_password")
+				div.row(ng-if="user.change_password")
+					div.form-group.col-xs-6
+						label new password
+						input.form-control(
+							type="password",
+							ng-model="user.new_password",
+							ng-change="validate('new_password')"
+						)
+					div.form-group.col-xs-6
+						label repeat new password
+						input.form-control(
+							type="password",
+							ng-model="user.repeat_password",
+							ng-change="validate('repeat_password')"
+						)
+					div.col-xs-12(ng-if="errors['new_password']")
+						{{ errors['new_password'] }}
+			
+			div.modal-footer
+				button.btn.btn-default(ng-click="close()")
+					i.fa.fa-times &nbsp;
+					| Close
+				button.btn.btn-primary(ng-click="save()")
+					i.fa.fa-check &nbsp;
+					| Save

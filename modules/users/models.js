@@ -26,6 +26,19 @@ UserSchema.methods.validPassword = function( password ) {
 	return this.password == hash.digest('hex');
 };
 
+UserSchema.methods.setPassword = function( password ) {
+	var hash = crypto.createHash('sha512');
+		hash.update(password, 'utf8');
+
+	this.password = hash.digest('hex');
+};
+
+UserSchema.set( 'toJSON', {
+	transform: function( doc, ret, options ) {
+		delete ret['password'];
+	}
+});
+
 var User = mongoose.model('User', UserSchema);
 var Account = mongoose.model('Account', AccountSchema);
 
