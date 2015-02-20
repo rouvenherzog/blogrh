@@ -7,7 +7,6 @@ var authentication = require('./authentication');
 var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
-var RedisStore = require('connect-redis')(session);
 
 module.exports = {
 	database: 'mongodb://localhost/abc',
@@ -48,12 +47,7 @@ module.exports = {
 		app.use(session({
 			secret: 'theworldisyours',
 			resave: false,
-			saveUninitialized: true,
-			store: new RedisStore({
-				host: '127.0.0.1',
-				port: 6379,
-				prefix: 'rouvenherzog:'
-			})
+			saveUninitialized: true
 		}));
 		app.use(bodyParser.urlencoded({ extended: true }));
 		app.use(bodyParser.json());

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Entry = require('./models').Entry;
-var Media = require('backend/modules/media/models').Media;
+var Media = require('../media/models').Media;
 
 router
 	.param('id', function( request, response, next, id ) {

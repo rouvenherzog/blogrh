@@ -1,8 +1,8 @@
-var blogmodule = require('backend/modules/blog');
-var mediamodule = require('backend/modules/media');
-var dashboardmodule = require('backend/modules/dashboard');
-var tagsmodule = require('backend/modules/tags');
-var usersmodule = require('backend/modules/users');
+var blogmodule = require('../modules/blog');
+var mediamodule = require('../modules/media');
+var dashboardmodule = require('../modules/dashboard');
+var tagsmodule = require('../modules/tags');
+var usersmodule = require('../modules/users');
 var config = require('./config');
 var db = require('./database');
 

@@ -2,8 +2,8 @@ var prompt = require('prompt');
 var mongoose = require('mongoose');
 var config = require('./config');
 mongoose.connect(config.database);
-var User = require('backend/modules/users/models').User;
-var Account = require('backend/modules/users/models').Account;
+var User = require('../modules/users/models').User;
+var Account = require('../modules/users/models').Account;
 var sha512 = require('crypto').createHash('sha512');
 
 var _Error = function( error ) {
