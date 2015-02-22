@@ -4,6 +4,7 @@ var config = require('./config');
 mongoose.connect(config.database);
 var User = require('../modules/users/models').User;
 var Account = require('../modules/users/models').Account;
+var Tag = require('../modules/tags/models').Tag;
 var sha512 = require('crypto').createHash('sha512');
 
 var _Error = function( error ) {
@@ -117,7 +118,19 @@ var WhipeData = function() {
 
 			process.exit(0);
 		});
-}
+};
+
+var CreateTag = function() {
+	prompt.start();
+	prompt.get(['name'], function( err, result ) {
+		(new Tag({name: result.name})).save(function(error) {
+			if( error )
+				throw(error);
+
+			process.exit(0);
+		});
+	});
+};
 
 var command = process.argv[2];
 switch( command ) {
@@ -132,6 +145,9 @@ switch( command ) {
 		break;
 	case 'whipeData':
 		WhipeData();
+		break;
+	case 'createTag':
+		CreateTag();
 		break;
 	default:
 		break;
