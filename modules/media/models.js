@@ -18,9 +18,9 @@ var MediaSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
-	localPath: String,
-	path: String,
 	title: String,
+
+	paths: {},
 
 	entry: {
 		type: Schema.Types.ObjectId,
@@ -34,56 +34,98 @@ var MediaSchema = new Schema({
 });
 
 MediaSchema.pre('remove', function(next) {
-	if( !this.localPath ) {
-		next();
-		return;
+	for( var key in this.paths ) {
+		fs.unlinkSync(this.paths[key].localpath);
 	}
 
-	fs.unlink(this.localPath, function(err) {
-		if( err )
-			console.log(err);
-
-		next();
-	});
+	next();
 });
 
 MediaSchema.set( 'toJSON', {
 	transform: function( doc, ret, options ) {
-		delete ret['localPath'];
+		for( var key in ret.paths ) {
+			delete ret.paths[key]['localpath'];
+		}
 	}
 });
 
 MediaSchema.statics.fromFile = function( file, args ) {
 	var a = q.defer();
 
-	try {
-		gm(file.buffer, file.name).size(
-			{bufferStream: true},
-			function( err, dimension ) {
-				if( err )
-					console.log(err)
+	var fileinfo = (/^(.*\/)(.*)(\..+)$/).exec(file.path);
+	var folderpath = fileinfo[1];
+	var dimension = {};
 
-				if( dimension.height > 512 || dimension.width > 512 )
-					this.resize(512, 512);
+	var resize = function(image, width, height, file) {
+		var done = q.defer();
+		var filename = fileinfo[2] + width + "x" + height + fileinfo[3];
+		var localpath = folderpath + filename;
 
-				this.write(file.path, function(err) {
-					var media = new Media({
-						localPath: file.path,
-						path: args.uploadRoot ? args.uploadRoot + '/' + file.name : file.name,
-						title: args.title || '',
-						tags: args.tags || [],
-						entry: args.entry || null,
-						uploaded_by: args.uploaded_by,
-						account: args.uploaded_by.account
-					});
+		image.resize(width, height,'>');
+		image.write(localpath, function(error) {
+			if( error )
+				throw(error)
 
-					if( !args.skipPersist )
-						media.save();
-
-					a.resolve(media);
-				});
+			var iwidth = dimension.width;
+			var iheight = dimension.height;
+			if( width < dimension.width || height < dimension.height ) {
+				iwidth = dimension.widthGtHeight ? width : parseInt(width * dimension.ratio);
+				iheight = !dimension.widthGtHeight ? height : parseInt(height / dimension.ratio);
 			}
-		);
+
+			done.resolve([width, {
+				localpath: localpath,
+				path: args.uploadRoot ? args.uploadRoot + '/' + filename : filename,
+				width: iwidth,
+				height: iheight,
+				ext: fileinfo[3].slice(1)
+			}]);
+		})
+
+		return done.promise;
+	}
+
+	try {
+		var image = gm(file.buffer, file.name);
+		image.size(function(error, d) {
+			if( error )
+				throw(error);
+
+			dimension.width = d.width;
+			dimension.height = d.height;
+			dimension.ratio = d.width/d.height;
+			dimension.widthGtHeight = d.width > d.height;
+
+			var promises = [
+				resize(image, 1024, 1024, file),
+				resize(image, 256, 256, file),
+				resize(image, 64, 64, file)
+			];
+
+			q.all(promises).then(function(thumbs) {
+				var media = new Media({
+					paths: {},
+					title: args.title || '',
+					tags: args.tags || [],
+					entry: args.entry || null,
+					uploaded_by: args.uploaded_by,
+					account: args.uploaded_by.account
+				});
+
+				for( var index in thumbs ) {
+					var size = thumbs[index][0];
+					var data = thumbs[index][1];
+					media.paths[size] = data;
+				}
+
+				media.markModified('paths');
+
+				if( !args.skipPersist )
+					media.save();
+
+				a.resolve(media);
+			});
+		});
 	} catch( e ) {
 		throw(e);
 	}
