@@ -4,14 +4,14 @@ div.entry-index-wrapper
 			a(role="button", ng-href="/admin/blog/{{ entry._id }}")
 				div.info
 					span.label(ng-class="{'label-success' : entry.published, 'label-info': !entry.published}")
-						{{ entry.published ? 'Published': 'Draft' }}
+						{{ entry.published ? '#{__('Blog.Published')}': '#{__('Blog.Draft')}' }}
 					{{ entry.modified_at | date : 'short' }}
 
 				h3
-					{{ entry.clean.title || 'Untitled' }}
+					{{ entry.clean.title || '#{__('Blog.Untitled')}' }}
 
 	div.navbar.navbar-default.navbar-fixed-bottom
 		ul.nav.navbar-nav
 			li
 				button.btn.btn-primary.navbar-btn(ng-click="create()").
-					New Entry
+					#{__('Blog.Create')}

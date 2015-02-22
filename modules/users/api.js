@@ -31,6 +31,8 @@ router.route('/users')
 			return raise_error({'email': 'Specify an email'});
 
 		user.name = data.name;
+		if( data.locale )
+			user.locale = data.locale;
 
 		if( data.email != user.email || data.username != user.username ) {
 			User.where(

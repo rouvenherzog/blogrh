@@ -5,14 +5,14 @@ div.entry-edit-wrapper
 		div.col-xs-12
 			button.btn.btn-default.navbar-btn(ng-click="back()")
 				i.fa.fa-chevron-left &nbsp;
-				| Back
+				| #{__('Blog.Menu.Back')}
 			button.btn.btn-default.navbar-btn.pull-right(ng-click="delete()")
 				i.fa.fa-trash &nbsp;
-				| Delete
+				| #{__('Blog.Menu.Delete')}
 			div.btn-group.pull-right
 				button.btn.btn-default.navbar-btn(ng-click="save()")
 					i.fa.fa-check &nbsp;
-					| Save
+					| #{__('Blog.Menu.Save')}
 				button.btn.btn-default.navbar-btn(ng-click="publish()")
 					i.fa(ng-class="{'fa-upload': !entry.published, 'fa-ban': entry.published}") &nbsp;
-					{{ entry.published ? 'Unpublish' : 'Publish' }}
+					{{ entry.published ? '#{__('Blog.Menu.Unpublish')}' : '#{__('Blog.Menu.Publish')}' }}

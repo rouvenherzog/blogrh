@@ -6,12 +6,12 @@ div.modal
 					i.fa.fa-times
 
 				h4.
-					Edit Profile
+					#{__('User.EditModal.Title')}
 
 			div.modal-body
-				h4 Profile information
+				h4 #{__('User.EditModal.ProfileInformation')}
 				div.form-group
-					label name
+					label #{__('User.EditModal.Label.Name')}
 					input.form-control(
 						type="text",
 						ng-model="user.name",
@@ -20,7 +20,7 @@ div.modal
 					div(ng-if="errors['name']")
 						{{ errors['name'] }}
 				div.form-group
-					label Email
+					label #{__('User.EditModal.Label.Email')}
 					input.form-control(
 						type="email",
 						ng-model="user.email",
@@ -29,7 +29,7 @@ div.modal
 					div(ng-if="errors['email']")
 						{{ errors['email'] }}
 				div.form-group
-					label username
+					label #{__('User.EditModal.Label.Username')}
 					input.form-control(
 						type="text",
 						ng-model="user.username",
@@ -38,7 +38,17 @@ div.modal
 					div(ng-if="errors['username']")
 						{{ errors['username'] }}
 				div.form-group
-					label old password
+					label #{__('User.EditModal.Label.Language')}
+					select.form-control(
+						type="text",
+						ng-model="user.locale",
+						ng-change="validate('locale')",
+						ng-options="locale.short as locale.title for locale in locales"
+					)
+					div(ng-if="errors['username']")
+						{{ errors['username'] }}
+				div.form-group
+					label #{__('User.EditModal.Label.OldPassword')}
 					input.form-control(
 						type="password",
 						ng-model="user.old_password",
@@ -47,18 +57,18 @@ div.modal
 				div(ng-if="errors['old_password']")
 					{{ errors['old_password'] }}
 				
-				h4 Change password 
+				h4 #{__('User.EditModal.ChangePassword')} 
 					input(type="checkbox", ng-model="user.change_password")
 				div.row(ng-if="user.change_password")
 					div.form-group.col-xs-6
-						label new password
+						label #{__('User.EditModal.Label.NewPassword')}
 						input.form-control(
 							type="password",
 							ng-model="user.new_password",
 							ng-change="validate('new_password')"
 						)
 					div.form-group.col-xs-6
-						label repeat new password
+						label #{__('User.EditModal.Label.RepeatPassword')}
 						input.form-control(
 							type="password",
 							ng-model="user.repeat_password",
@@ -70,7 +80,7 @@ div.modal
 			div.modal-footer
 				button.btn.btn-default(ng-click="close()")
 					i.fa.fa-times &nbsp;
-					| Close
+					| #{__('User.EditModal.Footer.Close')}
 				button.btn.btn-primary(ng-click="save()")
 					i.fa.fa-check &nbsp;
-					| Save
+					| #{__('User.EditModal.Footer.Save')}

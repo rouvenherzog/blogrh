@@ -8,6 +8,10 @@ UserModule.directive('rouvenherzogProfileForm', [
 			link: function( $scope, $element ) {
 				$scope.errors = {};
 				$scope.user = UserService.get();
+				$scope.locales = [
+					{short:'en', title:'English'},
+					{short: 'de', title:'German'}
+				];
 
 				$scope.close = function() {
 					UserService.clear();

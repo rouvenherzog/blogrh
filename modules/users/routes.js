@@ -5,7 +5,7 @@ var passport = require('passport');
 router.route('/login')
 	.get(function( request, response ) {
 		response.render('users/views/login', {
-			backgroundNumber: parseInt(Math.random() * 4),
+			backgroundNumber: parseInt(Math.random() * 3)+1,
 			error: request.flash('error'),
 			next: request.query.next
 		});

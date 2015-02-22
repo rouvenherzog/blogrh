@@ -12,17 +12,17 @@ div.media-row-wrapper( ng-if="filtered.length > 0" )
 							button.btn.btn-danger.btn-sm(title="Delete", ng-click="delete(m)")
 								i.fa.fa-trash
 				div.caption
-					h5(ng-class="{'no-title': !m.title}") {{ m.clean.title || 'Untitled' }}
+					h5(ng-class="{'no-title': !m.title}") {{ m.clean.title || '#{__('Media.Untitled')}' }}
 					ul.tag-list
 						li.tag-entry(ng-repeat="tag in m.clean.tags")
 							small(ng-if="getName(tag)")
 								{{ getName(tag) }}
 							i.fa.fa-circle-o-notch.fa-spin(ng-if="!getName(tag)")
 						li.tag-list-empty(ng-if="m.clean.tags.length == 0").
-							No Tags assigned.
+							#{__('Media.NoTagsAssigned')}
 
 			div.clearfix
 
 div( ng-if="filtered.length == 0")
 	div.well.well-sm
-		h4 No Media.
+		h4 #{__('Media.NoMedia')}

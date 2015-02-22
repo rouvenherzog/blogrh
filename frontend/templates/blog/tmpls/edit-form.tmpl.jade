@@ -1,13 +1,13 @@
-input.title(ng-model="entry.title", placeholder="Blog Title")
+input.title(ng-model="entry.title", placeholder="#{__('Blog.Title')}")
 
 rouvenherzog-blog-quill(ng-model="entry", field="delta")
 
 h3.media-title
-	| Media 
+	| #{__('Blog.Media.Title')} 
 
 	button.btn.btn-primary.btn-sm.upload-btn
 		i.fa.fa-upload &nbsp;
-		| Upload media
+		| #{__('Media.Upload')}
 
 		input(
 			type="file",

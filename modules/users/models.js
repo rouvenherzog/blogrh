@@ -12,6 +12,10 @@ var UserSchema = new Schema({
 	email: String,
 	password: String,
 	active: Boolean,
+	locale: {
+		type: String,
+		default: 'en'
+	},
 
 	account: {
 		type: Schema.Types.ObjectId,

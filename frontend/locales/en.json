@@ -1,0 +1,108 @@
+{
+	"Blog": {
+		"Create": "Create",
+		"Published": "Published",
+		"Draft": "Draft",
+		"Untitled": "Untitled",
+		"SelectAPostFromList": "Select a post from the list",
+		"Menu": {
+			"Close": "Close",
+			"Save": "Save",
+			"Unpublish": "Unpublish",
+			"Publish": "Publish",
+			"Delete": "Delete",
+			"Back": "Back"
+		},
+		"Media": {
+			"Title": "Media",
+			"Upload": "Upload Media"
+		},
+		"Title": "Blog Title"
+	},
+	"Quill": {
+		"FontSize": {
+			"Small": "Small",
+			"Normal": "Normal",
+			"Large": "Large",
+			"Huge": "Huge"
+		}
+	},
+	"Media": {
+		"Upload": "Upload Media",
+		"Untitled": "Untitled",
+		"NoTagsAssigned": "No Tags Assigned",
+		"NoMedia": "No Media",
+		"UploadModal": {
+			"Title": "Uploading Media",
+			"Uplading": {
+				"Uploaded": "Uploaded",
+				"Of": "of",
+				"Files": "Files"
+			},
+			"Footer": {
+				"Close": "Close",
+				"UploadFiles": "Upload Files",
+				"Uploading": "Uploading ..."
+			}
+		},
+		"Label": {
+			"Title": "Title",
+			"Tag": "Tags",
+			"FilterByTag": "Filter By Tag"
+		},
+		"EditModal": {
+			"Title": "Edit Media",
+			"Footer": {
+				"Close": "Close",
+				"Save": "Save"
+			}
+		},
+		"List": {
+			"NoTag": "No Tag",
+			"Files": "Files",
+			"File": "File"
+		}
+	},
+	"Login": {
+		"HelloPleaseLogIn": "Hello, please login to continue..",
+		"EmailOrUsername": "Email or Username",
+		"Password": "Password",
+		"Go": "Go"
+	},
+	"Navigation": {
+		"Hello": "Hello",
+		"Logout": "Logout"
+	},
+	"Tag": {
+		"Select": {
+			"Placeholder": "Select a Tag",
+			"NoTag": "No Tags"
+		}
+	},
+	"User": {
+		"EditModal": {
+			"Title": "Edit Profile",
+			"ProfileInformation": "Profile Information",
+			"Label": {
+				"Name": "Name",
+				"Email": "Email",
+				"Username": "Username",
+				"Language": "Language",
+				"OldPassword": "Old Password",
+				"NewPassword": "New Password",
+				"RepeatPassword": "Repeat Password"
+			},
+			"ChangePassword": "Change Password",
+			"Footer": {
+				"Close": "Close",
+				"Save": "Save"
+			}
+		}
+	},
+	"Dashboard": {
+		"Welcome": "Welcome",
+		"WhatDoYouWantToDo": "What do you want to do today?",
+		"DoPost": "Create or Edit a Post",
+		"DoMedia": "Upload or Edit Media"
+	}
+}

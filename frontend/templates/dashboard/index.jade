@@ -3,12 +3,12 @@ extends ../layout.jade
 block body
 	div.container-fluid.dashboard-wrapper
 		div.jumbotron
-			h1 Welcome, #{user.name}!
-			p.lead &nbsp;What do you want to do today ?
+			h1 #{__('Dashboard.Welcome')}, #{user.name}!
+			p.lead &nbsp; #{__('Dashboard.WhatDoYouWantToDo')}
 
-			a.btn.btn-primary.btn-lg(href="/admin/blog/") Create or Edit a Post
+			a.btn.btn-primary.btn-lg(href="/admin/blog/") #{__('Dashboard.DoPost')}
 			| 
-			a.btn.btn-primary.btn-lg(href="/admin/media/") Create or Edit Media
+			a.btn.btn-primary.btn-lg(href="/admin/media/") #{__('Dashboard.DoMedia')}
 
 	//- div.container-fluid.dashboard-wrapper
 	//- 	div.visible-xs-block

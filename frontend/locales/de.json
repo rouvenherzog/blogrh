@@ -1,0 +1,108 @@
+{
+	"Blog": {
+		"Create": "Hinzufügen",
+		"Published": "Veröffentlicht",
+		"Draft": "Entwurf",
+		"Untitled": "Ohne Titel",
+		"SelectAPostFromList": "Wähle einen Eintrag aus der Liste",
+		"Menu": {
+			"Close": "Schließen",
+			"Save": "Speichern",
+			"Unpublish": "Widerrufen",
+			"Publish": "Veröffentlichen",
+			"Delete": "Löschen",
+			"Back": "Zurück"
+		},
+		"Media": {
+			"Title": "Media",
+			"Upload": "Media hochladen"
+		},
+		"Title": "Titel"
+	},
+	"Quill": {
+		"FontSize": {
+			"Small": "Klein",
+			"Normal": "Normal",
+			"Large": "Groß",
+			"Huge": "Riesig"
+		}
+	},
+	"Media": {
+		"Upload": "Media hochladen",
+		"Untitled": "Kein Titel",
+		"NoTagsAssigned": "Keine Tags zugeordnet",
+		"NoMedia": "Keine Media vorhanden",
+		"UploadModal": {
+			"Title": "Media hochladen",
+			"Footer": {
+				"Close": "Abbrechen",
+				"UploadFiles": "Media hochladen",
+				"Uploading": "Lädt hoch ..."
+			},
+			"Uplading": {
+				"Uploaded": "Hochgeladen:",
+				"Of": "von",
+				"Files": "Dateien"
+			}
+		},
+		"EditModal": {
+			"Title": "Media bearbeiten",
+			"Footer": {
+				"Close": "Abbrechen",
+				"Save": "Speichern"
+			}
+		},
+		"Label": {
+			"Title": "Titel",
+			"Tag": "Tag",
+			"FilterByTag": "Media hat Tag"
+		},
+		"List": {
+			"NoTag": "Kein Tag",
+			"Files": "Dateien",
+			"File": "Datei"
+		}
+	},
+	"Dashboard": {
+		"Welcome": "Willkommen",
+		"WhatDoYouWantToDo": "Was willst du heute tun?",
+		"DoPost": "Post Eintrag erstellen oder bearbeiten",
+		"DoMedia": "Media hochladen oder bearbeiten"
+	},
+	"Tag": {
+		"Select": {
+			"Placeholder": "Wähle ein Tag aus",
+			"NoTag": "Kein Tag"
+		}
+	},
+	"Navigation": {
+		"Hello": "Hallo",
+		"Logout": "Ausloggen"
+	},
+	"Login": {
+		"HelloPleaseLogIn": "Hallo, log dich ein um fortzufahren..",
+		"EmailOrUsername": "Email oder Benutzername",
+		"Password": "Passwort",
+		"Go": "Los"
+	},
+	"User": {
+		"EditModal": {
+			"Title": "Profil bearbeiten",
+			"ProfileInformation": "Profil-Informationen",
+			"Label": {
+				"Name": "Name",
+				"Email": "Email",
+				"Username": "Benutzername",
+				"Language": "Sprache",
+				"OldPassword": "Altes Passwort",
+				"NewPassword": "Neues Passwort",
+				"RepeatPassword": "Passwort Wiederholen"
+			},
+			"ChangePassword": "Passwort ändern",
+			"Footer": {
+				"Close": "Schließen",
+				"Save": "Speichern"
+			}
+		}
+	}
+}

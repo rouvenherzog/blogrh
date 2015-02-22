@@ -6,7 +6,7 @@ div.modal
 					i.fa.fa-times
 
 				h4.
-					Uploading {{ media.length }} Image{{ media.length > 1 ? 's' : '' }}
+					#{__('Media.UploadModal.Title')}
 
 			div.modal-body
 				div.row
@@ -29,27 +29,31 @@ div.modal
 							span.lead
 								{{ selected_media.name }}
 						div.selected-media-field.selected-media-title
-							label Title
-							input(placeholder="Title", ng-model="selected_media.title")
+							label #{__('Media.Label.Title')}
+							input(placeholder="#{__('Media.Label.Title')}", ng-model="selected_media.title")
 						div.selected-media-field.selected-media-tags
-							label Tags
+							label #{__('Media.Label.Tag')}
 							rouvenherzog-tag-select(model="selected_media", field="tags")
 
 				div.row(ng-if="uploading")
 					div.col-xs-12
 						h1.
-							Uploaded {{ amount_uploaded }} of {{ media.length }} Files.
+							#{__('Media.UploadModal.Uplading.Uploaded')}
+							{{ amount_uploaded }}
+							#{__('Media.UploadModal.Uplading.Of')}
+							{{ media.length }}
+							#{__('Media.UploadModal.Uplading.Files')}.
 
 
 			div.modal-footer
 				div(ng-if="!uploading")
 					button.btn.btn-default(ng-click="close()")
 						i.fa.fa-times &nbsp;
-						| Close
+						| #{__('Media.UploadModal.Footer.Close')}
 					button.btn.btn-primary(ng-click="upload()")
 						i.fa.fa-check &nbsp;
-						| Upload File{{ files.length > 1 ? 's' : '' }}
+						| #{__('Media.UploadModal.Footer.UploadFiles')}
 				div(ng-if="uploading")
 					button.btn.btn-primary
 						i.fa.fa-circle-o-notch.fa-spin &nbsp;
-						| Uploading ...
+						| #{__('Media.UploadModal.Footer.Uploading')}

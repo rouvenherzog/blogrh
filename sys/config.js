@@ -19,23 +19,6 @@ module.exports = {
 			modules: []
 		});
 
-		// Set up i18n
-		var locales = ['en', 'de'];
-		i18n.configure({
-			locals: ['en', 'de'],
-			directory: frontend_dir + 'locales',
-			defaultLocale: 'de'
-		});
-		app.use('/admin', i18n.init);
-		app.param('lang', function(request, response, next, lang) {
-			if( locales.indexOf(lang) == -1 ) {
-				// Raise a 404
-			}
-
-			i18n.setLocale(request, lang);
-			next();
-		});
-
 		var frontend_dir = __dirname + '/../frontend/';
 		// Add Template Directory
 		app.get('views').push( frontend_dir + 'templates' );
@@ -69,6 +52,23 @@ module.exports = {
 
 		// authenticate
 		authentication(app);
+
+		// Set up i18n
+		var locales = ['en', 'de'];
+		var initI18n = function(request, response, next) {
+			i18n.init( request, response );
+			if( request.user )
+				request.setLocale(request.user.locale);
+			next();
+		};
+		i18n.configure({
+			locales: locales,
+			directory: frontend_dir + 'locales',
+			defaultLocale: 'de',
+			objectNotation: true
+		});
+		app.use('/admin', initI18n);
+		app.use('/angular', initI18n);
 
 		// Make the app available in Jade
 		app.locals.app = app;

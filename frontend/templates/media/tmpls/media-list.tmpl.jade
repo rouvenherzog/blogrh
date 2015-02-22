@@ -4,7 +4,7 @@ nav.navbar.navbar-default.navbar-fixed-top.media-sub-nav
 			li
 				button.btn.btn-primary.navbar-btn.upload-btn
 					i.fa.fa-upload &nbsp;
-					| Upload media
+					| #{__('Media.Upload')}
 
 					input(
 						type="file",
@@ -13,14 +13,13 @@ nav.navbar.navbar-default.navbar-fixed-top.media-sub-nav
 					)
 			li.divider
 			li
-				label Filter by Tag:
+				label #{__('Media.Label.FilterByTag')}:
 				form.navbar-form
 					div.form-group
 						rouvenherzog-tag-select(
 							single="true",
 							model="filter",
-							field="tag",
-							placeholder="Select Tag"
+							field="tag"
 						)
 
 		//- form.navbar-form.navbar-right

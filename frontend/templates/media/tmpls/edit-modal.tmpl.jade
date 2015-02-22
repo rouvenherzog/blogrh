@@ -1,12 +1,12 @@
 div.modal
-	div.modal-dialog.modal-lg
+	div.modal-dialog
 		div.modal-content
 			div.modal-header
 				button.close(ng-click="close()")
 					i.fa.fa-times
 
 				h4.
-					Edit Media
+					#{__('Media.EditModal.Title')}
 
 			div.modal-body
 				div.row
@@ -18,17 +18,17 @@ div.modal
 							span.lead
 								{{ media.name }}
 						div.selected-media-field.selected-media-title
-							label Title
-							input(placeholder="Title", ng-model="media.title")
+							label #{__('Media.Label.Title')}
+							input(placeholder="#{__('Media.Label.Title')}", ng-model="media.title")
 						div.selected-media-field.selected-media-tags
-							label Tags
+							label #{__('Media.Label.Tag')}
 							rouvenherzog-tag-select(model="media", field="tags")
 
 
 			div.modal-footer
 				button.btn.btn-default(ng-click="close()")
 					i.fa.fa-times &nbsp;
-					| Close
+					| #{__('Media.EditModal.Footer.Close')}
 				button.btn.btn-primary(ng-click="save()")
 					i.fa.fa-check &nbsp;
-					| Save Changes
+					| #{__('Media.EditModal.Footer.Save')}
