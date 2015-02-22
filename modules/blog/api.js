@@ -95,6 +95,7 @@ router.route('/blog/:id/publish')
 	.put(function( request, response ) {
 		request.entry.set({
 			published: !request.entry.published,
+			published_at: new Date(),
 			modified_by: request.user
 		});
 		request.entry.save(function(error) {
