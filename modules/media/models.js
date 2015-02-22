@@ -56,6 +56,7 @@ MediaSchema.set( 'toJSON', {
 MediaSchema.statics.fromFile = function( file, args ) {
 	var a = q.defer();
 
+	console.log("RESIZE AND SAVE IMAGE");
 	gm(file.buffer, file.name).size(
 		{bufferStream: true},
 		function( err, dimension ) {
