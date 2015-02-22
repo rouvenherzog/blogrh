@@ -109,7 +109,6 @@ router.route('/blog/:id/publish')
 router.route('/blog/:id/media')
 	.post(function( request, response ) {
 		var file = request.files.file;
-		console.log("request", request.body);
 		Media.fromFile(file, {
 			title: request.body.title,
 			tags: request.body.tags,
