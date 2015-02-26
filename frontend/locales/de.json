@@ -15,7 +15,7 @@
 		},
 		"Media": {
 			"Title": "Media",
-			"Upload": "Media hochladen"
+			"Upload": "Dateien hochladen"
 		},
 		"Title": "Titel",
 		"labels": {
@@ -37,10 +37,10 @@
 		}
 	},
 	"Media": {
-		"Upload": "Media hochladen",
+		"Upload": "Dateien hochladen",
 		"Untitled": "Kein Titel",
-		"NoTagsAssigned": "Keine Tags zugeordnet",
-		"NoMedia": "Keine Media vorhanden",
+		"NoTagsAssigned": "Keine Markierungen zugeordnet",
+		"NoMedia": "Keine Dateien vorhanden",
 		"UploadModal": {
 			"Title": "Media hochladen",
 			"Footer": {
@@ -63,11 +63,11 @@
 		},
 		"Label": {
 			"Title": "Titel",
-			"Tag": "Tag",
-			"FilterByTag": "Media hat Tag"
+			"Tag": "Markierungen",
+			"FilterByTag": "Media hat Markierung"
 		},
 		"List": {
-			"NoTag": "Kein Tag",
+			"NoTag": "Keine Markierung",
 			"Files": "Dateien",
 			"File": "Datei"
 		}
@@ -80,8 +80,8 @@
 	},
 	"Tag": {
 		"Select": {
-			"Placeholder": "Wähle ein Tag aus",
-			"NoTag": "Kein Tag"
+			"Placeholder": "Wähle eine Markierung aus",
+			"NoTag": "Keine Markierung"
 		}
 	},
 	"Navigation": {

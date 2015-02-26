@@ -3,7 +3,7 @@ div.media-row-wrapper( ng-if="filtered.length > 0" )
 		div.media-row( ng-style="rowStyle()" )
 			div.media-row-item(ng-repeat="m in filtered")
 				div.thumbnail
-					img(ng-src="{{ m.clean.path }}")
+					img(ng-src="{{ m.clean.paths['256'].path }}")
 
 					div.actions
 						div.btn-group
