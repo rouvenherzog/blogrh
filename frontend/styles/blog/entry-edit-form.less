@@ -17,10 +17,51 @@ rouvenherzog-blog-edit-entry-form {
 		}
 	}
 
+	div {
+		ul.nav.nav-tabs {
+			border-bottom: 0px;
+
+			&> li {
+				&.active {
+					&> a {
+						background-color: #FAFAFA;
+					}
+				}
+
+				&> a {
+					color: #333;
+					font-weight: bold;
+					cursor: pointer;
+					border-radius: 0px;
+					margin-right: 0px;
+				}
+			}
+		}
+
+		div#meta {
+			border: 1px solid #ddd;
+			padding: 20px;
+
+			input {
+				border-radius: 0px;
+			}
+		}
+	}
+
 	rouvenherzog-blog-quill {
-		.ql-wrapper {
-			.ql-editor {
-				min-height: 250px;
+		&.summary {
+			.ql-wrapper {
+				.ql-editor {
+					min-height: 100px;
+				}
+			}
+		}
+
+		&.body {
+			.ql-wrapper {
+				.ql-editor {
+					min-height: 250px;
+				}
 			}
 		}
 	}

@@ -9,14 +9,19 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 			// Specify fields for this model
 			this.fields = {
 				title: "",
-				delta: [],
 				rendered: "",
 				modified_at: new Date(),
 				published: false,
 				published_at: new Date(),
-				summery: "",
+				specifiedSummary: false,
+				body: {
+					delta: []
+				},
+				summary: {
+					delta: []
+				},
 				keywords: [],
-				media: []
+				media: [],
 			};
 
 			// Clean Copy
@@ -29,6 +34,22 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 
 			// Populate Media
 			this.replaceMedia();
+		};
+
+		Entry.prototype.getCount = function( stopAt ) {
+			var count = 0;
+			for( var index in this.body.delta ) {
+				count += this.body.delta[index].insert.length;
+				if( stopAt && (count >= stopAt) ) {
+					return count;
+				}
+			}
+
+			return count;
+		};
+
+		Entry.prototype.hasSummary = function() {
+			return this.getCount(700) >= 700;
 		};
 
 		Entry.prototype.replaceMedia = function() {
@@ -77,8 +98,11 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 
 		Entry.prototype.validate = function( key, value ) {
 			// If the rendered field gets set, trust it
-			if( key == 'rendered' && typeof value == "string" ) {
-				value = $sce.trustAsHtml(value);
+			if( ['body', 'summary'].indexOf(key) != -1 ) {
+				if( typeof value == "object" && typeof value.rendered == "string" )
+					value.rendered = $sce.trustAsHtml(value.rendered);
+			} else {
+				value = angular.copy(value);
 			}
 
 			return value;
@@ -103,8 +127,15 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 
 		Entry.prototype.set = function( args ) {
 			for( var key in args ) {
-				this.clean[key] = this.validate(key, args[key]);
-				this[key] = this.validate(key, args[key]);
+				if( this[key] && angular.isObject(args[key]) ) {
+					for( var index in args[key] ) {
+						this.clean[key][index] = args[key][index];
+						this[key][index] = args[key][index];
+					}
+				} else {
+					this.clean[key] = this.validate(key, args[key]);
+					this[key] = this.validate(key, args[key]);
+				}
 			}
 		};
 

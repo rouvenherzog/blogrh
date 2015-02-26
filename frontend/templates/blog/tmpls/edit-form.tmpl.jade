@@ -1,6 +1,27 @@
-input.title(ng-model="entry.title", placeholder="#{__('Blog.Title')}")
+div.form-group
+	input.title(ng-model="entry.title", placeholder="#{__('Blog.Title')}")
 
-rouvenherzog-blog-quill(ng-model="entry", field="delta")
+div
+	ul.nav.nav-tabs
+		li.active(data-toggle="tab", data-target="#body")
+			a #{__('Blog.labels.Body')}
+		li(data-toggle="tab", data-target="#summary", ng-if="entry.hasSummary()")
+			a #{__('Blog.labels.Summary')}
+		li.pull-right(data-toggle="tab", data-target="#meta")
+			a.edit-meta-btn
+				i.fa.fa-cog
+				|  #{__('Blog.labels.EditMeta')}
+
+	div.tab-content
+		div.tab-pane.active#body
+			rouvenherzog-blog-quill.body(ng-model="entry", field="body.delta", article-length="700")
+		div.tab-pane#summary
+			rouvenherzog-blog-quill.summary(ng-model="entry", field="summary.delta", watch="entry.clean.summary")
+		div.tab-pane#meta
+			div.form-group
+				label #{__('Blog.labels.Keywords')}
+				input.keywords.form-control(ng-model="entry.keywords")
+
 
 h3.media-title
 	| #{__('Blog.Media.Title')} 

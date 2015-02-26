@@ -5,6 +5,9 @@ mongoose.connect(config.database);
 var User = require('../modules/users/models').User;
 var Account = require('../modules/users/models').Account;
 var sha512 = require('crypto').createHash('sha512');
+var http = require('http');
+var querystring = require('querystring');
+var cache = require('node-cache');
 
 var _Error = function( error ) {
 	console.log(error);
@@ -119,6 +122,41 @@ var WhipeData = function() {
 		});
 }
 
+var CachePiwik = function() {
+	var query = querystring.stringify({
+		module: 'API',
+		method: 'API.get',
+
+		idSite: 1,
+		period: 'range',
+		date: 'last14',
+		format: 'json',
+		token_auth: '5a78aad39d2846a3d58845c5514a375d'
+	});
+
+	http.get(
+		'http://piwik.rouvenherzog.me/?' + query,
+		function(res) {
+			console.log( 'http://piwik.rouvenherzog.me/?' + query );
+			console.log( res.statusCode );
+			res.on('data', function(data) {
+				console.log("========================================");
+				console.log(JSON.parse(data.toString()));
+				console.log("========================================");
+			});
+
+			res.on('end', function() {
+				process.exit(0);
+			});
+		}
+	)
+
+	.on('error', function(error) {
+		console.log(error);
+		process.exit(-1);
+	});
+};
+
 var command = process.argv[2];
 switch( command ) {
 	case 'createUser':
@@ -132,6 +170,12 @@ switch( command ) {
 		break;
 	case 'whipeData':
 		WhipeData();
+		break;
+	case 'createTag':
+		CreateTag();
+		break;
+	case 'cachePiwik':
+		CachePiwik();
 		break;
 	default:
 		break;

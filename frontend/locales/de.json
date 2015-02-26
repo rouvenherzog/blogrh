@@ -4,7 +4,7 @@
 		"Published": "Veröffentlicht",
 		"Draft": "Entwurf",
 		"Untitled": "Ohne Titel",
-		"SelectAPostFromList": "Wähle einen Eintrag aus der Liste",
+		"SelectAPostFromList": "Wähle einen Artikel aus der Liste",
 		"Menu": {
 			"Close": "Schließen",
 			"Save": "Speichern",
@@ -17,7 +17,16 @@
 			"Title": "Media",
 			"Upload": "Media hochladen"
 		},
-		"Title": "Titel"
+		"Title": "Titel",
+		"labels": {
+			"Summary": "Kurzfassung",
+			"Body": "Kompletter Text",
+			"EditMeta": "Metadaten bearbeiten",
+			"Keywords": "Schlagworte"
+		},
+		"shortPost": "Kurzer Artikel",
+		"longPost": "Langer Artikel",
+		"Characters": "Zeichen"
 	},
 	"Quill": {
 		"FontSize": {

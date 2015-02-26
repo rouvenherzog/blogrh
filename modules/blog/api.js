@@ -67,11 +67,17 @@ router.route('/blog/:id')
 	})
 
 	.put(function( request, response ) {
+		console.log(request.body, request.body.specifiedSummary)
 		request.entry.set({
 			title: request.body.title,
-			summery: request.body.summery,
+			summary: {
+				delta: request.body.summary.delta
+			},
 			keywords: request.body.keywords,
-			delta: request.body.delta,
+			body: {
+				delta: request.body.body.delta
+			},
+			specifiedSummary: request.body.specifiedSummary,
 			modified_by: request.user
 		});
 		request.entry.save(function(error) {
@@ -109,16 +115,18 @@ router.route('/blog/:id/publish')
 router.route('/blog/:id/media')
 	.post(function( request, response ) {
 		var file = request.files.file;
-		console.log("request", request.body);
 		Media.fromFile(file, {
 			title: request.body.title,
-			tags: request.body.tags,
+			tags: request.body.tags.split(','),
 			uploadRoot: request.app.get('uploadroot'),
 			entry: request.entry,
 			uploaded_by: request.user
 		}).then(function( media ) {
 			request.entry.media.push(media);
 			request.entry.save(function(error) {
+				if( error )
+					throw(error);
+
 				response.json(media);
 			});
 		});
