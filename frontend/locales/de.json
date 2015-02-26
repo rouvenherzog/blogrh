@@ -69,7 +69,8 @@
 		"Label": {
 			"Title": "Titel",
 			"Tag": "Markierungen",
-			"FilterByTag": "Media hat Markierung"
+			"FilterByTag": "Media hat Markierung",
+			"Description": "Beschreibung"
 		},
 		"List": {
 			"NoTag": "Keine Markierung",

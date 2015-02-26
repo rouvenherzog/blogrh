@@ -29,6 +29,7 @@ MediaModule.service('rouvenherzog.Media.MediaService', [
 				data.append('file', m.file);
 				data.append('title', m.title || '');
 				data.append('tags', m.tags);
+				data.append('description', m.description);
 
 				return data;
 			};

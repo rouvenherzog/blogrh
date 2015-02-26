@@ -13,7 +13,8 @@ MediaModule.factory('rouvenherzog.Media.MediaFactory', [
 			this.fields = {
 				path: null,
 				tags: [],
-				title: null
+				title: null,
+				description: null
 			};
 
 			// Clean Copy

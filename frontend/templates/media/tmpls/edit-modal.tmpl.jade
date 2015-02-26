@@ -20,6 +20,9 @@ div.modal
 						div.selected-media-field.selected-media-title
 							label #{__('Media.Label.Title')}
 							input(placeholder="#{__('Media.Label.Title')}", ng-model="media.title")
+						div.selected-media-field.selected-media-title
+							label #{__('Media.Label.Description')}
+							textarea(placeholder="#{__('Media.Label.Description')}", ng-model="media.description")
 						div.selected-media-field.selected-media-tags
 							label #{__('Media.Label.Tag')}
 							rouvenherzog-tag-select(model="media", field="tags")

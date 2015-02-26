@@ -119,6 +119,7 @@ router.route('/blog/:id/media')
 			title: request.body.title,
 			tags: request.body.tags && request.body.tags.split(','),
 			uploadRoot: request.app.get('uploadroot'),
+			description: request.body.description,
 			entry: request.entry,
 			uploaded_by: request.user
 		}).then(function( media ) {

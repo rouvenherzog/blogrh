@@ -19,6 +19,7 @@ var MediaSchema = new Schema({
 		default: Date.now
 	},
 	title: String,
+	description: String,
 
 	paths: {},
 
@@ -107,6 +108,7 @@ MediaSchema.statics.fromFile = function( file, args ) {
 					paths: {},
 					title: args.title || '',
 					tags: args.tags || [],
+					description: args.description || '',
 					entry: args.entry || null,
 					uploaded_by: args.uploaded_by,
 					account: args.uploaded_by.account

@@ -37,6 +37,7 @@ router.route('/media')
 			Media.fromFile(file, {
 				title: request.body.title,
 				uploadRoot: request.app.get('uploadroot'),
+				description: request.body.description,
 				tags: request.body.tags && request.body.tags.split(','),
 				uploaded_by: request.user
 			}).then(function( media ) {
@@ -52,7 +53,8 @@ router.route('/media/:id')
 	.put(function( request, response ) {
 		request.media.set({
 			title: request.body.title,
-			tags: request.body.tags
+			tags: request.body.tags,
+			description: request.body.description
 		});
 		request.media.save(function(error) {
 			if( error )
