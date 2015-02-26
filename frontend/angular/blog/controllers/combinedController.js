@@ -3,7 +3,8 @@ BlogModule.controller('rouvenherzog.Blog.combinedController', [
 	'$location',
 	'$routeParams',
 	'rouvenherzog.Blog.BlogService',
-	function( $scope, $location, $routeParams, BlogService ) {
+	'$sce',
+	function( $scope, $location, $routeParams, BlogService, $sce ) {
 		var saved_state = undefined;
 
 		$scope.selected_entry = null;
@@ -46,5 +47,29 @@ BlogModule.controller('rouvenherzog.Blog.combinedController', [
 					$location.path('/admin/blog/' + entry._id );
 				});
 		};
+
+		$scope.listSorts = {
+			available: [
+				{
+					field: 'created_at',
+					display: $sce.trustAsHtml('<i class="fa fa-clock-o"></i> '),
+					direction: true
+				},{
+					field: 'published',
+					display: $sce.trustAsHtml('Status '),
+					direction: true
+				}
+			],
+
+			activate: function( sorting ) {
+				if( sorting == $scope.listSorts.active )
+					sorting.direction = !sorting.direction;
+				else
+					$scope.listSorts.active = sorting;
+			},
+
+			active: null
+		};
+		$scope.listSorts.active = $scope.listSorts.available[0];
 	}
 ]);

@@ -20,8 +20,19 @@
 			width: 100%;
 			padding-right: 15px;
 
-			li {
-				float: right;
+			li:not(.pull-right) {
+				a {
+					color: #333;
+					opacity: .25;
+
+					&:hover:not(.active) {
+						opacity: .5;
+					}
+
+					&.active {
+						opacity: 1;
+					}
+				}
 			}
 		}
 	}

@@ -1,13 +1,22 @@
 div.col-xs-5.col-sm-4.col-md-3.entry-list-wrapper
 	div.navbar.navbar-default.navbar-fixed-top.col-xs-5.col-sm-4.col-md-3
 		ul.nav.navbar-nav
-			li
+			li(ng-repeat="sorting in listSorts.available")
+				a(href="#", ng-class="{'active': listSorts.active == sorting}", ng-click="listSorts.activate(sorting)")
+					span(ng-bind-html="sorting.display")
+					i.fa(ng-class="{'fa-chevron-down': sorting.direction, 'fa-chevron-up': !sorting.direction}")
+
+			li.pull-right.create-btn
 				button.btn.btn-primary.navbar-btn(ng-click="create()")
 					i.fa.fa-plus-circle &nbsp;
 					| #{__('Blog.Create')}
 
 	ul.list-group.entry-list
-		li.list-group-item.entry-list-item(ng-repeat="entry in entries", ng-class="{'active': entry==selected_entry}", ng-click="open(entry)")
+		li.list-group-item.entry-list-item(
+			ng-repeat="entry in entries | orderBy : listSorts.active.field : listSorts.active.direction",
+			ng-class="{'active': entry==selected_entry}",
+			ng-click="open(entry)"
+		)
 			div.info
 				span.label(ng-class="{'label-success' : entry.published, 'label-info': !entry.published}")
 					{{ entry.published ? '#{__('Blog.Published')}': '#{__('Blog.Draft')}' }}
