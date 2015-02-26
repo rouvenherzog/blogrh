@@ -26,7 +26,12 @@
 		},
 		"shortPost": "Kurzer Artikel",
 		"longPost": "Langer Artikel",
-		"Characters": "Zeichen"
+		"Characters": "Zeichen",
+		"deleteConfirmation": {
+			"title": "Artikel wirklich löschen?",
+			"okay": "Löschen",
+			"cancel": "Abbrechen"
+		}
 	},
 	"Quill": {
 		"FontSize": {
@@ -70,6 +75,11 @@
 			"NoTag": "Keine Markierung",
 			"Files": "Dateien",
 			"File": "Datei"
+		},
+		"deleteConfirmation": {
+			"title": "Datei wirklich löschen?",
+			"okay": "Löschen",
+			"cancel": "Abbrechen"
 		}
 	},
 	"Dashboard": {

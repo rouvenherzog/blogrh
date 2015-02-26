@@ -2,7 +2,8 @@ MediaModule.factory('rouvenherzog.Media.MediaFactory', [
 	'$rootScope',
 	'$http',
 	'$q',
-	function( $rootScope, $http, $q ) {
+	'rouvenherzog.Notification.NotificationService',
+	function( $rootScope, $http, $q, NotificationService ) {
 		var Media = function( args ) {
 			this.listeners = {
 				'change': []
@@ -50,6 +51,7 @@ MediaModule.factory('rouvenherzog.Media.MediaFactory', [
 				)
 				.success(function( data ) {
 					self.set(data);
+					NotificationService.success('Media updated.', 2000);
 					a.resolve();
 				});
 
@@ -62,6 +64,7 @@ MediaModule.factory('rouvenherzog.Media.MediaFactory', [
 			$http
 				.delete('/admin/api/media/' + this._id )
 				.success(function() {
+					NotificationService.success('Media deleted.', 2000);
 					a.resolve();
 				});
 

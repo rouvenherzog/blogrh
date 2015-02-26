@@ -5,7 +5,8 @@ MediaModule.controller('rouvenherzog.Media.rowController', [
 	'$filter',
 	'$rootScope',
 	'rouvenherzog.Tag.TagService',
-	function( $scope, $element, $compile, $filter, $rootScope, TagService ) {
+	'rouvenherzog.Notification.ConfirmationService',
+	function( $scope, $element, $compile, $filter, $rootScope, TagService, ConfirmationService ) {
 		$scope.filtered = ($scope.tag === undefined) ?
 			$scope.media :
 			$filter('mediaHasTag')($scope.media, $scope.tag);
@@ -31,14 +32,25 @@ MediaModule.controller('rouvenherzog.Media.rowController', [
 			angular.element(document.body).append(template);
 		};
 
-		$scope.delete = function( media ) {
-			media
-				.delete()
-				.then(function() {
-					var index = $scope.media.indexOf( media );
-					if( index != -1 )
-						$scope.media.splice(index, 1);
-				});
+		$scope.delete = function($event, media, title, confirmText, cancelText) {
+			$event.stopPropagation();
+
+			ConfirmationService.confirm(
+				angular.element($event.target).parents('.thumbnail').first(), {
+					placement: 'bottom',
+					title: title,
+					confirmText: confirmText,
+					cancelText: cancelText
+				}
+			).then(function() {
+				media
+					.delete()
+					.then(function() {
+						var index = $scope.media.indexOf( media );
+						if( index != -1 )
+							$scope.media.splice(index, 1);
+					});
+			});
 		};
 
 		$scope.getName = function( tagid ) {

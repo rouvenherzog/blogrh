@@ -117,7 +117,7 @@ router.route('/blog/:id/media')
 		var file = request.files.file;
 		Media.fromFile(file, {
 			title: request.body.title,
-			tags: request.body.tags.split(','),
+			tags: request.body.tags && request.body.tags.split(','),
 			uploadRoot: request.app.get('uploadroot'),
 			entry: request.entry,
 			uploaded_by: request.user

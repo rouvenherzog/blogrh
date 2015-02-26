@@ -37,7 +37,7 @@ router.route('/media')
 			Media.fromFile(file, {
 				title: request.body.title,
 				uploadRoot: request.app.get('uploadroot'),
-				tags: request.body.tags,
+				tags: request.body.tags && request.body.tags.split(','),
 				uploaded_by: request.user
 			}).then(function( media ) {
 				response.json(media);

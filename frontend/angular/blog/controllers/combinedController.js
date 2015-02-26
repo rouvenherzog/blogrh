@@ -2,9 +2,10 @@ BlogModule.controller('rouvenherzog.Blog.combinedController', [
 	'$scope',
 	'$location',
 	'$routeParams',
-	'rouvenherzog.Blog.BlogService',
 	'$sce',
-	function( $scope, $location, $routeParams, BlogService, $sce ) {
+	'rouvenherzog.Blog.BlogService',
+	'rouvenherzog.Notification.ConfirmationService',
+	function( $scope, $location, $routeParams, $sce, BlogService, ConfirmationService ) {
 		var saved_state = undefined;
 
 		$scope.selected_entry = null;
@@ -32,12 +33,23 @@ BlogModule.controller('rouvenherzog.Blog.combinedController', [
 			$scope.selected_entry.publish();
 		};
 
-		$scope.delete = function() {
-			BlogService
-				.deleteEntry($scope.selected_entry)
-				.then(function() {
-					$scope.open(null);
-				});
+		$scope.delete = function($event, title, confirmText, cancelText) {
+			$event.stopPropagation();
+
+			ConfirmationService.confirm(
+				$event.target, {
+					placement: 'bottom',
+					title: title,
+					confirmText: confirmText,
+					cancelText: cancelText
+				}
+			).then(function() {
+				BlogService
+					.deleteEntry($scope.selected_entry)
+					.then(function() {
+						$scope.open(null);
+					});
+			});
 		};
 
 		$scope.create = function() {

@@ -81,6 +81,7 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 			$http
 				.delete('/admin/api/blog/' + this._id)
 				.success(function() {
+					NotificationService.success('Entry deleted.', 2000);
 					a.resolve();
 				});
 
@@ -119,6 +120,7 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 						published: data.published
 					});
 
+					NotificationService.success('Entry '+ (self.published ? 'published' : 'unpublished') +'.', 2000);
 					a.resolve();
 				});
 

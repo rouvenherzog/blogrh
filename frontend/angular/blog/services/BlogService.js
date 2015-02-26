@@ -2,7 +2,8 @@ BlogModule.service('rouvenherzog.Blog.BlogService', [
 	'$q',
 	'$http',
 	'rouvenherzog.Blog.BlogFactory',
-	function( $q, $http, BlogFactory ) {
+	'rouvenherzog.Notification.NotificationService',
+	function( $q, $http, BlogFactory, NotificationService ) {
 		var initial_queried = false;
 		var current_page = 0;
 		var entries = [];
@@ -75,6 +76,7 @@ BlogModule.service('rouvenherzog.Blog.BlogService', [
 				.post('/admin/api/blog/')
 				.success(function( data ) {
 					var entry = add( data );
+					NotificationService.success('Entry created.', 2000);
 					a.resolve( entry );
 				});
 			return a.promise;

@@ -41,7 +41,7 @@ div.ql-wrapper
 
 		div.ql-format-group.pull-right
 			div(ng-if="articleLength")
-				b {{ getAmountCharacters() < articleLength ? '#{__('Blog.shortPost')}' : '#{__('Blog.longPost')}'  }} 
+				b.hidden-sm {{ getAmountCharacters() < articleLength ? '#{__('Blog.shortPost')}' : '#{__('Blog.longPost')}'  }} 
 				small(ng-if="getAmountCharacters() < articleLength") ({{ getAmountCharacters() }}/{{ articleLength }} #{__('Blog.Characters')})
 				small(ng-if="getAmountCharacters() >= articleLength") ({{ getAmountCharacters() }} #{__('Blog.Characters')})
 			div(ng-if="!articleLength")
