@@ -43,10 +43,10 @@ div.modal
 						type="text",
 						ng-model="user.locale",
 						ng-change="validate('locale')",
-						ng-options="locale.short as locale.title for locale in locales"
+						ng-options="short as long for (short, long) in locales"
 					)
-					div(ng-if="errors['username']")
-						{{ errors['username'] }}
+					div(ng-if="errors['locale']")
+						{{ errors['locale'] }}
 				div.form-group
 					label #{__('User.EditModal.Label.OldPassword')}
 					input.form-control(
@@ -56,7 +56,7 @@ div.modal
 					)
 				div(ng-if="errors['old_password']")
 					{{ errors['old_password'] }}
-				
+
 				h4 #{__('User.EditModal.ChangePassword')} 
 					input(type="checkbox", ng-model="user.change_password")
 				div.row(ng-if="user.change_password")
@@ -76,7 +76,7 @@ div.modal
 						)
 					div.col-xs-12(ng-if="errors['new_password']")
 						{{ errors['new_password'] }}
-			
+
 			div.modal-footer
 				button.btn.btn-default(ng-click="close()")
 					i.fa.fa-times &nbsp;

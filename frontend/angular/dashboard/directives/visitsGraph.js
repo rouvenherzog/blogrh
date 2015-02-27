@@ -1,0 +1,5 @@
+DashboardModule.directive('rouvenherzogDashboardVisistsGraph', [
+	function() {
+		
+	}
+]);

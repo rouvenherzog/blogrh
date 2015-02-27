@@ -5,14 +5,18 @@ UserModule.service('rouvenherzog.User.UserService', [
 		var defaults = {
 			'email': '',
 			'name': '',
-			'username': ''
+			'username': '',
+			'locale': ''
 		};
 		var user = {};
 		var clean = {};
+		var locale = null;
 
 		$http
 			.get('/admin/api/users')
 			.success(function( data ) {
+				locale = data.locale;
+
 				copy(user, data);
 				copy(clean, data);
 			});
@@ -20,6 +24,10 @@ UserModule.service('rouvenherzog.User.UserService', [
 		var copy = function( to, from ) {
 			for( var key in defaults )
 				to[key] = from[key] || to[key] || defaults[key];
+		};
+
+		this.getLocale = function() {
+			return locale;
 		};
 
 		this.getClean = function() {
@@ -71,7 +79,7 @@ UserModule.service('rouvenherzog.User.UserService', [
 						copy(user,data);
 						copy(clean, user);
 
-						a.resolve();
+						a.resolve( data );
 					})
 					.error(function(data) {
 						a.reject(data);

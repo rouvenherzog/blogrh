@@ -10,8 +10,6 @@ router.route('/users')
 		var data = request.body;
 		var user = request.user;
 
-		console.log(data);
-
 		var raise_error = function( error ) {
 			response.status(400).json(error);
 		};

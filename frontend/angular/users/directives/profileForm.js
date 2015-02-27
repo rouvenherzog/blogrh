@@ -1,6 +1,7 @@
 UserModule.directive('rouvenherzogProfileForm', [
+	'$window',
 	'rouvenherzog.User.UserService',
-	function( UserService ) {
+	function( $window, UserService ) {
 		return {
 			restrict: 'E',
 			scope: {},
@@ -8,10 +9,10 @@ UserModule.directive('rouvenherzogProfileForm', [
 			link: function( $scope, $element ) {
 				$scope.errors = {};
 				$scope.user = UserService.get();
-				$scope.locales = [
-					{short:'en', title:'English'},
-					{short: 'de', title:'German'}
-				];
+				$scope.locales = {
+					'en': 'English',
+					'de': 'German'
+				};
 
 				$scope.close = function() {
 					UserService.clear();
@@ -22,9 +23,12 @@ UserModule.directive('rouvenherzogProfileForm', [
 					if( $scope.errors.failed )
 						return;
 
+					var locale = UserService.getLocale();
 					UserService
 						.save()
 						.then(function(data) {
+							if( data.locale != locale )
+								$window.location.reload();
 							$scope.close();
 						}, function( errors ) {
 							$scope.errors = errors;

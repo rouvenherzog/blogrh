@@ -17,7 +17,21 @@
 			"Title": "Media",
 			"Upload": "Upload Media"
 		},
-		"Title": "Blog Title"
+		"Title": "Blog Title",
+		"deleteConfirmation": {
+			"title": "Blog.deleteConfirmation.title",
+			"okay": "Blog.deleteConfirmation.okay",
+			"cancel": "Blog.deleteConfirmation.cancel"
+		},
+		"labels": {
+			"Body": "Blog.labels.Body",
+			"Summary": "Blog.labels.Summary",
+			"EditMeta": "Blog.labels.EditMeta",
+			"Keywords": "Blog.labels.Keywords"
+		},
+		"shortPost": "Blog.shortPost",
+		"longPost": "Blog.longPost",
+		"Characters": "Blog.Characters"
 	},
 	"Quill": {
 		"FontSize": {
@@ -48,7 +62,8 @@
 		"Label": {
 			"Title": "Title",
 			"Tag": "Tags",
-			"FilterByTag": "Filter By Tag"
+			"FilterByTag": "Filter By Tag",
+			"Description": "Media.Label.Description"
 		},
 		"EditModal": {
 			"Title": "Edit Media",
@@ -61,6 +76,11 @@
 			"NoTag": "No Tag",
 			"Files": "Files",
 			"File": "File"
+		},
+		"deleteConfirmation": {
+			"title": "Media.deleteConfirmation.title",
+			"okay": "Media.deleteConfirmation.okay",
+			"cancel": "Media.deleteConfirmation.cancel"
 		}
 	},
 	"Login": {
