@@ -1,0 +1,24 @@
+extends ../../layout.jade
+
+block body
+	div.container-fluid.dashboard-wrapper
+		div.jumbotron
+			h1 #{__('Dashboard.Welcome')}, #{user.name}!
+			p.lead &nbsp; #{__('Dashboard.WhatDoYouWantToDo')}
+
+			a.btn.btn-primary.btn-lg(href="/admin/blog/") #{__('Dashboard.DoPost')}
+			| 
+			a.btn.btn-primary.btn-lg(href="/admin/media/") #{__('Dashboard.DoMedia')}
+
+		div.statistics
+			h1 Website Statistics
+			div.row
+				div.col-md-4.col-sm-6.col-xs-12
+					h3 Visits
+					rouvenherzog-dashboard-line-graph(collection="visits")
+				div.col-md-4.col-sm-6.col-xs-12
+					h3 Page Views
+					rouvenherzog-dashboard-line-graph(collection="pageviews")
+				div.col-md-4.col-sm-6.col-xs-6
+					h3 Devices
+					rouvenherzog-dashboard-pie-graph(collection="devices")

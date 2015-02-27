@@ -1,6 +1,7 @@
 var App = angular.module(
 	'rouvenherzog',
 	[
+		'rouvenherzog.Dashboard',
 		'rouvenherzog.Blog',
 		'rouvenherzog.Notification',
 		'rouvenherzog.Media',

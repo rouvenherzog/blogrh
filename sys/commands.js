@@ -8,7 +8,6 @@ var Tag = require('../modules/tags/models').Tag;
 var sha512 = require('crypto').createHash('sha512');
 var http = require('http');
 var querystring = require('querystring');
-var cache = require('node-cache');
 
 var _Error = function( error ) {
 	console.log(error);
@@ -135,13 +134,18 @@ var CreateTag = function() {
 	});
 };
 
+var InitPiwik = function() {
+
+};
+
 var CachePiwik = function() {
+	var cache = config.cache;
 	var query = querystring.stringify({
 		module: 'API',
-		method: 'API.get',
+		method: 'VisitsSummary.get',
 
 		idSite: 1,
-		period: 'range',
+		period: 'day',
 		date: 'last14',
 		format: 'json',
 		token_auth: '5a78aad39d2846a3d58845c5514a375d'
@@ -153,9 +157,10 @@ var CachePiwik = function() {
 			console.log( 'http://piwik.rouvenherzog.me/?' + query );
 			console.log( res.statusCode );
 			res.on('data', function(data) {
-				console.log("========================================");
-				console.log(JSON.parse(data.toString()));
-				console.log("========================================");
+				cache.set( "DASHBOARD-CACHE", data.toString() );
+				console.log("================================");
+				console.log( data.toString() );
+				console.log("================================");
 			});
 
 			res.on('end', function() {

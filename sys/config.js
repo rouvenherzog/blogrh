@@ -8,8 +8,13 @@ var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 
+// Create Cache
+var redis = require('redis');
+var cache = redis.createClient('6379', 'localhost');
+
 module.exports = {
 	database: 'mongodb://localhost/abc',
+	cache: cache,
 	init: function( app, config ) {
 		config = config || {};
 
