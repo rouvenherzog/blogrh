@@ -32,15 +32,15 @@ MediaModule.controller('rouvenherzog.Media.rowController', [
 			angular.element(document.body).append(template);
 		};
 
-		$scope.delete = function($event, media, title, confirmText, cancelText) {
+		$scope.delete = function($event, media) {
 			$event.stopPropagation();
 
 			ConfirmationService.confirm(
 				angular.element($event.target).parents('.thumbnail').first(), {
 					placement: 'bottom',
-					title: title,
-					confirmText: confirmText,
-					cancelText: cancelText
+					title: 'Media.deleteConfirmation.title',
+					confirmText: 'Media.deleteConfirmation.okay',
+					cancelText: 'Media.deleteConfirmation.cancel'
 				}
 			).then(function() {
 				media

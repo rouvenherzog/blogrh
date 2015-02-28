@@ -27,10 +27,22 @@
 		"shortPost": "Kurzer Artikel",
 		"longPost": "Langer Artikel",
 		"Characters": "Zeichen",
+		"RecoverPopup": {
+			"Title": "Eine ungespeicherte Version wurde gefunden.",
+			"Recover": "Wiederherstellen",
+			"Discard": "Verwerfen"
+		},
 		"deleteConfirmation": {
 			"title": "Artikel wirklich löschen?",
 			"okay": "Löschen",
 			"cancel": "Abbrechen"
+		},
+		"Notifications": {
+			"published": "Artikel veröffentlicht.",
+			"unpublished": "Artikel widerrufen.",
+			"saved": "Artikel gespeichert.",
+			"deleted": "Artikel gelöscht.",
+			"created": "Artikel erstellt."
 		}
 	},
 	"Quill": {
@@ -81,6 +93,10 @@
 			"title": "Datei wirklich löschen?",
 			"okay": "Löschen",
 			"cancel": "Abbrechen"
+		},
+		"Notifications": {
+			"saved": "Änderungen gespeichert.",
+			"deleted": "Datei entfernt."
 		}
 	},
 	"Dashboard": {
@@ -129,6 +145,18 @@
 				"Close": "Schließen",
 				"Save": "Speichern"
 			}
+		},
+		"Errors": {
+			"SpecifyEmail": "Bitte gib eine Email Adresse an.",
+			"SpecifyName": "Bitte gib einen Namen an.",
+			"SpecifyUsername": "Bitte gib einen Usernamen an.",
+			"SpecifyOldPassword": "Bitte gib dein Passwort ein.",
+			"SpecifyNewPassword": "Bitte gib ein neues Passwort ein.",
+			"PasswordsHaveToMatch": "Die Passwörter müssen übereinstimmen."
+		},
+		"locales": {
+			"en": "Englisch",
+			"de": "Deutsch"
 		}
 	}
 }

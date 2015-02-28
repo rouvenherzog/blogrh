@@ -10,7 +10,7 @@ div.media-row-wrapper( ng-if="filtered.length > 0" )
 							button.btn.btn-default.btn-sm(ng-click="edit(m)")
 								i.fa.fa-pencil
 							button.btn.btn-danger.btn-sm(
-								ng-click="delete($event, m, '#{__('Media.deleteConfirmation.title')}', '#{__('Media.deleteConfirmation.okay')}', '#{__('Media.deleteConfirmation.cancel')}' )"
+								ng-click="delete($event, m )"
 							)
 								i.fa.fa-trash
 				div.caption

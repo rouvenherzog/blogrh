@@ -52,7 +52,7 @@ MediaModule.factory('rouvenherzog.Media.MediaFactory', [
 				)
 				.success(function( data ) {
 					self.set(data);
-					NotificationService.success('Media updated.', 2000);
+					NotificationService.success('Media.Notifications.saved', 2000);
 					a.resolve();
 				});
 
@@ -65,7 +65,7 @@ MediaModule.factory('rouvenherzog.Media.MediaFactory', [
 			$http
 				.delete('/admin/api/media/' + this._id )
 				.success(function() {
-					NotificationService.success('Media deleted.', 2000);
+					NotificationService.success('Media.Notifications.deleted', 2000);
 					a.resolve();
 				});
 

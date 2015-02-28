@@ -33,15 +33,14 @@ BlogModule.controller('rouvenherzog.Blog.combinedController', [
 			$scope.selected_entry.publish();
 		};
 
-		$scope.delete = function($event, title, confirmText, cancelText) {
+		$scope.delete = function($event) {
 			$event.stopPropagation();
-
 			ConfirmationService.confirm(
 				$event.target, {
 					placement: 'bottom',
-					title: title,
-					confirmText: confirmText,
-					cancelText: cancelText
+					title: 'Blog.deleteConfirmation.title',
+					confirmText: 'Blog.deleteConfirmation.okay',
+					cancelText: 'Blog.deleteConfirmation.cancel'
 				}
 			).then(function() {
 				BlogService

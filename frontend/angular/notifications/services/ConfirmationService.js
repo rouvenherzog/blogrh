@@ -2,7 +2,8 @@ NotificationModule.service('rouvenherzog.Notification.ConfirmationService', [
 	'$q',
 	'$compile',
 	'$rootScope',
-	function( $q, $compile, $rootScope ) {
+	'$translate',
+	function( $q, $compile, $rootScope, $translate ) {
 		var a = null;
 		var element = null;
 		var explicit = false;
@@ -47,15 +48,21 @@ NotificationModule.service('rouvenherzog.Notification.ConfirmationService', [
 
 			a = $q.defer();
 
-			var scope = $rootScope.$new();
-			scope.confirmText = options.confirmText;
-			scope.cancelText = options.cancelText;
-			scope.title = options.title;
-			scope.element = angular.element(el);
-			scope.placement = options.placement;
+			$translate([
+				options.confirmText,
+				options.cancelText,
+				options.title
+			]).then(function( translations ) {
+				var scope = $rootScope.$new();
+				scope.confirmText = translations[options.confirmText];
+				scope.cancelText = translations[options.cancelText];
+				scope.title = translations[options.title];
+				scope.element = angular.element(el);
+				scope.placement = options.placement;
 
-			template = $compile('<rouvenherzog-confirmation-popup placement="placement" title="title" confirm-text="confirmText" cancel-text="cancelText" element="element" />')(scope);
-			element = angular.element(el);
+				template = $compile('<rouvenherzog-confirmation-popup placement="placement" title="title" confirm-text="confirmText" cancel-text="cancelText" element="element" />')(scope);
+				element = angular.element(el);
+			});
 
 			return a.promise;
 		};

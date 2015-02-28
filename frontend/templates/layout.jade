@@ -1,7 +1,7 @@
 doctype html
 html
 	head
-		base(href="/admin")
+		base(href="/admin", language="#{ user.locale }")
 		link(rel="stylesheet", href="/static/admin/bower_components/bootstrap/dist/css/bootstrap.css")
 		link(rel="stylesheet", href="/static/admin/bower_components/quill/dist/quill.snow.css")
 		link(rel="stylesheet", href="/static/admin/bower_components/font-awesome/css/font-awesome.css")
@@ -39,6 +39,8 @@ html
 		script(type="text/javascript", src="/static/admin/bower_components/bootstrap/dist/js/bootstrap.js")
 		script(type="text/javascript", src="/static/admin/bower_components/Chart.js/Chart.js")
 		script(type="text/javascript", src="/static/admin/bower_components/angular/angular.js")
+		script(type="text/javascript", src="/static/admin/bower_components/angular-translate/angular-translate.js")
+		script(type="text/javascript", src="/static/admin/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js")
 		script(type="text/javascript", src="/static/admin/bower_components/angular-sanitize/angular-sanitize.js")
 		script(type="text/javascript", src="/static/admin/bower_components/angular-route/angular-route.js")
 		script(type="text/javascript", src="/static/admin/bower_components/angular-ui-select/dist/select.js")

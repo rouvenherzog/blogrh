@@ -76,7 +76,7 @@ BlogModule.service('rouvenherzog.Blog.BlogService', [
 				.post('/admin/api/blog/')
 				.success(function( data ) {
 					var entry = add( data );
-					NotificationService.success('Entry created.', 2000);
+					NotificationService.success('Blog.Notifications.created', 2000);
 					a.resolve( entry );
 				});
 			return a.promise;

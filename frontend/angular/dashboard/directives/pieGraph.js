@@ -27,7 +27,8 @@ DashboardModule.directive('rouvenherzogDashboardPieGraph', [
 								'</li>'+
 							'<%}%>'+
 						'</ul>'
-					)
+					),
+					animationSteps: 60
 				};
 
 				var colors = [

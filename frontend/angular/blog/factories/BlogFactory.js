@@ -4,8 +4,7 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 	'$sce',
 	'rouvenherzog.Media.MediaFactory',
 	'rouvenherzog.Notification.NotificationService',
-	'rouvenherzog.Notification.ConfirmationService',
-	function( $q, $http, $sce, MediaFactory, NotificationService, ConfirmationService ) {
+	function( $q, $http, $sce, MediaFactory, NotificationService ) {
 		var Entry = function( args ) {
 			this.saved = true;
 
@@ -75,28 +74,8 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 		};
 
 		Entry.prototype.recover = function( el ) {
-			var a = $q.defer();
-
-			if( this.temp ) {
-				var self = this;
-				ConfirmationService.confirm(el, {
-					title: 'An unsaved version has been found.',
-					confirmText: 'Recover',
-					cancelText: 'Discard',
-					placement: 'auto',
-					explicitClose: true,
-					overlay: true
-				}).then(function() {
-					self.set(self.temp);
-					self.saved = true;
-					a.resolve();
-				}, function(){
-					self.save(true);
-					a.reject();
-				});
-			}
-
-			return a.promise;
+			this.set(this.temp);
+			this.saved = true;
 		};
 
 		Entry.prototype.getCount = function( stopAt ) {
@@ -132,7 +111,7 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 				.success(function(data) {
 					self.set(data, true);
 					if( !dont_notify )
-						NotificationService.success('Saved Entry.', 2000);
+						NotificationService.success('Blog.Notifications.saved', 2000);
 					a.resolve();
 				});
 
@@ -145,7 +124,7 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 			$http
 				.delete('/admin/api/blog/' + this._id)
 				.success(function() {
-					NotificationService.success('Entry deleted.', 2000);
+					NotificationService.success('Blog.Notifications.deleted', 2000);
 					a.resolve();
 				});
 
@@ -192,7 +171,11 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 						published: data.published
 					});
 
-					NotificationService.success('Entry '+ (self.published ? 'published' : 'unpublished') +'.', 2000);
+					var message = self.published ?
+						'Blog.Notifications.published' :
+						'Blog.Notifications.unpublished';
+					NotificationService.success( message, 2000 );
+
 					a.resolve();
 				});
 

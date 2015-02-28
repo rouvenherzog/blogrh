@@ -31,7 +31,19 @@
 		},
 		"shortPost": "Short Post",
 		"longPost": "Long Post",
-		"Characters": "Characters"
+		"Characters": "Characters",
+		"RecoverPopup": {
+			"Title": "An unsaved version has been found.",
+			"Recover": "Recover",
+			"Discard": "Discard"
+		},
+		"Notifications": {
+			"published": "Entry published.",
+			"unpublished": "Entry unpublished.",
+			"saved": "Entry saved.",
+			"deleted": "Entry deleted.",
+			"created": "Entry created."
+		}
 	},
 	"Quill": {
 		"FontSize": {
@@ -117,6 +129,18 @@
 				"Close": "Close",
 				"Save": "Save"
 			}
+		},
+		"Errors": {
+			"SpecifyEmail": "Please specify an email address.",
+			"SpecifyName": "Please specify a name.",
+			"SpecifyUsername": "Please specify a username.",
+			"SpecifyOldPassword": "Please insert your old password.",
+			"SpecifyNewPassword": "Please specify a new password.",
+			"PasswordsHaveToMatch": "The passwords have to match."
+		},
+		"locales": {
+			"en": "English",
+			"de": "German"
 		}
 	},
 	"Dashboard": {

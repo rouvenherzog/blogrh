@@ -1,7 +1,8 @@
 BlogModule.directive('rouvenherzogBlogEditEntryForm', [
 	'$compile',
 	'$interval',
-	function( $compile, $interval ) {
+	'rouvenherzog.Notification.ConfirmationService',
+	function( $compile, $interval, ConfirmationService ) {
 		return {
 			restrict: 'E',
 			scope: {
@@ -25,7 +26,16 @@ BlogModule.directive('rouvenherzogBlogEditEntryForm', [
 					$scope.entry.modified();
 				};
 
-				$scope.entry.recover($element.find('.title'));
+				if( $scope.entry.temp ) {
+					ConfirmationService.confirm($element.find('.title'), {
+						title: 'Blog.RecoverPopup.Title',
+						confirmText: 'Blog.RecoverPopup.Recover',
+						cancelText: 'Blog.RecoverPopup.Discard',
+						explicitClose: true
+					}).then(function() {
+						$scope.entry.recover();
+					});
+				}
 
 				$interval(function() {
 					$scope.entry.autoSave();

@@ -1,7 +1,8 @@
 UserModule.service('rouvenherzog.User.UserService', [
 	'$q',
 	'$http',
-	function( $q, $http ) {
+	'$translate',
+	function( $q, $http, $translate ) {
 		var defaults = {
 			'email': '',
 			'name': '',
@@ -50,17 +51,19 @@ UserModule.service('rouvenherzog.User.UserService', [
 				if( field && key != field ) return;
 
 				errors['failed'] = true;
-				errors[key] = message;
+				$translate(message).then(function(translation) {
+					errors[key] = translation;
+				});
 			};
 
-			if( !user.email ) set_error('email', 'Please specify an email address');
-			if( !user.name ) set_error('name', 'Please specify a name');
-			if( !user.username ) set_error('username', 'Please specify a username');
-			if( !user.old_password ) set_error('old_password', 'Please insert your old password');
+			if( !user.email ) set_error('email', 'User.Errors.SpecifyEmail');
+			if( !user.name ) set_error('name', 'User.Errors.SpecifyName');
+			if( !user.username ) set_error('username', 'User.Errors.SpecifyUsername');
+			if( !user.old_password ) set_error('old_password', 'User.Errors.SpecifyOldPassword');
 
 			if( user.change_password ) {
-				if( !user.new_password ) set_error('new_password', 'Please specify a new password');
-				if( user.new_password != user.repeat_password ) set_error('new_password', 'The passwords have to match');
+				if( !user.new_password ) set_error('new_password', 'User.Errors.SpecifyNewPassword');
+				if( user.new_password != user.repeat_password ) set_error('new_password', 'User.Errors.PasswordsHaveToMatch');
 			};
 
 			return errors;

@@ -31,6 +31,15 @@ module.exports = function(grunt) {
 			}
 		},
 
+		copy: {
+			i18n: {
+				cwd: 'frontend/locales/',
+				expand: true,
+				src: '*.json',
+				dest: 'frontend/static/locales/'
+			}
+		},
+
 		watch: {
 			development: {
 				files: ['frontend/angular/**/*.js', 'frontend/styles/**/*.less'],
@@ -41,6 +50,7 @@ module.exports = function(grunt) {
 
 	// Loading Grunt Tasks
 	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-less');
 };

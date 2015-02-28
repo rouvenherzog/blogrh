@@ -1,20 +1,27 @@
 NotificationModule.service('rouvenherzog.Notification.NotificationService', [
 	'rouvenherzog.Notification.NotificationFactory',
 	'$timeout',
-	function( NotificationFactory, $timeout ) {
+	'$q',
+	'$translate',
+	function( NotificationFactory, $timeout, $q, $translate ) {
 		var notifications = [];
 		var self = this;
 
 		var create_notification = function( type, text, timeout ) {
-			var notification = NotificationFactory[type](text);
-			notifications.push(notification);
+			var a = $q.defer();
+			$translate(text).then(function(translation) {
+				var notification = NotificationFactory[type](translation);
+				notifications.push(notification);
 
-			if( timeout )
-				$timeout(function() {
-					self.closeNotification( notification );
-				}, timeout);
+				if( timeout )
+					$timeout(function() {
+						self.closeNotification( notification );
+					}, timeout);
 
-			return notification;
+				a.resolve(notification);
+			});
+
+			return a.promise;
 		};
 
 		this.getNotifications = function() {
