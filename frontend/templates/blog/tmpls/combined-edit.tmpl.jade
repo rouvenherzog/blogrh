@@ -53,6 +53,12 @@ div.col-xs-7.col-sm-8.col-md-9.entry-detail-wrapper
 						)
 							i.fa.fa-trash &nbsp;
 							| #{__('Blog.Menu.Delete')}
+					li &nbsp;
+				
+				ul.nav.navbar-nav.navbar-right
+					li(ng-if="selected_entry.dirty")
+						p.navbar-text
+							{{ !selected_entry.saved ? ( selected_entry.saving ? 'Saving ...' : 'Not Cached') : 'Cached' }}
 
 		rouvenherzog-blog-edit-entry-form(entry="selected_entry")
 

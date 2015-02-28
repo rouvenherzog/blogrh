@@ -67,7 +67,6 @@ router.route('/blog/:id')
 	})
 
 	.put(function( request, response ) {
-		console.log(request.body, request.body.specifiedSummary)
 		request.entry.set({
 			title: request.body.title,
 			summary: {
@@ -80,6 +79,7 @@ router.route('/blog/:id')
 			specifiedSummary: request.body.specifiedSummary,
 			modified_by: request.user
 		});
+		request.entry.temp = null;
 		request.entry.save(function(error) {
 			if( error )
 				console.log(error);
@@ -102,6 +102,28 @@ router.route('/blog/:id/publish')
 		request.entry.set({
 			published: !request.entry.published,
 			published_at: new Date(),
+			modified_by: request.user
+		});
+		request.entry.save(function(error) {
+			if( error )
+				console.log(error);
+
+			response.json(request.entry);
+		});
+	});
+
+router.route('/blog/:id/autosave')
+	.put(function( request, response ) {
+		request.entry.autosave({
+			title: request.body.title,
+			summary: {
+				delta: request.body.summary.delta
+			},
+			keywords: request.body.keywords,
+			body: {
+				delta: request.body.body.delta
+			},
+			specifiedSummary: request.body.specifiedSummary,
 			modified_by: request.user
 		});
 		request.entry.save(function(error) {

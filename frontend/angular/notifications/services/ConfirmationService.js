@@ -5,8 +5,12 @@ NotificationModule.service('rouvenherzog.Notification.ConfirmationService', [
 	function( $q, $compile, $rootScope ) {
 		var a = null;
 		var element = null;
+		var explicit = false;
 
-		var clear = function( resolve ) {
+		var clear = function( resolve, implicit ) {
+			if( explicit && implicit )
+				return;
+
 			if( a != null )
 				if( resolve )
 					a.resolve();
@@ -23,7 +27,7 @@ NotificationModule.service('rouvenherzog.Notification.ConfirmationService', [
 		document.getElementsByTagName('body').item(0).addEventListener(
 			'click',
 			function(){
-				self.no();
+				self.no( true );
 			}
 		);
 
@@ -31,11 +35,14 @@ NotificationModule.service('rouvenherzog.Notification.ConfirmationService', [
 			clear(true);
 		};
 
-		this.no = function() {
-			clear(false);
+		this.no = function( implicit ) {
+			clear(false, implicit );
 		};
 
 		this.confirm = function(el, options) {
+			if( options.explicitClose )
+				explicit = true;
+
 			clear();
 
 			a = $q.defer();
@@ -45,8 +52,9 @@ NotificationModule.service('rouvenherzog.Notification.ConfirmationService', [
 			scope.cancelText = options.cancelText;
 			scope.title = options.title;
 			scope.element = angular.element(el);
+			scope.placement = options.placement;
 
-			template = $compile('<rouvenherzog-confirmation-popup title="title" confirm-text="confirmText" cancel-text="cancelText" element="element" />')(scope);
+			template = $compile('<rouvenherzog-confirmation-popup placement="placement" title="title" confirm-text="confirmText" cancel-text="cancelText" element="element" />')(scope);
 			element = angular.element(el);
 
 			return a.promise;

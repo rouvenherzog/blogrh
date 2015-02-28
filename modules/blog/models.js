@@ -30,7 +30,7 @@ var EntrySchema = new Schema({
 	},
 
 	title: String,
-	keywords: [String],
+	keywords: String,
 	isLongArticle: Boolean,
 	summary: {
 		delta: [],
@@ -44,10 +44,21 @@ var EntrySchema = new Schema({
 	media: [{
 		type: Schema.Types.ObjectId,
 		ref: 'Media'
-	}]
+	}],
+
+	temp: {}
 });
 
+EntrySchema.methods.autosave = function( status ) {
+	this.temp = status;
+	this.markModified('temp');
+	this.skipRender = true;
+};
+
 EntrySchema.pre('save', function(next) {
+	if( this.skipRender )
+		return next();
+
 	if( this.body.delta ) {
 		this.markModified('body');
 		this.body.rendered = helpers.render_delta(this.body.delta);

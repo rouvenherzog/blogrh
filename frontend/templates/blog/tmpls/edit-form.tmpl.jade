@@ -1,5 +1,5 @@
 div.form-group
-	input.title(ng-model="entry.title", placeholder="#{__('Blog.Title')}")
+	input.title(ng-model="entry.title", placeholder="#{__('Blog.Title')}", ng-change="modified()")
 
 div
 	ul.nav.nav-tabs
@@ -14,13 +14,13 @@ div
 
 	div.tab-content
 		div.tab-pane.active#body
-			rouvenherzog-blog-quill.body(ng-model="entry", field="body.delta", article-length="700")
+			rouvenherzog-blog-quill.body(ng-model="entry", notify="modified", field="body.delta", watch="entry.copy.body", article-length="700")
 		div.tab-pane#summary
-			rouvenherzog-blog-quill.summary(ng-model="entry", field="summary.delta", watch="entry.clean.summary")
+			rouvenherzog-blog-quill.summary(ng-model="entry", notify="modified", field="summary.delta", watch="entry.copy.summary")
 		div.tab-pane#meta
 			div.form-group
 				label #{__('Blog.labels.Keywords')}
-				input.keywords.form-control(ng-model="entry.keywords")
+				input.keywords.form-control(ng-model="entry.keywords", ng-change="modified()")
 
 
 h3.media-title

@@ -7,7 +7,8 @@ BlogModule.directive('rouvenherzogBlogQuill', [
 				model: "=ngModel",
 				field: "@",
 				articleLength: "@",
-				watch: "="
+				watch: "=",
+				notify: "="
 			},
 			templateUrl: '/angular/blog/tmpls/quill.tmpl',
 			link: function( $scope, element, attrs ) {
@@ -51,6 +52,8 @@ BlogModule.directive('rouvenherzogBlogQuill', [
 							}
 
 							model[field] = ops;
+							if( $scope.notify )
+								$scope.notify(ops);
 							if( !$rootScope.$$phase )
 								$scope.$apply();
 						});

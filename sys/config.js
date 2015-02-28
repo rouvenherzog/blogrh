@@ -31,9 +31,9 @@ module.exports = {
 		app.use( '/static/admin', express.static(frontend_dir + 'static') );
 
 		// Add Content Parser
-		app.use(cookieParser("asd"));
+		app.use(cookieParser(app.get('secrets').cookie));
 		app.use(session({
-			secret: 'theworldisyours',
+			secret: app.get('secrets').session,
 			resave: false,
 			saveUninitialized: true
 		}));
