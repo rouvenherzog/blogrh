@@ -5,7 +5,8 @@ var helpers = require('./helpers');
 
 router.route('/dashboard')
 	.get(function( request, response ) {
-		cache.get('DASHBOARD-CACHE', function( err, result ) {
+		var key = 'DASHBOARD-CACHE-1';
+		cache.get(key, function( err, result ) {
 			if( err )
 				throw(err);
 
@@ -14,7 +15,7 @@ router.route('/dashboard')
 
 			else
 				helpers.query(1, '5a78aad39d2846a3d58845c5514a375d').then(function(result) {
-					cache.set('DASHBOARD-CACHE', result);
+					cache.setex(key, 60*60*24, result );
 					response.json(JSON.parse(result));
 				});
 		})

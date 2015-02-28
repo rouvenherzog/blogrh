@@ -19,19 +19,19 @@
 		},
 		"Title": "Blog Title",
 		"deleteConfirmation": {
-			"title": "Blog.deleteConfirmation.title",
-			"okay": "Blog.deleteConfirmation.okay",
-			"cancel": "Blog.deleteConfirmation.cancel"
+			"title": "Really delete Entry?",
+			"okay": "Delete",
+			"cancel": "Cancel"
 		},
 		"labels": {
-			"Body": "Blog.labels.Body",
-			"Summary": "Blog.labels.Summary",
-			"EditMeta": "Blog.labels.EditMeta",
-			"Keywords": "Blog.labels.Keywords"
+			"Body": "Complete Text",
+			"Summary": "Summary",
+			"EditMeta": "Edit Meta Information",
+			"Keywords": "Keywords"
 		},
-		"shortPost": "Blog.shortPost",
-		"longPost": "Blog.longPost",
-		"Characters": "Blog.Characters"
+		"shortPost": "Short Post",
+		"longPost": "Long Post",
+		"Characters": "Characters"
 	},
 	"Quill": {
 		"FontSize": {
@@ -63,7 +63,7 @@
 			"Title": "Title",
 			"Tag": "Tags",
 			"FilterByTag": "Filter By Tag",
-			"Description": "Media.Label.Description"
+			"Description": "Description"
 		},
 		"EditModal": {
 			"Title": "Edit Media",
@@ -78,9 +78,9 @@
 			"File": "File"
 		},
 		"deleteConfirmation": {
-			"title": "Media.deleteConfirmation.title",
-			"okay": "Media.deleteConfirmation.okay",
-			"cancel": "Media.deleteConfirmation.cancel"
+			"title": "Really delete Media?",
+			"okay": "Delete",
+			"cancel": "Cancel"
 		}
 	},
 	"Login": {
@@ -123,6 +123,12 @@
 		"Welcome": "Welcome",
 		"WhatDoYouWantToDo": "What do you want to do today?",
 		"DoPost": "Create or Edit a Post",
-		"DoMedia": "Upload or Edit Media"
+		"DoMedia": "Upload or Edit Media",
+		"WebsiteStatistics": {
+			"Title": "Website Statistics",
+			"Visits": "Visits",
+			"PageViews": "Page Views",
+			"Devices": "Devices"
+		}
 	}
 }

@@ -30,21 +30,13 @@ module.exports.query = function( siteId, token_auth ) {
 	http.get(
 		'http://piwik.rouvenherzog.me/?' + query,
 		function(res) {
-			var result;
-			console.log(res.statusCode);
+			var result = "";
 
 			res.on('data', function(data) {
-				console.log(data.toString());
-				result = data.toString();
+				result += data.toString();
 			});
 
 			res.on('end', function() {
-				console.log("ENDED");
-				a.resolve(result);
-			});
-
-			res.on('finish', function() {
-				console.log("FINISHED");
 				a.resolve(result);
 			});
 		}
