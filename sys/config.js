@@ -47,6 +47,11 @@ module.exports = {
 				client: cache
 			})
 		}));
+		app.use('/admin', function( request, response, next ) {
+			request.session.lastVisited = new Date();
+			request.session.touch();
+			next();
+		});
 		app.use(bodyParser.urlencoded({ extended: true }));
 		app.use(bodyParser.json());
 		app.use(multer({
