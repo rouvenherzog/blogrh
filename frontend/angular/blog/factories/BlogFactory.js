@@ -6,6 +6,7 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 	'rouvenherzog.Notification.NotificationService',
 	function( $q, $http, $sce, MediaFactory, NotificationService ) {
 		var Entry = function( args ) {
+			this.dirty = false;
 			this.saved = true;
 
 			// Specify fields for this model
@@ -28,7 +29,9 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 
 			// Clean Copy
 			this.clean = {};
-
+			// This gets updated only from the server ( recover entry )
+			// Angular watches this to update its content.
+			// watching the entry itself would throw a max stack size exceeded
 			this.copy = {};
 
 			// Initialize all fields
@@ -41,12 +44,13 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 		};
 
 		Entry.prototype.modified = function() {
-			this.saved = false;
-
 			this.dirty = false;
 			for( var key in this.fields ) {
-				if( !angular.equals(this[key], this.clean[key]) )
-					return (this.dirty = true);
+				if( !angular.equals(this[key], this.clean[key]) ) {
+					this.dirty = true;
+					this.saved = false;
+					return true;
+				}
 			}
 		};
 
@@ -78,6 +82,16 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 			this.saved = true;
 		};
 
+		Entry.prototype.discardTemp = function() {
+			var self = this;
+			$http
+				.delete('/admin/api/blog/' + this._id + '/autosave')
+				.success(function() {
+					delete self['temp'];
+					delete self.clean['temp'];
+				});
+		};
+
 		Entry.prototype.getCount = function( stopAt ) {
 			var count = 0;
 			for( var index in this.body.delta ) {
@@ -97,6 +111,8 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 		Entry.prototype.replaceMedia = function() {
 			for( var index in this.media )
 				this.media[index] = MediaFactory.construct(this.media[index]);
+
+			this.clean.media = this.media;
 		};
 
 		Entry.prototype.save = function( dont_notify ) {
@@ -109,6 +125,8 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 					this.toJSON()
 				)
 				.success(function(data) {
+					// Media does not have to be updated
+					delete data['media'];
 					self.set(data, true);
 					if( !dont_notify )
 						NotificationService.success('Blog.Notifications.saved', 2000);
@@ -194,7 +212,6 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 				} else {
 					if( clean )
 						this.clean[key] = this.validate(key, args[key]);
-
 					this.copy[key] = this.validate(key, args[key]);
 					this[key] = this.validate(key, args[key]);
 				}

@@ -48,7 +48,7 @@
 			"created": "Entry created."
 		},
 		"EntryNotFound": "Ups. The Entry you were looking for wasn't found. Why don't you try another one from the list?",
-		"CreateAPost": "Click on 'Create' to start create an entry."
+		"CreateAPost": "Click on 'Create' to create an entry."
 	},
 	"Quill": {
 		"FontSize": {

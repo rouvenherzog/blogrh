@@ -39,7 +39,7 @@ BlogModule.directive('rouvenherzogBlogEditEntryForm', [
 						},
 						function() {
 							// Deletes the temp and saves the current status
-							$scope.entry.save(true);
+							$scope.entry.discardTemp();
 						}
 					);
 				}

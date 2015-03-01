@@ -95,9 +95,9 @@ router.route('/blog/:id')
 				delta: request.body.body.delta
 			},
 			specifiedSummary: request.body.specifiedSummary,
-			modified_by: request.user
+			modified_by: request.user,
+			temp: null
 		});
-		request.entry.temp = null;
 		request.entry.save(function(error) {
 			if( error )
 				return next(error);
@@ -134,6 +134,13 @@ router.route('/blog/:id/publish')
 	});
 
 router.route('/blog/:id/autosave')
+	.delete(function( request,response, next) {
+		request.entry.temp = null;
+		request.entry.save(function(error) {
+			cache.del(getKey(request.user.account));
+			response.json();
+		});
+	})
 	.put(function( request, response, next ) {
 		request.entry.autosave({
 			title: request.body.title,

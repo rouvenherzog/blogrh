@@ -64,6 +64,8 @@ EntrySchema.pre('save', function(next) {
 		this.body.rendered = helpers.render_delta(this.body.delta);
 	}
 
+	this.markModified('temp');
+
 	var count = 0;
 	var summaryDelta = [];
 	for( var index = 0; index < this.body.delta.length; index++ ) {
