@@ -9,15 +9,21 @@ BlogModule.controller('rouvenherzog.Blog.combinedController', [
 		var saved_state = undefined;
 
 		$scope.selected_entry = null;
+		$scope.not_found = false;
 		$scope.entries = BlogService.getEntries();
 
 		if( $routeParams.id ) {
 			BlogService
 				.getEntry( $routeParams.id )
-				.then(function( entry ) {
-					saved_state = entry.toJSON();
-					$scope.selected_entry = entry;
-				});
+				.then(
+					function( entry ) {
+						saved_state = entry.toJSON();
+						$scope.selected_entry = entry;
+					},
+					function() {
+						$scope.not_found = true;
+					}
+				);
 		}
 
 		$scope.open = function( entry ) {

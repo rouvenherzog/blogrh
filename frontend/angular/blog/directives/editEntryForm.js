@@ -32,9 +32,16 @@ BlogModule.directive('rouvenherzogBlogEditEntryForm', [
 						confirmText: 'Blog.RecoverPopup.Recover',
 						cancelText: 'Blog.RecoverPopup.Discard',
 						explicitClose: true
-					}).then(function() {
-						$scope.entry.recover();
-					});
+					}).then(
+						function() {
+							// Recovers the saved version but doesn't save it
+							$scope.entry.recover();
+						},
+						function() {
+							// Deletes the temp and saves the current status
+							$scope.entry.save(true);
+						}
+					);
 				}
 
 				$interval(function() {

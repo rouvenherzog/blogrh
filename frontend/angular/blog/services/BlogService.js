@@ -51,6 +51,9 @@ BlogModule.service('rouvenherzog.Blog.BlogService', [
 					.success(function(data) {
 						var object = add(data);
 						a.resolve(object);
+					})
+					.error(function() {
+						a.reject();
 					});
 
 			return a.promise;

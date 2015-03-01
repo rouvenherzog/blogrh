@@ -43,7 +43,8 @@
 			"saved": "Artikel gespeichert.",
 			"deleted": "Artikel gelöscht.",
 			"created": "Artikel erstellt."
-		}
+		},
+		"EntryNotFound": "Ups. Der Artikel wurde nicht gefunden. Warum wählst du nicht einen aus der Liste stattdessen?"
 	},
 	"Quill": {
 		"FontSize": {

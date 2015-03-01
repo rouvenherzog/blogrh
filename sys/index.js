@@ -13,7 +13,7 @@ module.exports = function(app, args) {
 	dashboardmodule(app);
 	usersmodule(app);
 
-	app.get(/angular\/(.*)$/, function(request, response) {
+	app.get(/angular\/(.*)$/, function(request, response, next) {
 		var path = request.params[0];
 		response.render(path + ".jade");
 	});
@@ -26,6 +26,8 @@ module.exports = function(app, args) {
 		if( args.tags )
 			tagsmodule(app);
 	}
+
+	config.error_handling(app);
 
 	return app;
 };

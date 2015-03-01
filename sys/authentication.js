@@ -29,7 +29,6 @@ module.exports = function( app ) {
 	});
 
 	passport.deserializeUser(function(id, done) {
-		console.log("DES", id);
 		User.findById(id, function(error, user){
 			return done(null, user);
 		});

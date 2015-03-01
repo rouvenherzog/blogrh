@@ -1,5 +1,5 @@
 var express = require('express');
-var logger = require('morgan')
+var logger = require('morgan');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var i18n = require('i18n');
@@ -7,6 +7,7 @@ var authentication = require('./authentication');
 var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
 
 // Create Cache
 var redis = require('redis');
@@ -17,7 +18,6 @@ module.exports = {
 	cache: cache,
 	init: function( app, config ) {
 		config = config || {};
-
 		// Set Backend information
 		app.set( 'backend', {
 			api: '/admin/api',
@@ -25,8 +25,12 @@ module.exports = {
 		});
 
 		var frontend_dir = __dirname + '/../frontend/';
+
 		// Add Template Directory
+		if( typeof app.get('views') == 'string' )
+			app.set('views', [app.get('views')]);
 		app.get('views').push( frontend_dir + 'templates' );
+
 		// Set Assets Directory
 		app.use( '/static/admin', express.static(frontend_dir + 'static') );
 
@@ -35,7 +39,13 @@ module.exports = {
 		app.use(session({
 			secret: app.get('secrets').session,
 			resave: false,
-			saveUninitialized: true
+			cookie: {
+				maxAge: 1000 * 60 * 30
+			},
+			saveUninitialized: true,
+			store: new RedisStore({
+				client: cache
+			})
 		}));
 		app.use(bodyParser.urlencoded({ extended: true }));
 		app.use(bodyParser.json());
@@ -45,7 +55,9 @@ module.exports = {
 		}));
 
 		// Add logger
-		app.use(logger('dev'));
+		app.use(logger(
+			app.get('env') === 'development' ? 'dev' : 'tiny'
+		));
 
 		// Add the url to requests
 		app.use(function(request, response, next) {
@@ -81,5 +93,63 @@ module.exports = {
 			res.locals.user = req.user || {};
 			next();
 		});
+	},
+
+	error_handling: function( app ) {
+		// development error handler
+		// will print stacktrace
+		var error_handler = null;
+		if (app.get('env') === 'development') {
+			error_handler = function(err, req, res, next) {
+				res.status(500);
+				if( req.xhr ) {
+					if( req.status == 404 ) {
+						res.status(404);
+						res.json();
+					} else {
+						res.json({
+							message: err.message,
+							stack: err.stack.split('\n')
+						})
+					}
+				} else {
+					res.render('errors/development-500', {
+						message: err.message,
+						error: err
+					});
+				}
+			};
+		} else {
+			error_handler = function(err, req, res, next) {
+				res.status(500);
+				if( req.xhr ) {
+					if( req.status == 404 ) {
+						res.status(404);
+						res.json();
+					} else {
+						res.json({
+							message: err.message
+						});
+					}
+				} else {
+					res.render('errors/production-500', {
+						message: err.message
+					});
+				}
+			}
+		}
+		app.use( '/admin', error_handler );
+		app.use( '/angular', error_handler );
+
+		var handler_404 = function( req, res, next ) {
+			res.status(404);
+			if( req.xhr ) {
+				res.json({});
+			} else {
+				res.render('errors/404');
+			}
+		};
+		app.use('/admin', handler_404);
+		app.use('/angular', handler_404);
 	}
 };

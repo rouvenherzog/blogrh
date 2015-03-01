@@ -10,10 +10,12 @@ router
 			.populate('media')
 			.exec(function(error, entry) {
 				if( error )
-					console.log(error);
+					return next(error);
 
-				if( entry == null )
-					console.log("ENTRY NULL");
+				if( entry == null ) {
+					request.status = 404;
+					return next(new Error("Entry not found."));
+				}
 
 				request.entry = entry;
 				next();
@@ -25,10 +27,12 @@ router
 			.findById(id)
 			.exec(function(error, media) {
 				if( error )
-					console.log(error);
+					return next(error);
 
-				if( media == null )
-					console.log("MEDIA NULL");
+				if( media == null ) {
+					request.status = 404;
+					return next(new Error("Media not found."));
+				}
 
 				request.media = media;
 				next();
@@ -36,33 +40,33 @@ router
 	});
 
 router.route('/blog')
-		.get(function( request, response ) {
+		.get(function( request, response, next ) {
 			Entry
 				.find()
 				.populate('media')
 				.exec(function(error, entries) {
 					if( error )
-						console.log(error);
+						return next(error);
 
 					response.json(entries);
 				});
 		})
 
-		.post(function( request, response ) {
+		.post(function( request, response, next ) {
 			var entry = new Entry({
 				created_by: request.user,
 				account: request.user.account
 			});
 			entry.save(function(error) {
 				if( error )
-					console.log(error);
+					return next(error);
 
 				response.json(entry);
 			});
 		});
 
 router.route('/blog/:id')
-	.get(function( request, response ) {
+	.get(function( request, response, next ) {
 		response.json(request.entry);
 	})
 
@@ -82,23 +86,23 @@ router.route('/blog/:id')
 		request.entry.temp = null;
 		request.entry.save(function(error) {
 			if( error )
-				console.log(error);
+				return next(error);
 
 			response.json(request.entry);
 		});
 	})
 
-	.delete(function( request, response ) {
+	.delete(function( request, response, next ) {
 		request.entry.remove(function( error ) {
 			if( error )
-				console.log(error);
+				return next(error);
 
 			response.json({})
 		})
 	});
 
 router.route('/blog/:id/publish')
-	.put(function( request, response ) {
+	.put(function( request, response, next ) {
 		request.entry.set({
 			published: !request.entry.published,
 			published_at: new Date(),
@@ -106,14 +110,14 @@ router.route('/blog/:id/publish')
 		});
 		request.entry.save(function(error) {
 			if( error )
-				console.log(error);
+				return next(error);
 
 			response.json(request.entry);
 		});
 	});
 
 router.route('/blog/:id/autosave')
-	.put(function( request, response ) {
+	.put(function( request, response, next ) {
 		request.entry.autosave({
 			title: request.body.title,
 			summary: {
@@ -128,14 +132,14 @@ router.route('/blog/:id/autosave')
 		});
 		request.entry.save(function(error) {
 			if( error )
-				console.log(error);
+				return next(error);
 
 			response.json(request.entry);
 		});
 	});
 
 router.route('/blog/:id/media')
-	.post(function( request, response ) {
+	.post(function( request, response, next ) {
 		var file = request.files.file;
 		Media.fromFile(file, {
 			title: request.body.title,
@@ -148,7 +152,7 @@ router.route('/blog/:id/media')
 			request.entry.media.push(media);
 			request.entry.save(function(error) {
 				if( error )
-					throw(error);
+					return next(error);
 
 				response.json(media);
 			});
@@ -156,15 +160,15 @@ router.route('/blog/:id/media')
 	});
 
 router.route('/blog/:id/media/:mediaid')
-	.delete(function( request, response ) {
+	.delete(function( request, response, next ) {
 		request.media.remove(function( error ) {
 			if( error )
-				console.log(error);
+				return next(error);
 
 			request.entry.media.pull(request.media._id);
 			request.entry.save(function(error) {
 				if( error )
-					console.log(error);
+					return next(error);
 
 				response.json({});
 			});

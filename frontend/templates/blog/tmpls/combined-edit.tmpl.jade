@@ -25,8 +25,12 @@ div.col-xs-5.col-sm-4.col-md-3.entry-list-wrapper
 				{{ entry.clean.title || '#{__('Blog.Untitled')}' }}
 
 div.col-xs-7.col-sm-8.col-md-9.entry-detail-wrapper
-	div(ng-if="!selected_entry")
-		h1.
+	div(ng-if="not_found")
+		h1.entry-not-found.
+			#{__('Blog.EntryNotFound')}
+
+	div(ng-if="!not_found && !selected_entry")
+		h1.not-entry-selected.
 			#{__('Blog.SelectAPostFromList')}
 
 	div.selected(ng-if="selected_entry")

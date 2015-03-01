@@ -15,8 +15,11 @@ var App = angular.module(
 App.config([
 	'$locationProvider',
 	'$translateProvider',
-	function( $locationProvider, $translateProvider ) {
+	'$httpProvider',
+	function( $locationProvider, $translateProvider, $httpProvider ) {
 		$locationProvider.html5Mode(true);
+
+		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 
 		$translateProvider.useStaticFilesLoader({
 			prefix: '/static/admin/locales/',

@@ -1,0 +1,10 @@
+extends ../layout.jade
+
+block body
+	div.container-fluid
+		h1 #{message}
+		hr
+		h3 Stack
+		ul
+			each stack in error.stack.split('\n')
+				li #{stack}

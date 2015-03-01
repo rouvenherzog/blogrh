@@ -43,7 +43,8 @@
 			"saved": "Entry saved.",
 			"deleted": "Entry deleted.",
 			"created": "Entry created."
-		}
+		},
+		"EntryNotFound": "Ups. The Entry you were looking for wasn't found. Why don't you try another one from the list?"
 	},
 	"Quill": {
 		"FontSize": {
