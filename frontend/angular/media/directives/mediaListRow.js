@@ -1,5 +1,6 @@
 MediaModule.directive('rouvenherzogMediaListRow', [
-	function() {
+	'$filter',
+	function($filter) {
 		return {
 			restrict: 'E',
 			replace: true,

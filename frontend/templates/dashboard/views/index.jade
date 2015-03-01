@@ -10,15 +10,16 @@ block body
 			| 
 			a.btn.btn-primary.btn-lg(href="/admin/media/") #{__('Dashboard.DoMedia')}
 
-		div.statistics
-			h1 #{__('Dashboard.WebsiteStatistics.Title')}
-			div.row
-				div.col-md-4.col-sm-6.col-xs-12
-					h3 #{__('Dashboard.WebsiteStatistics.Visits')}
-					rouvenherzog-dashboard-line-graph(collection="visits")
-				div.col-md-4.col-sm-6.col-xs-12
-					h3 #{__('Dashboard.WebsiteStatistics.PageViews')}
-					rouvenherzog-dashboard-line-graph(collection="pageviews")
-				div.col-md-4.col-sm-6.col-xs-6
-					h3 #{__('Dashboard.WebsiteStatistics.Devices')}
-					rouvenherzog-dashboard-pie-graph(collection="devices")
+		if piwik
+			div.statistics
+				h1 #{__('Dashboard.WebsiteStatistics.Title')}
+				div.row
+					div.col-md-4.col-sm-6.col-xs-12
+						h3 #{__('Dashboard.WebsiteStatistics.Visits')}
+						rouvenherzog-dashboard-line-graph(collection="visits")
+					div.col-md-4.col-sm-6.col-xs-12
+						h3 #{__('Dashboard.WebsiteStatistics.PageViews')}
+						rouvenherzog-dashboard-line-graph(collection="pageviews")
+					div.col-md-4.col-sm-6.col-xs-6
+						h3 #{__('Dashboard.WebsiteStatistics.Devices')}
+						rouvenherzog-dashboard-pie-graph(collection="devices")

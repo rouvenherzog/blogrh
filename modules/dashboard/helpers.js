@@ -25,8 +25,6 @@ module.exports.query = function( siteId, token_auth ) {
 		})
 	});
 
-	console.log(query);
-
 	http.get(
 		'http://piwik.rouvenherzog.me/?' + query,
 		function(res) {

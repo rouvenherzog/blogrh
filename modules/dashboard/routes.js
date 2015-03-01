@@ -3,7 +3,9 @@ var router = express.Router();
 
 router
 	.get('/', function( request, response ) {
-		response.render('dashboard/views//index');
+		response.render('dashboard/views/index', {
+			piwik: request.app.get('piwik') ? true : false
+		});
 	})
 
 module.exports = function(app) {

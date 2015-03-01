@@ -1,19 +1,22 @@
 div.col-xs-12.media-list-row
-	h3 {{ tag && tag.name || '#{__('Media.List.NoTag')}' }} 
-		small.
-			{{ (media | mediaHasTag : tag).length }} {{ (media | mediaHasTag : tag).length > 1 ? '#{__('Media.List.Files')}' : '#{__('Media.List.File')}' }}
-
-		button.btn.btn-default.btn-sm.pull-right(
+	div
+		h3(
 			data-toggle="collapse",
 			data-target="{{ '#' + (tag && tag._id || 'notag') }}",
-			aria-expanded="true"
+			aria-expanded="false"
 			aria-controls="{{ (tag && tag._id || 'notag') }}"
 			ng-click="collapsed = !collapsed"
 		)
-			i.fa(ng-class="{'fa-angle-up': !collapsed, 'fa-angle-down': collapsed}")
+			| {{ tag && tag.name || '#{__('Media.List.NoTag')}' }} 
+			small.
+				{{ (media | mediaHasTag : tag).length }} {{ (media | mediaHasTag : tag).length > 1 ? '#{__('Media.List.Files')}' : '#{__('Media.List.File')}' }}
 
-	rouvenherzog-media-row.collapse.in(
-		media="media",
-		tag="tag",
-		id="{{ tag && tag._id || 'notag' }}"
-	)
+			button.btn.btn-default.btn-sm.pull-right(
+			)
+				i.fa(ng-class="{'fa-angle-up': collapsed, 'fa-angle-down': !collapsed}")
+
+		rouvenherzog-media-row.collapse(
+			media="media",
+			tag="tag",
+			id="{{ tag && tag._id || 'notag' }}"
+		)

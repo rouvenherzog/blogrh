@@ -5,6 +5,10 @@ var helpers = require('./helpers');
 
 router.route('/dashboard')
 	.get(function( request, response ) {
+		var piwik = request.app.get('piwik');
+		if( !piwik )
+			return request.json({});
+
 		var key = 'DASHBOARD-CACHE-' + request.user.account;
 		cache.get(key, function( err, result ) {
 			if( err )
@@ -14,7 +18,6 @@ router.route('/dashboard')
 				response.json(JSON.parse(result));
 
 			else {
-				var piwik = request.app.get('piwik');
 				helpers.query(piwik.siteId, piwik.authToken).then(function(result) {
 					cache.setex(key, 60*60, result );
 					response.json(JSON.parse(result));
