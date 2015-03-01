@@ -2,6 +2,11 @@ var express = require('express');
 var router = express.Router();
 var Entry = require('./models').Entry;
 var Media = require('../media/models').Media;
+var cache = require('../../sys/config').cache;
+
+var getKey = function( account, id ) {
+	return "BLOG-" + account + (id ? ("-" + id) : "");
+};
 
 router
 	.param('id', function( request, response, next, id ) {
@@ -41,15 +46,23 @@ router
 
 router.route('/blog')
 		.get(function( request, response, next ) {
-			Entry
-				.find()
-				.populate('media')
-				.exec(function(error, entries) {
-					if( error )
-						return next(error);
+			var key = getKey(request.user.account);
+			cache.get(key, function( err, result ) {
+				if( result ) {
+					response.json(JSON.parse(result));
+				} else {
+					Entry
+						.find()
+						.populate('media')
+						.exec(function(error, entries) {
+							if( error )
+								return next(error);
 
-					response.json(entries);
-				});
+							cache.set(key, JSON.stringify(entries));
+							response.json(entries);
+						});
+				}
+			});
 		})
 
 		.post(function( request, response, next ) {
@@ -61,6 +74,7 @@ router.route('/blog')
 				if( error )
 					return next(error);
 
+				cache.del(getKey(request.user.account));
 				response.json(entry);
 			});
 		});
@@ -88,6 +102,7 @@ router.route('/blog/:id')
 			if( error )
 				return next(error);
 
+			cache.del(getKey(request.user.account));
 			response.json(request.entry);
 		});
 	})
@@ -97,6 +112,7 @@ router.route('/blog/:id')
 			if( error )
 				return next(error);
 
+			cache.del(getKey(request.user.account));
 			response.json({})
 		})
 	});
@@ -112,6 +128,7 @@ router.route('/blog/:id/publish')
 			if( error )
 				return next(error);
 
+			cache.del(getKey(request.user.account));
 			response.json(request.entry);
 		});
 	});
@@ -134,6 +151,7 @@ router.route('/blog/:id/autosave')
 			if( error )
 				return next(error);
 
+			cache.del(getKey(request.user.account));
 			response.json(request.entry);
 		});
 	});
@@ -154,6 +172,7 @@ router.route('/blog/:id/media')
 				if( error )
 					return next(error);
 
+				cache.del(getKey(request.user.account));
 				response.json(media);
 			});
 		});
@@ -170,6 +189,7 @@ router.route('/blog/:id/media/:mediaid')
 				if( error )
 					return next(error);
 
+				cache.del(getKey(request.user.account));
 				response.json({});
 			});
 		});

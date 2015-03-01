@@ -1,6 +1,6 @@
 div.col-xs-12.media-list-row
 	h3 {{ tag && tag.name || '#{__('Media.List.NoTag')}' }} 
-		small
+		small.
 			{{ (media | mediaHasTag : tag).length }} {{ (media | mediaHasTag : tag).length > 1 ? '#{__('Media.List.Files')}' : '#{__('Media.List.File')}' }}
 
 		button.btn.btn-default.btn-sm.pull-right(

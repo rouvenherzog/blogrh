@@ -7,6 +7,7 @@
 		'rouvenherzog.Media.MediaService',
 		function($scope, $element, TagService, MediaFactory, MediaService) {
 			var media = [];
+			var failed_at = 0;
 
 			var load_preview = function( m ) {
 				var reader = new FileReader();
@@ -42,6 +43,7 @@
 				media.push(m);
 			}
 
+			$scope.failed = false;
 			$scope.uploading = false;
 			$scope.amount_uploaded = 0;
 
@@ -62,18 +64,28 @@
 			};
 
 			$scope.upload = function() {
+				var toUpload = $scope.media;
+				if( $scope.failed ) {
+					toUpload = toUpload.slice(failed_at);
+				}
+
+				$scope.failed = false;
 				$scope.uploading = true;
 				$scope.selected_media = null;
 
 				MediaService
-					.upload($scope.media, $scope.uploadPath, $scope.mediaArray)
+					.upload(toUpload, $scope.uploadPath, $scope.mediaArray)
 					.then(
 						// Successfully uploaded all files
 						function() {
 							$scope.close();
 						},
 
-						function() {},
+						// Something went wront during uploading
+						function( index ) {
+							$scope.failed = true;
+							failed_at += index;
+						},
 
 						function( info ) {
 							$scope.amount_uploaded = info.current;

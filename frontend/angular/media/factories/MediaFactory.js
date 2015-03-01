@@ -54,7 +54,11 @@ MediaModule.factory('rouvenherzog.Media.MediaFactory', [
 					self.set(data);
 					NotificationService.success('Media.Notifications.saved', 2000);
 					a.resolve();
-				});
+				})
+				.error(function() {
+					NotificationService.error('Errors.500');
+					a.reject();
+				})
 
 			return a.promise;
 		};
@@ -67,7 +71,11 @@ MediaModule.factory('rouvenherzog.Media.MediaFactory', [
 				.success(function() {
 					NotificationService.success('Media.Notifications.deleted', 2000);
 					a.resolve();
-				});
+				})
+				.error(function(){
+					NotificationService.error('Errors.500');
+					a.reject();
+				})
 
 			return a.promise;
 		};

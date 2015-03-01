@@ -17,6 +17,8 @@ div.modal
 							img(ng-src="{{ m.preview }}", ng-if="m.preview")
 							div(ng-if="m.uploaded").upload-complete
 								i.fa.fa-check
+							div(ng-if="m.failed").upload-failed
+								i.fa.fa-times
 
 				div.row(ng-if="!uploading")
 					div.selected-media-preview.col-xs-5
@@ -38,7 +40,7 @@ div.modal
 							label #{__('Media.Label.Tag')}
 							rouvenherzog-tag-select(model="selected_media", field="tags")
 
-				div.row(ng-if="uploading")
+				div.row(ng-if="uploading && !failed")
 					div.col-xs-12
 						h1.
 							#{__('Media.UploadModal.Uplading.Uploaded')}
@@ -46,17 +48,25 @@ div.modal
 							#{__('Media.UploadModal.Uplading.Of')}
 							{{ media.length }}
 							#{__('Media.UploadModal.Uplading.Files')}.
+				div.row(ng-if="failed")
+					div.col-xs-12
+						h1.
+							#{__('Media.UploadModal.Failed')}
 
 
 			div.modal-footer
-				div(ng-if="!uploading")
+				div(ng-if="!uploading || failed")
 					button.btn.btn-default(ng-click="close()")
 						i.fa.fa-times &nbsp;
 						| #{__('Media.UploadModal.Footer.Close')}
-					button.btn.btn-primary(ng-click="upload()")
+					button.btn.btn-primary(ng-click="upload()", ng-if="!failed")
 						i.fa.fa-check &nbsp;
 						| #{__('Media.UploadModal.Footer.UploadFiles')}
-				div(ng-if="uploading")
+
+					button.btn.btn-primary(ng-click="upload()", ng-if="failed")
+						i.fa.fa-refresh &nbsp;
+						| #{__('Media.UploadModal.Footer.Failed')}
+				div(ng-if="uploading && !failed")
 					button.btn.btn-primary
 						i.fa.fa-circle-o-notch.fa-spin &nbsp;
 						| #{__('Media.UploadModal.Footer.Uploading')}

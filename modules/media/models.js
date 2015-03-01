@@ -35,11 +35,16 @@ var MediaSchema = new Schema({
 });
 
 MediaSchema.pre('remove', function(next) {
-	for( var key in this.paths ) {
-		fs.unlinkSync(this.paths[key].localpath);
+	try {
+		for( var key in this.paths ) {
+			fs.unlinkSync(this.paths[key].localpath);
+		}
+	} catch( error ) {
+		console.log(error);
+		// return next(error);
 	}
 
-	next();
+	return next();
 });
 
 MediaSchema.set( 'toJSON', {

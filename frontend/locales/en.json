@@ -1,10 +1,13 @@
 {
+	"Errors": {
+		"500": "Something went wrong. We are working on fixing this issue."
+	},
 	"Blog": {
 		"Create": "Create",
 		"Published": "Published",
 		"Draft": "Draft",
 		"Untitled": "Untitled",
-		"SelectAPostFromList": "Select a post from the list",
+		"SelectAPostFromList": "Select a post from the list.",
 		"Menu": {
 			"Close": "Close",
 			"Save": "Save",
@@ -44,7 +47,8 @@
 			"deleted": "Entry deleted.",
 			"created": "Entry created."
 		},
-		"EntryNotFound": "Ups. The Entry you were looking for wasn't found. Why don't you try another one from the list?"
+		"EntryNotFound": "Ups. The Entry you were looking for wasn't found. Why don't you try another one from the list?",
+		"CreateAPost": "Click on 'Create' to start create an entry."
 	},
 	"Quill": {
 		"FontSize": {
@@ -69,8 +73,10 @@
 			"Footer": {
 				"Close": "Close",
 				"UploadFiles": "Upload Files",
-				"Uploading": "Uploading ..."
-			}
+				"Uploading": "Uploading ...",
+				"Failed": "Try again"
+			},
+			"Failed": "An error occured whilst uploading the files."
 		},
 		"Label": {
 			"Title": "Title",

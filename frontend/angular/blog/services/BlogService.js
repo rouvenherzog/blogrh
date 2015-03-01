@@ -29,6 +29,9 @@ BlogModule.service('rouvenherzog.Blog.BlogService', [
 					var objects = data;
 					for( var index in objects )
 						add(objects[index]);
+				})
+				.error(function() {
+					NotificationService.error('Errors.500');
 				});
 		};
 

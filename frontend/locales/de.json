@@ -1,10 +1,13 @@
 {
+	"Errors": {
+		"500": "Irgendwas ist schief gelaufen. Wir arbeiten daran den Fehler zu beheben."
+	},
 	"Blog": {
 		"Create": "Hinzufügen",
 		"Published": "Veröffentlicht",
 		"Draft": "Entwurf",
 		"Untitled": "Ohne Titel",
-		"SelectAPostFromList": "Wähle einen Artikel aus der Liste",
+		"SelectAPostFromList": "Wähle einen Artikel aus der Liste.",
 		"Menu": {
 			"Close": "Schließen",
 			"Save": "Speichern",
@@ -44,7 +47,8 @@
 			"deleted": "Artikel gelöscht.",
 			"created": "Artikel erstellt."
 		},
-		"EntryNotFound": "Ups. Der Artikel wurde nicht gefunden. Warum wählst du nicht einen aus der Liste stattdessen?"
+		"EntryNotFound": "Ups. Der Artikel wurde nicht gefunden. Warum wählst du nicht einen aus der Liste stattdessen?",
+		"CreateAPost": "Klicke auf 'Hinzufügen' um einen Artikel zu erstellen."
 	},
 	"Quill": {
 		"FontSize": {
@@ -64,13 +68,15 @@
 			"Footer": {
 				"Close": "Abbrechen",
 				"UploadFiles": "Media hochladen",
-				"Uploading": "Lädt hoch ..."
+				"Uploading": "Lädt hoch ...",
+				"Failed": "Nochmal versuchen"
 			},
 			"Uplading": {
 				"Uploaded": "Hochgeladen:",
 				"Of": "von",
 				"Files": "Dateien"
-			}
+			},
+			"Failed": "Ein Fehler beim hochladen der Dateien ist aufgetreten."
 		},
 		"EditModal": {
 			"Title": "Media bearbeiten",

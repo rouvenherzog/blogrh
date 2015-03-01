@@ -3,7 +3,8 @@ MediaModule.service('rouvenherzog.Media.MediaService', [
 	'$q',
 	'$http',
 	'rouvenherzog.Media.MediaFactory',
-	function( $rootScope, $q, $http, MediaFactory) {
+	'rouvenherzog.Notification.NotificationService',
+	function( $rootScope, $q, $http, MediaFactory, NotificationService) {
 		var media = [];
 		var media_cache = {};
 
@@ -16,6 +17,9 @@ MediaModule.service('rouvenherzog.Media.MediaService', [
 						media.push(m);
 						media_cache[m._id] = m;
 					}
+				})
+				.error(function() {
+					NotificationService.error('Errors.500');
 				});
 
 			return media;
@@ -42,6 +46,7 @@ MediaModule.service('rouvenherzog.Media.MediaService', [
 				}
 
 				media[index].uploading = true;
+				media[index].failed = false;
 
 				$http
 					.post(
@@ -65,11 +70,22 @@ MediaModule.service('rouvenherzog.Media.MediaService', [
 						});
 
 						index++;
+
+						// Recursively upload all files
 						upl();
+					})
+					.error(function() {
+						var failedat = index;
+						for( ; index < media.length; index++ ) {
+							media[index].uploading = false;
+							media[index].failed = true;
+						}
+
+						a.reject( failedat );
 					});
 			};
 
-			// Leave digest cicly for $rootScope.$apply
+			// Start uploading files
 			upl();
 
 			return a.promise;
