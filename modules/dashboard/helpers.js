@@ -2,7 +2,7 @@ var q = require('q');
 var http = require('http');
 var querystring = require('querystring');
 
-module.exports.query = function( siteId, token_auth ) {
+module.exports.query = function( site_url, site_id, token_auth ) {
 	var a = q.defer();
 
 	var query = querystring.stringify({
@@ -12,13 +12,13 @@ module.exports.query = function( siteId, token_auth ) {
 		format: 'json',
 
 		"urls[0]": querystring.stringify({
-			idSite: siteId,
+			idSite: site_id,
 			method: 'API.get',
 			period: 'day',
 			date: 'last14'
 		}),
 		"urls[1]": querystring.stringify({
-			idSite: siteId,
+			idSite: site_id,
 			method: 'DevicesDetection.getType',
 			period: 'range',
 			date: 'last14'
@@ -26,7 +26,7 @@ module.exports.query = function( siteId, token_auth ) {
 	});
 
 	http.get(
-		'http://piwik.rouvenherzog.me/?' + query,
+		site_url + '/?' + query,
 		function(res) {
 			var result = "";
 

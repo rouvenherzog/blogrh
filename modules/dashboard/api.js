@@ -20,7 +20,7 @@ router.route('/dashboard')
 				response.json(JSON.parse(result));
 
 			else {
-				helpers.query(piwik.siteId, piwik.authToken).then(function(result) {
+				helpers.query(piwik.siteUrl, piwik.siteId, piwik.authToken).then(function(result) {
 					cache.setex(key, 60*60, result );
 					response.json(JSON.parse(result));
 				});
