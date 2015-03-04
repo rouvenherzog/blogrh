@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var fs = require('fs');
 var q = require('q');
+var _ = require('underscore');
 
 var MediaSchema = new Schema({
 	account: {
@@ -33,6 +34,37 @@ var MediaSchema = new Schema({
 		ref: 'Tag'
 	}]
 });
+
+MediaSchema.statics.query = function( account, args ) {
+	if( !account ) throw(new Error("Account has to be given."));
+
+	args = args || {};
+	args = _.extend({
+		account: account,
+		populate: ['entry']
+	}, args);
+
+	var populate = args.populate;
+	delete args['populate'];
+
+	var a = q.defer();
+	var query = Media.find(args);
+
+	for( var index in populate )
+		query = query.populate(populate[index]);
+
+	query.exec(function( err, result ) {
+			if( err )
+				return a.reject(err);
+
+			if( args._id )
+				result = result.length ? result[0] : null;
+
+			a.resolve(result);
+		});
+
+	return a.promise;
+};
 
 MediaSchema.pre('remove', function(next) {
 	try {
@@ -104,6 +136,7 @@ MediaSchema.statics.fromFile = function( file, args ) {
 
 			var promises = [
 				resize(image, 1024, 1024, file),
+				resize(image, 512, 512, file),
 				resize(image, 256, 256, file),
 				resize(image, 64, 64, file)
 			];

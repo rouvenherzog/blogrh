@@ -6,6 +6,7 @@
   "scripts": {
     "test": "test"
   },
+  "bin": "sys/commands.js",
   "author": "rouvenherzog",
   "license": "ISC",
   "dependencies": {
@@ -31,6 +32,7 @@
     "underscore": "~1.8.2",
     "redis": "~0.12.1",
     "grunt-contrib-copy": "~0.8.0",
-    "connect-redis": "~2.2.0"
+    "connect-redis": "~2.2.0",
+    "optimist": "~0.6.1"
   }
 }

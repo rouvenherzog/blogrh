@@ -1,21 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var Media = require('./models').Media;
-var cache = require('../../sys/config').cache;
-
-var getKey = function( account, id ) {
-	return "MEDIA-" + account + (id ? ("-" + id) : "");
-};
+var configuration = require('../../sys/config').configuration;
 
 router
 	.param('id', function( request, response, next, id ) {
 		Media
-			.findById(id)
-			.populate('entry')
-			.exec(function(error, media) {
-				if( error )
-					return next(error);
-
+			.query(configuration.account, { _id: id })
+			.then(function(media) {
 				if( media == null ) {
 					request.status = 404;
 					return next(new Error("Media not found."));
@@ -23,28 +15,20 @@ router
 
 				request.media = media;
 				next();
+			}, function( error ) {
+				return next(error);
 			});
 	});
 
 router.route('/media')
 		.get(function( request, response, next ) {
-			var key = getKey(request.user.account);
-			cache.get(key, function( err, result ) {
-				if( result ) {
-					response.json(JSON.parse(result));
-				} else {
-					Media
-						.find()
-						.populate('entry')
-						.exec(function(error, media) {
-							if( error )
-								return next(error);
-
-							cache.set(key, JSON.stringify(media));
-							response.json(media);
-						});
-				}
-			});
+			Media
+				.query(configuration.account)
+				.then(function(result) {
+					response.json(result);
+				}, function( error ) {
+					return next(error);
+				})
 		})
 
 		.post(function( request, response, next ) {
@@ -52,12 +36,11 @@ router.route('/media')
 			try {
 				Media.fromFile(file, {
 					title: request.body.title,
-					uploadRoot: request.app.get('uploadroot'),
+					uploadRoot: configuration.uploadroot,
 					description: request.body.description,
 					tags: request.body.tags && request.body.tags.split(','),
 					uploaded_by: request.user
 				}).then(function( media ) {
-					cache.del(getKey(request.user.account));
 					response.json(media);
 				});
 			} catch( error ) {
@@ -80,7 +63,6 @@ router.route('/media/:id')
 			if( error )
 				return next(error);
 
-			cache.del(getKey(request.user.account));
 			response.json(request.media);
 		});
 	})
@@ -91,7 +73,6 @@ router.route('/media/:id')
 			if( error )
 				return next(error);
 
-			cache.del(getKey(request.user.account));
 			if( entry ) {
 				entry.media.pull(request.media._id);
 				entry.save(function( error ) {

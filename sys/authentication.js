@@ -2,12 +2,15 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../modules/users/models').User;
 
-module.exports = function( app ) {
+module.exports = function( app, account ) {
 	// Set up authentication
 	passport.use(new LocalStrategy(
 		function( username, password, done ) {
+			console.log(account);
 			User
-				.find()
+				.find({
+					account: account
+				})
 				.or([{username: username}, {email: username}])
 				.findOne(function (err, user) {
 					if( err )

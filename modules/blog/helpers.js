@@ -1,4 +1,7 @@
+var q = require('q');
 var convert = require('convert-rich-text');
+var Entry = require('./models').Entry;
+var _ = require('underscore');
 
 module.exports.render_delta = function( delta ) {
 	return convert(delta, 'html', {

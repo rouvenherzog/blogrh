@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var helpers = require('./helpers');
+var q = require('q');
 var _ = require('underscore');
 
 var EntrySchema = new Schema({
@@ -48,6 +49,36 @@ var EntrySchema = new Schema({
 
 	temp: {}
 });
+
+EntrySchema.statics.query = function( account, args ) {
+	if( !account ) throw(new Error("Account has to be given."));
+
+	args = args || {};
+	args = _.extend({
+		account: account,
+		populate: ['media']
+	}, args);
+
+	var populate = args.populate;
+	delete args['populate'];
+
+	var a = q.defer();
+	var query = Entry.find(args);
+	for( var index in populate ) {
+		query = query.populate(populate[index]);
+	}
+	query.exec(function( err, result ) {
+			if( err )
+				return a.reject(err);
+
+			if( args._id )
+				result = result.length ? result[0] : null;
+
+			a.resolve(result);
+		});
+
+	return a.promise;
+};
 
 EntrySchema.methods.autosave = function( status ) {
 	this.temp = status;

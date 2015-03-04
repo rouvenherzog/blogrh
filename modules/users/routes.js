@@ -12,15 +12,14 @@ router.route('/login')
 	})
 	.post(
 		function( request, response, next ) {
-			var next = request.query.next;
-			if( next.length == 0 ) next = null;
+			var nextpath = request.query.next;
+			if( nextpath.length == 0 ) nextpath = null;
 
-			var successRoute = next || '/admin';
+			var successRoute = nextpath || '/admin';
 			var failureRoute = '/admin/login';
-			if( next )
-				failureRoute += '?next=' + next;
+			if( nextpath )
+				failureRoute += '?next=' + nextpath;
 
-			console.log(next, successRoute, failureRoute)
 			passport.authenticate( 'local', {
 				successRedirect: successRoute,
 				failureRedirect: failureRoute,

@@ -1,7 +1,8 @@
 var routes = require('./routes');
 var api = require('./api');
+var models = require('./models');
 
-module.exports = function( app ) {
+module.exports.register = function( app ) {
 	routes(app);
 	api(app);
 
@@ -15,3 +16,5 @@ module.exports = function( app ) {
 
 	return app;
 };
+
+module.exports.Entry = models.Entry;

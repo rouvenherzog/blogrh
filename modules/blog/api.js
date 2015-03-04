@@ -2,29 +2,26 @@ var express = require('express');
 var router = express.Router();
 var Entry = require('./models').Entry;
 var Media = require('../media/models').Media;
-var cache = require('../../sys/config').cache;
-
-var getKey = function( account, id ) {
-	return "BLOG-" + account + (id ? ("-" + id) : "");
-};
+var configuration = require('../../sys/config').configuration;
 
 router
 	.param('id', function( request, response, next, id ) {
 		Entry
-			.findById(id)
-			.populate('media')
-			.exec(function(error, entry) {
-				if( error )
-					return next(error);
+			.query( configuration.account, { _id: id })
+			.then(
+				function( entry ) {
+					if( entry == null ) {
+						request.status = 404;
+						return next(new Error("Entry not found."));
+					}
 
-				if( entry == null ) {
-					request.status = 404;
-					return next(new Error("Entry not found."));
+					request.entry = entry;
+					next();
+				},
+				function( error ) {
+					return next(error)
 				}
-
-				request.entry = entry;
-				next();
-			});
+			);
 	})
 
 	.param('mediaid', function( request, response, next, id ) {
@@ -46,23 +43,13 @@ router
 
 router.route('/blog')
 		.get(function( request, response, next ) {
-			var key = getKey(request.user.account);
-			cache.get(key, function( err, result ) {
-				if( result ) {
-					response.json(JSON.parse(result));
-				} else {
-					Entry
-						.find()
-						.populate('media')
-						.exec(function(error, entries) {
-							if( error )
-								return next(error);
-
-							cache.set(key, JSON.stringify(entries));
-							response.json(entries);
-						});
-				}
-			});
+			Entry
+				.query(configuration.account)
+				.then(function( result ) {
+					response.json( result );
+				}, function( error ) {
+					return next(error);
+				});
 		})
 
 		.post(function( request, response, next ) {
@@ -74,7 +61,6 @@ router.route('/blog')
 				if( error )
 					return next(error);
 
-				cache.del(getKey(request.user.account));
 				response.json(entry);
 			});
 		});
@@ -102,7 +88,6 @@ router.route('/blog/:id')
 			if( error )
 				return next(error);
 
-			cache.del(getKey(request.user.account));
 			response.json(request.entry);
 		});
 	})
@@ -112,7 +97,6 @@ router.route('/blog/:id')
 			if( error )
 				return next(error);
 
-			cache.del(getKey(request.user.account));
 			response.json({})
 		})
 	});
@@ -128,7 +112,6 @@ router.route('/blog/:id/publish')
 			if( error )
 				return next(error);
 
-			cache.del(getKey(request.user.account));
 			response.json(request.entry);
 		});
 	});
@@ -137,7 +120,6 @@ router.route('/blog/:id/autosave')
 	.delete(function( request,response, next) {
 		request.entry.temp = null;
 		request.entry.save(function(error) {
-			cache.del(getKey(request.user.account));
 			response.json();
 		});
 	})
@@ -158,7 +140,6 @@ router.route('/blog/:id/autosave')
 			if( error )
 				return next(error);
 
-			cache.del(getKey(request.user.account));
 			response.json(request.entry);
 		});
 	});
@@ -169,7 +150,7 @@ router.route('/blog/:id/media')
 		Media.fromFile(file, {
 			title: request.body.title,
 			tags: request.body.tags && request.body.tags.split(','),
-			uploadRoot: request.app.get('uploadroot'),
+			uploadRoot: configuration.uploadroot,
 			description: request.body.description,
 			entry: request.entry,
 			uploaded_by: request.user
@@ -179,7 +160,6 @@ router.route('/blog/:id/media')
 				if( error )
 					return next(error);
 
-				cache.del(getKey(request.user.account));
 				response.json(media);
 			});
 		});
@@ -196,7 +176,6 @@ router.route('/blog/:id/media/:mediaid')
 				if( error )
 					return next(error);
 
-				cache.del(getKey(request.user.account));
 				response.json({});
 			});
 		});

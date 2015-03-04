@@ -21,7 +21,7 @@ div.col-xs-5.col-sm-4.col-md-3.entry-list-wrapper
 				span.label(ng-class="{'label-success' : entry.published, 'label-info': !entry.published}").
 					{{ entry.published ? '#{__('Blog.Published')}': '#{__('Blog.Draft')}' }}
 				| {{ entry.modified_at | date : 'short' }}
-			h4.
+			h3.
 				{{ entry.clean.title || '#{__('Blog.Untitled')}' }}
 
 div.col-xs-7.col-sm-8.col-md-9.entry-detail-wrapper

@@ -1,22 +1,55 @@
+#!/usr/bin/env node
+
 var prompt = require('prompt');
-var mongoose = require('mongoose');
 var config = require('./config');
-mongoose.connect(config.database);
 var User = require('../modules/users/models').User;
 var Account = require('../modules/users/models').Account;
 var Tag = require('../modules/tags/models').Tag;
 var sha512 = require('crypto').createHash('sha512');
 var http = require('http');
 var querystring = require('querystring');
+var argv = require('optimist').argv;
+var mongoose = require('mongoose');
+mongoose.connect(argv.database || "mongodb://localhost/rouvenherzog");
+
+var commands = [];
+var RegisterCommand = function( name, args, description ) {
+	commands.push({
+		name: name,
+		args: args,
+		description: description
+	});
+};
+
+var PrintCommands = function() {
+
+	console.log("============ AVAILABLE COMMANDS ============");
+	for( var index in commands ) {
+		var command = commands[index];
+		console.log(
+			command.name,
+			command.args
+		);
+		console.log(
+			'\t',
+			command.description,
+			'\n',
+			'-----------------------------------------------------------------------'
+		);
+	}
+}
 
 var _Error = function( error ) {
 	console.log(error);
 	process.exit(1);
 }
 
-var CreateUser = function() {
+RegisterCommand('createUser', 'accountid', 'Creates a User for the specified account');
+var CreateUser = function( accountid ) {
+	if( !accountid )
+		return _Error("Specify an account id to create a user for.");
+
 	var cuser = function(result, account) {
-		delete result['accountid'],
 		result.account = account._id;
 		result.password = sha512.update(result.password, 'utf8').digest('hex');
 
@@ -24,8 +57,8 @@ var CreateUser = function() {
 			.find()
 			.or([{username: result.username}, {email: result.email}])
 			.exec(function (error, existing) {
-				if( error ) _Error(error);
-				if( existing.length > 0 ) _Error("Username or email already exists.");
+				if( error ) return _Error(error);
+				if( existing.length > 0 ) return _Error("Username or email already exists.");
 
 				var user = new User(result);
 				user.save(function(error) {
@@ -37,39 +70,29 @@ var CreateUser = function() {
 		});
 	};
 
-	prompt.start();
-	prompt.get(['name', 'username', 'email', 'password', 'accountid'], function( err, result ) {
-		if( result.accountid == '' )
-			prompt.get(['accountname'], function( err, accountresult ) {
-				var account = new Account({
-					name: accountresult.accountname
-				});
-				account.save(function( error ) {
-					if( error ) _Error(error);
+	Account
+		.findById(accountid)
+		.exec(function(error, account) {
+			if( error )
+				return _Error(error);
 
-					console.log("Created Account " + account.name);
-					cuser(result, account);
-				});
-			})
-		else
-			Account
-				.findById(result.accountid)
-				.exec(function(error, account) {
-					if( error ) _Error(error);
+			if( account == null )
+				return _Error("Account not found.");
 
-					if( account == null ) {
-						console.log("Account not found.");
-						return;
-					}
-
-					cuser(result, account);
-				});
-	});
+			prompt.start();
+			prompt.get(['name', 'username', 'email', 'password'], function( err, result ) {
+				cuser(result, account);
+			});
+		});
 };
 
-var ListUser = function() {
+RegisterCommand('listUser', '[accountid]', 'List all users or users for the specified account.');
+var ListUser = function(accountid) {
+	var args = undefined;
+	if( accountid )
+		args = {account:accountid};
 	User
-		.find()
+		.find(args)
 		.exec(function(error, result) {
 			if( error ) _Error(error);
 
@@ -82,6 +105,23 @@ var ListUser = function() {
 		});
 };
 
+RegisterCommand('createAccount', '', 'Creates a new account.');
+var CreateAccount = function() {
+	prompt.get(['accountname'], function( err, accountresult ) {
+		var account = new Account({
+			name: accountresult.accountname
+		});
+		account.save(function( error ) {
+			if( error ) _Error(error);
+
+			console.log("Created Account " + account.name, account._id);
+
+			process.exit(0);
+		});
+	})
+};
+
+RegisterCommand('listAccounts', '', 'Lists all accounts.');
 var ListAccounts = function() {
 	Account
 		.find()
@@ -97,104 +137,86 @@ var ListAccounts = function() {
 		});
 };
 
-var WhipeData = function() {
-	User
-		.find()
-		.exec(function(error, result) {
-			if( error ) _Error(error);
+RegisterCommand('createTag', 'accountid', 'Creates a Tag for the specified account.');
+var CreateTag = function( accountid ) {
+	if( !accountid )
+		return _Error("Specify an account id to create a user for.");
 
-			result.forEach(function(item) {
-				item.remove();
-			});
-
-			process.exit(0);
-		});
 	Account
-		.find()
-		.exec(function(error, result) {
-			if( error ) _Error(error);
-
-			result.forEach(function(item) {
-				item.remove();
-			});
-
-			process.exit(0);
-		});
-};
-
-var CreateTag = function() {
-	prompt.start();
-	prompt.get(['name'], function( err, result ) {
-		(new Tag({name: result.name})).save(function(error) {
+		.findById(accountid)
+		.exec(function(error, account) {
 			if( error )
-				throw(error);
+				return _Error(error);
 
+			if( account == null )
+				return _Error("Account not found.");
+
+			prompt.start();
+			prompt.get(['name'], function( err, result ) {
+				var tag = new Tag({
+					name: result.name,
+					account: account
+				});
+				tag.save(function(error) {
+					if( error )
+						return _Error(error);
+
+					process.exit(0);
+				});
+			});
+		});
+};
+
+RegisterCommand('deleteOrphanAccounts', '', 'Deletes all accounts that do not have users assigned.');
+var DeleteOrphanAccounts = function() {
+	User.find(function(err, result) {
+		var accounts = [];
+		for( var index in result ) {
+			var user = result[index];
+			var account = String(user.account);
+			if( accounts.indexOf(account) == -1 )
+				accounts.push(account);
+		}
+
+		Account.find({
+			_id: {
+				$nin: accounts
+			}
+		}, function(err, result) {
+			var length = result.length;
+			for( var index in result ) {
+				result[index].remove();
+			}
+
+			console.log(result.length, "Accounts removed");
 			process.exit(0);
 		});
 	});
 };
 
-var InitPiwik = function() {
-
-};
-
-var CachePiwik = function() {
-	var cache = config.cache;
-	var query = querystring.stringify({
-		module: 'API',
-		method: 'VisitsSummary.get',
-
-		idSite: 1,
-		period: 'day',
-		date: 'last14',
-		format: 'json',
-		token_auth: '5a78aad39d2846a3d58845c5514a375d'
-	});
-
-	http.get(
-		'http://piwik.rouvenherzog.me/?' + query,
-		function(res) {
-			console.log( 'http://piwik.rouvenherzog.me/?' + query );
-			console.log( res.statusCode );
-			res.on('data', function(data) {
-				cache.set( "DASHBOARD-CACHE", data.toString() );
-				console.log("================================");
-				console.log( data.toString() );
-				console.log("================================");
-			});
-
-			res.on('end', function() {
-				process.exit(0);
-			});
-		}
-	)
-
-	.on('error', function(error) {
-		console.log(error);
-		process.exit(-1);
-	});
-};
-
-var command = process.argv[2];
+var command = argv._[0];
 switch( command ) {
+	case 'createAccount':
+		CreateAccount();
+		break;
 	case 'createUser':
-		CreateUser();
+		CreateUser(argv._[1]);
 		break;
 	case 'listUser':
-		ListUser();
+		ListUser(argv._[1]);
 		break;
 	case 'listAccounts':
 		ListAccounts();
 		break;
-	case 'whipeData':
-		WhipeData();
-		break;
 	case 'createTag':
-		CreateTag();
+		CreateTag(argv._[1]);
 		break;
-	case 'cachePiwik':
-		CachePiwik();
+	case 'deleteOrphanAccounts':
+		DeleteOrphanAccounts();
 		break;
 	default:
-		break;
+		if( command )
+			console.log('Command '+ command +' not found.');
+		PrintCommands();
+		process.exit(1);
 }

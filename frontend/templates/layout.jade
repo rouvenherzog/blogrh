@@ -15,14 +15,20 @@ html
 			div.collapse.navbar-collapse#app-navbar
 				ul.nav.navbar-nav
 					each module in app.get('backend').modules
-						li(class={active: module.root == url})
-							a(href=module.root, target="_self")= module.name
+						li(class=((module.root != '/admin/' || url == '/admin/') && url.indexOf(module.root) == 0) ? 'active' : '')
+							a(href=module.root, target="_self")
+								| #{module.name}
+				ul.nav.navbar-nav
 
 				ul.nav.navbar-nav.navbar-right
 					li.navbar-text
 						| #{__('Navigation.Hello')}, 
 						rouvenherzog-user-name
 						| !
+					li
+						a.text-primary(href="/", target="_self")
+							i.fa.fa-eye &nbsp;
+							| Show Website
 					li
 						a.text-primary(href="", rouvenherzog-open-profile-form)
 							i.fa.fa-cogs

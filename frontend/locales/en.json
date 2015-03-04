@@ -106,7 +106,8 @@
 		"HelloPleaseLogIn": "Hello, please login to continue..",
 		"EmailOrUsername": "Email or Username",
 		"Password": "Password",
-		"Go": "Go"
+		"Go": "Go",
+		"GoBack": "Go Back to website"
 	},
 	"Navigation": {
 		"Hello": "Hello",

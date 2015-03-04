@@ -1,8 +1,34 @@
+@import 'colors';
+
 html, body {
 	height: 100%;
 	overflow: hidden;
 
+	.navbar-inverse {
+		.navbar-text {
+			color: @lightblue20;
+		}
+
+		.navbar-nav {
+			&> li {
+				&> a {
+					color: @lightblue20;
+				}
+
+				&.active {
+					&> a,
+					&> a:hover,
+					&> a:focus {
+						background-color: lighten(@darkblue40, 5%);
+					}
+				}
+			}
+		}
+	}
+
 	&> nav.navbar {
+		border-top: 0px;
+		background-color: @darkblue40;
 		position: relative;
 		z-index: 100;
 		border-radius: 0px;

@@ -1,11 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var cache = require('../../sys/config').cache;
+var configuration = require('../../sys/config').configuration;
 var helpers = require('./helpers');
 
 router.route('/dashboard')
 	.get(function( request, response ) {
-		var piwik = request.app.get('piwik');
+		var cache = configuration.cache;
+		var piwik = configuration.piwik;
+
 		if( !piwik )
 			return request.json({});
 

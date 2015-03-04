@@ -132,7 +132,8 @@
 		"HelloPleaseLogIn": "Hallo, log dich ein um fortzufahren..",
 		"EmailOrUsername": "Email oder Benutzername",
 		"Password": "Passwort",
-		"Go": "Los"
+		"Go": "Los",
+		"GoBack": "Zurück zur Webseite"
 	},
 	"User": {
 		"EditModal": {
