@@ -6,7 +6,6 @@ module.exports = function( app, account ) {
 	// Set up authentication
 	passport.use(new LocalStrategy(
 		function( username, password, done ) {
-			console.log(account);
 			User
 				.find({
 					account: account

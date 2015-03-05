@@ -92,8 +92,11 @@ module.exports.init = function( app, config ) {
 		})
 	}));
 	app.use('/admin', function( request, response, next ) {
-		request.session.lastVisited = new Date();
-		request.session.touch();
+		if( request.session ) {
+			request.session.lastVisited = new Date();
+			request.session.touch();
+		}
+
 		next();
 	});
 	app.use(bodyParser.urlencoded({ extended: true }));

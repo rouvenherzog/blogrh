@@ -71,7 +71,7 @@ EntrySchema.statics.query = function( account, args ) {
 			if( err )
 				return a.reject(err);
 
-			if( args._id )
+			if( args._id && typeof args._id == 'string' )
 				result = result.length ? result[0] : null;
 
 			a.resolve(result);

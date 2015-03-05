@@ -4,11 +4,17 @@ var passport = require('passport');
 
 router.route('/login')
 	.get(function( request, response ) {
-		response.render('users/views/login', {
-			backgroundNumber: parseInt(Math.random() * 3)+1,
-			error: request.flash('error'),
-			next: request.query.next
-		});
+		if( request.isAuthenticated() ) {
+			return response.redirect(request.query.nect || '/admin');
+		} else {
+			return response.render('users/views/login', {
+				backgroundNumber: parseInt(Math.random() * 3)+1,
+				error: request.flash('error'),
+				next: request.query.next,
+				username: request.query.username,
+				password: request.query.password
+			});
+		}
 	})
 	.post(
 		function( request, response, next ) {

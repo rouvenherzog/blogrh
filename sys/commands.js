@@ -86,11 +86,12 @@ var CreateUser = function( accountid ) {
 		});
 };
 
-RegisterCommand('listUser', '[accountid]', 'List all users or users for the specified account.');
-var ListUser = function(accountid) {
+RegisterCommand('listUsers', '[accountid]', 'List all users or users for the specified account.');
+var ListUsers = function(accountid) {
 	var args = undefined;
 	if( accountid )
 		args = {account:accountid};
+
 	User
 		.find(args)
 		.exec(function(error, result) {
@@ -202,8 +203,8 @@ switch( command ) {
 	case 'createUser':
 		CreateUser(argv._[1]);
 		break;
-	case 'listUser':
-		ListUser(argv._[1]);
+	case 'listUsers':
+		ListUsers(argv._[1]);
 		break;
 	case 'listAccounts':
 		ListAccounts();

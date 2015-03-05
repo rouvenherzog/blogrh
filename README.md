@@ -10,7 +10,15 @@ If you haven't set up an express app yet, check out the demo or head over to [ex
 
 Additionally, you'll have to have a mongodb available. This plugin uses mongodb to store users, blog entries and media. Instructions how to install mongodb are [here](http://docs.mongodb.org/manual/installation/).
 
-Request from Piwik get cached for an hour. rouvenherzog uses redis for this. Be sure to have [redis up and running](http://redis.io/topics/quickstart) if you want to display analytics on your dashboard. By default the app connects to a redis instance running at `localhost:6379`. You can change the host and port in the [configs](#Configuration).
+rouvenherzog uses Redis as cache for piwik requests and sessions. Be sure to have [redis up and running](http://redis.io/topics/quickstart) before starting the app. By default the app connects to a redis instance running at `localhost:6379`. You can change the host and port in the [configs](#Configuration).
+
+## Commandline
+By default all changes from the command line happen under `mongodb://localhost/rouvenherzog`. Reading: The database rouvenherzog on localhost. If you want to change the host and/or database add the parameter `--database <mongodb://host/database>` to your command. For instance:
+    
+    // To create an Account in the database mydatabase
+    rouveherzog createAccount --database mongodb://localhost/mydatabase
+    // To create a User in the database mydatabase
+    rouvenherzog createUser <accountid> --database mongodb://localhost/mydatabase
 
 ## Installation and Set up
 Install the plugin from npm
@@ -18,10 +26,10 @@ Install the plugin from npm
 	npm install rouvenherzog [--save]
 
 In order to login you need to create an account and at least one user first.
-rouvenherzog offers command line interface to do these tasks. Navigate with a console
-into your application directory and run the following commands. You will be prompted to insert the required information during the process.
+rouvenherzog offers a command line interface to do these tasks. [**Read the paragraph about the commandline first**](#Commandline) to make sure you're adding objects to the right database. Now navigate with a console
+into your application directory and run the following commands. You will be prompted to insert the required information during the process. 
 
-	rouvenherzog createAccount // This outputs an account id ..
+    rouvenherzog createAccount // This outputs an account id ..
 	rouvenherzog createUser <accountid> // .. insert this id here
 	
 Why do you have to create an account? This plugin works with multiple sites sharing one database as well. Additionally you might of course change the `database` field whilst registering the plugin to specify a database per site. Up to you. In any case you'll have to provide the account id when registering the backend. Only objects that are linked to that account will be displayed and editable.
@@ -67,8 +75,10 @@ As stated above, `account` is the account id you generated. All objects created 
 | redis || Two fields again: `host` and `port`. The combination has to point at the address and port your redis instance runs at. By default his is localhost:6379.
 
 ## Further
+For furhter information head over to [the wiki](https://github.com/rouvenherzog/rouvenherzog/wiki/00-Home).
+
 ### Piwik
-If you track the visiters on your site you can fetch recent information and display them on the backends dashboard. [Piwik](http://www.piwik.com) is a free, open soure analytics tool that provides a variety of functionality to analyse user behaviour on your site.
+If you track the visiters on your site you can fetch recent information and display them on the backends dashboard. [Piwik](http://www.piwik.org) is a free, open soure analytics tool that provides a variety of functionality to analyse user behaviour on your site.
 To enable the Piwik dashboard simply provide your information when registering the backend. You find these information when you log in to piwik.
 
     rouvenherzog.register( app, {

@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
+var configuration = require('../../sys/config').configuration;
 
 router
 	.get('/', function( request, response ) {
 		response.render('dashboard/views/index', {
-			piwik: request.app.get('piwik') ? true : false
+			piwik: configuration.piwik ? true : false
 		});
 	})
 
