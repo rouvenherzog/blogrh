@@ -48,7 +48,9 @@
 			"created": "Artikel erstellt."
 		},
 		"EntryNotFound": "Ups. Der Artikel wurde nicht gefunden. Warum wählst du nicht einen aus der Liste stattdessen?",
-		"CreateAPost": "Klicke auf 'Hinzufügen' um einen Artikel zu erstellen."
+		"CreateAPost": "Klicke auf 'Hinzufügen' um einen Artikel zu erstellen.",
+		"EntryNotFoundSingle": "Ups. Der Artikel wurde nicht gefunden."
+
 	},
 	"Quill": {
 		"FontSize": {

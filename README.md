@@ -1,4 +1,13 @@
 # rouvenherzog
+node module
+plugs into express app
+adds backend to manage blog entries and media
+flexible - use of objects is up to you
+multilpe user
+runs using mongodb and redis
+
+rouvenherzog is a simple blogging cms that plugs into yourx express app and adds a backend to create and modify blog entries, as well as upload and tag images. How you display the created information is up to you. Simply query the objects you want to display in your route. rouvenherzog runs on mongodb and uses redis for caching. You might as well use the same database for multiple instances of rouvenherzog, since it offers a mutiple user system.
+
 rouvenherzog is a simple, pluggable NodeJS blogging and gallery content management system. It's highly flexible as it plugs in a backend to handle a blog and gallery only. How you use the created entries is up to you.
 
 [Check out the Demo!](http://demo.rouvenherzog.me)

@@ -3,47 +3,49 @@ BlogModule.controller('rouvenherzog.Blog.editController', [
 	'$routeParams',
 	'$location',
 	'rouvenherzog.Blog.BlogService',
-	function( $scope, $routeParams, $location, BlogService ) {
-		var saved_state;
+	'rouvenherzog.Notification.ConfirmationService',
+	function( $scope, $routeParams, $location, BlogService, ConfirmationService ) {
 		$scope.entry = undefined;
 
 		BlogService
 			.getEntry( $routeParams.id )
 			.then(function( entry ) {
-				saved_state = entry.toJSON();
 				$scope.entry = entry;
 			});
 
 		$scope.save = function() {
 			$scope.entry
-				.save()
-				.then(function() {
-					saved_state = $scope.entry.toJSON();
-				});
-		};
-
-		$scope.reset = function() {
-			$scope.entry.set( saved_state );
+				.save();
 		};
 
 		$scope.publish = function() {
 			$scope.entry
-				.publish()
-				.then(function() {
-					saved_state = $scope.entry.toJSON();
-				});
+				.publish();
 		};
 
-		$scope.delete = function() {
-			BlogService
-				.deleteEntry($scope.entry)
-				.then(function() {
-					$scope.back();
-				});
+		$scope.delete = function($event) {
+			$event.stopPropagation();
+
+			ConfirmationService.confirm(
+				$event.target, {
+					placement: 'top',
+					title: 'Blog.deleteConfirmation.title',
+					confirmText: 'Blog.deleteConfirmation.okay',
+					cancelText: 'Blog.deleteConfirmation.cancel'
+				}
+			).then(function() {
+				BlogService
+					.deleteEntry($scope.entry)
+					.then(function() {
+						$scope.back();
+					});
+			});
 		};
 
 		$scope.back = function() {
-			$scope.reset();
+			if( $scope.entry )
+				$scope.reset();
+
 			$location.path('/admin/blog');
 		};
 	}

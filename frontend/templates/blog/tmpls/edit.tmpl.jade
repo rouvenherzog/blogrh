@@ -1,15 +1,18 @@
 div.entry-edit-wrapper
-	rouvenherzog-blog-edit-entry-form(entry="entry")
+	rouvenherzog-blog-edit-entry-form(entry="entry", ng-if="entry")
+	h1(ng-if="!entry").
+		#{__('Blog.EntryNotFoundSingle')}
 
 	div.navbar.navbar-default.navbar-fixed-bottom
 		div.col-xs-12
 			button.btn.btn-default.navbar-btn(ng-click="back()")
 				i.fa.fa-chevron-left &nbsp;
 				| #{__('Blog.Menu.Back')}
-			button.btn.btn-default.navbar-btn.pull-right(ng-click="delete()")
-				i.fa.fa-trash &nbsp;
-				| #{__('Blog.Menu.Delete')}
-			div.btn-group.pull-right
+			div.btn-group.pull-right(ng-if="entry")
+				button.btn.btn-default.navbar-btn(ng-click="delete($event)")
+					i.fa.fa-trash &nbsp;
+					| #{__('Blog.Menu.Delete')}
+			div.btn-group.pull-right(ng-if="entry")
 				button.btn.btn-default.navbar-btn(ng-click="save()")
 					i.fa.fa-check &nbsp;
 					| #{__('Blog.Menu.Save')}

@@ -21,7 +21,7 @@ html
 				ul.nav.navbar-nav
 
 				ul.nav.navbar-nav.navbar-right
-					li.navbar-text
+					li.navbar-text.hidden-xs
 						| #{__('Navigation.Hello')}, 
 						rouvenherzog-user-name
 						| !
@@ -31,7 +31,8 @@ html
 							| Show Website
 					li
 						a.text-primary(href="", rouvenherzog-open-profile-form)
-							i.fa.fa-cogs
+							i.fa.fa-cogs &nbsp;
+							| Profile
 					li
 						a(href="/admin/logout", target="_self")
 							i.fa.fa-leave

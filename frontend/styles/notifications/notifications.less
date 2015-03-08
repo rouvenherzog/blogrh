@@ -4,6 +4,10 @@ rouvenherzog-notification-list {
 	left: 20px;
 	bottom: 20px;
 
+	@media( max-width: 767px ) {
+		bottom: 70px;
+	}
+
 	ul {
 		list-style: none;
 		margin: 0px;
@@ -18,6 +22,20 @@ rouvenherzog-notification-list {
 				position: absolute;
 				right: 10px;
 				top: 5px;
+			}
+
+			@media( max-width: 767px ) {
+				width: auto;
+				padding-right: 45px !important;
+				max-width: 100%;
+
+				.close {
+					top: 15px;
+
+					i {
+						font-size: 26px;
+					}
+				}
 			}
 
 			div {

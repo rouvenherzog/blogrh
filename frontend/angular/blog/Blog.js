@@ -33,3 +33,23 @@ BlogModule.config([
 			});
 	}
 ]);
+
+BlogModule.run([
+	'$window',
+	'$location',
+	'$route',
+	function( $window, $location, $route ) {
+		var isWide = window.innerWidth >= 768;
+		window.addEventListener('resize', function( event ) {
+			if(
+				(isWide && window.innerWidth < 768) ||
+				(!isWide && window.innerWidth >= 768)
+			) {
+				$route.reload();
+				isWide = window.innerWidth >= 768;
+			}
+		});
+
+		console.log( $route );
+	}
+])
