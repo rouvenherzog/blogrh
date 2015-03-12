@@ -8,22 +8,10 @@ BlogModule.config([
 	'$locationProvider',
 	function( $routeProvider, $locationProvider ) {
 		var base = document.getElementsByTagName('base').item(0).getAttribute('href') + '/blog';
-		if( window.innerWidth < 768 ) {
-			$routeProvider
-				.when(base, {
-					templateUrl: '/angular/blog/tmpls/index.tmpl',
-					controller: 'rouvenherzog.Blog.indexController'
-				})
-				.when(base + '/:id', {
-					templateUrl: '/angular/blog/tmpls/edit.tmpl',
-					controller: 'rouvenherzog.Blog.editController'
-				});
-		} else {
-			$routeProvider.when(base + '/:id?', {
-				templateUrl: '/angular/blog/tmpls/combined-edit.tmpl',
-				controller: 'rouvenherzog.Blog.combinedController'
-			});
-		}
+		$routeProvider.when(base + '/:id?', {
+			template: '<ng-include src="template"></ng-include>',
+			controller: 'rouvenherzog.Blog.blogController'
+		});
 
 		// Default 404
 		$routeProvider
@@ -33,23 +21,3 @@ BlogModule.config([
 			});
 	}
 ]);
-
-BlogModule.run([
-	'$window',
-	'$location',
-	'$route',
-	function( $window, $location, $route ) {
-		var isWide = window.innerWidth >= 768;
-		window.addEventListener('resize', function( event ) {
-			if(
-				(isWide && window.innerWidth < 768) ||
-				(!isWide && window.innerWidth >= 768)
-			) {
-				$route.reload();
-				isWide = window.innerWidth >= 768;
-			}
-		});
-
-		console.log( $route );
-	}
-])

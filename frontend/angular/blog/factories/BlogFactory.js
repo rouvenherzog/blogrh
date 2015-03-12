@@ -28,7 +28,10 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 			};
 
 			// Clean Copy
+			// Used to display server state in list etc
+			// this.* is dirty version, used in forms
 			this.clean = {};
+
 			// This gets updated only from the server ( recover entry )
 			// Angular watches this to update its content.
 			// watching the entry itself would throw a max stack size exceeded
@@ -44,6 +47,7 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 		};
 
 		Entry.prototype.modified = function() {
+			console.log(this);
 			this.dirty = false;
 			for( var key in this.fields ) {
 				if( !angular.equals(this[key], this.clean[key]) ) {
@@ -159,18 +163,26 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 		};
 
 		Entry.prototype.validate = function( key, value ) {
-			if( angular.isObject(value) ) {
-				var temp = value;
-				value = angular.isArray(value) ? [] : {};
-				for( var index in temp ) {
-					value[index] = temp[index];
+			var deepcopy = function( obj ) {
+				if( angular.isObject(obj) ) {
+					var result = angular.isArray(obj) ? [] : {};
+					for( var index in obj ) {
+						result[index] = deepcopy( obj[index] );
+					}
+					return result;
+				} else {
+					return obj;
 				}
-			}
+			};
+
+			value = deepcopy(value);
 
 			// If the rendered field gets set, trust it
 			if( ['body', 'summary'].indexOf(key) != -1 ) {
 				if( typeof value == "object" && typeof value.rendered == "string" )
 					value.rendered = $sce.trustAsHtml(value.rendered);
+			} else if( key == 'rendered' ) {
+				value = $sce.trustAsHtml(value);
 			} else {
 				value = angular.copy(value);
 			}
@@ -205,9 +217,9 @@ BlogModule.factory('rouvenherzog.Blog.BlogFactory', [
 				if( this[key] && angular.isObject(args[key]) ) {
 					for( var index in args[key] ) {
 						if( clean )
-							this.clean[key][index] = args[key][index];
-						this.copy[key][index] = args[key][index];
-						this[key][index] = args[key][index];
+							this.clean[key][index] = this.validate(index, args[key][index]);
+						this.copy[key][index] = this.validate(index, args[key][index]);
+						this[key][index] = this.validate(index, args[key][index]);
 					}
 				} else {
 					if( clean )

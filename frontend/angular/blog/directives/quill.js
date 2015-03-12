@@ -43,15 +43,12 @@ BlogModule.directive('rouvenherzogBlogQuill', [
 						// Initialize listeners
 						quill.on('text-change', function(delta, source) {
 							var ops = quill.getContents().ops;
-							if( ops.length > 0 ) {
-								var last = ops[ops.length-1].insert;
-								if( last.match(/^\n$/g) )
-									ops = ops.splice(0, ops.length-1);
-								else if( last.match(/\n$/g) )
-									ops[ops.length-1].insert = last.substr(0, last.length-1 );
-							}
 
-							model[field] = ops;
+							// model[field] = ops;
+							model[field].splice(0);
+							for( var index in ops )
+								model[field][index] = ops[index];
+
 							if( $scope.notify )
 								$scope.notify(ops);
 							if( !$rootScope.$$phase )

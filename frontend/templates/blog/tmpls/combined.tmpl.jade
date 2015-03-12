@@ -13,27 +13,27 @@ div.col-xs-5.col-sm-4.col-md-3.entry-list-wrapper
 
 	ul.list-group.entry-list
 		li.list-group-item.entry-list-item(
-			ng-repeat="entry in entries | orderBy : listSorts.active.field : listSorts.active.direction",
-			ng-class="{'active': entry==selected_entry}",
-			ng-click="open(entry)"
+			ng-repeat="list_entry in entries | orderBy : listSorts.active.field : listSorts.active.direction",
+			ng-class="{'active': list_entry==entry}",
+			ng-click="open(list_entry)"
 		)
 			div.info
-				span.label(ng-class="{'label-success' : entry.published, 'label-info': !entry.published}").
-					{{ entry.published ? '#{__('Blog.Published')}': '#{__('Blog.Draft')}' }}
-				| {{ entry.modified_at | date : 'short' }}
+				span.label(ng-class="{'label-success' : list_entry.published, 'label-info': !list_entry.published}").
+					{{ list_entry.published ? '#{__('Blog.Published')}': '#{__('Blog.Draft')}' }}
+				| {{ list_entry.modified_at | date : 'short' }}
 			h3.
-				{{ entry.clean.title || '#{__('Blog.Untitled')}' }}
+				{{ list_entry.clean.title || '#{__('Blog.Untitled')}' }}
 
 div.col-xs-7.col-sm-8.col-md-9.entry-detail-wrapper
 	div(ng-if="not_found")
 		h1.entry-not-found.
 			#{__('Blog.EntryNotFound')}
 
-	div(ng-if="!not_found && !selected_entry")
+	div(ng-if="!not_found && !entry")
 		h1.no-entry-selected.
 			{{ (entries.length > 0) ? "#{__('Blog.SelectAPostFromList')}" : "#{__('Blog.CreateAPost')}" }}
 
-	div.selected(ng-if="selected_entry")
+	div.selected(ng-if="entry")
 		div.navbar.navbar-default.navbar-fixed-top
 			div.col-xs-7.col-xs-offset-5.col.sm-8.col-sm-offset-4.col-md-9.col-md-offset-3
 				ul.nav.navbar-nav
@@ -48,8 +48,8 @@ div.col-xs-7.col-sm-8.col-md-9.entry-detail-wrapper
 								i.fa.fa-check &nbsp;
 								| #{__('Blog.Menu.Save')}
 							button.btn.btn-default.navbar-btn(ng-click="publish()")
-								i.fa(ng-class="{'fa-upload': !selected_entry.published, 'fa-ban': selected_entry.published}") &nbsp;
-								| {{ selected_entry.published ? '#{__('Blog.Menu.Unpublish')}' : '#{__('Blog.Menu.Publish')}' }}
+								i.fa(ng-class="{'fa-upload': !entry.published, 'fa-ban': entry.published}") &nbsp;
+								| {{ entry.published ? '#{__('Blog.Menu.Unpublish')}' : '#{__('Blog.Menu.Publish')}' }}
 					li &nbsp;
 					li
 						button.btn.btn-default.navbar-btn(
@@ -60,11 +60,11 @@ div.col-xs-7.col-sm-8.col-md-9.entry-detail-wrapper
 					li &nbsp;
 				
 				ul.nav.navbar-nav.navbar-right
-					li(ng-if="selected_entry.dirty")
+					li(ng-if="entry.dirty")
 						p.navbar-text
 							small.
-								{{ !selected_entry.saved ? ( selected_entry.saving ? 'Saving ...' : 'Not Cached') : 'Cached' }}
+								{{ !entry.saved ? ( entry.saving ? 'Saving ...' : 'Not Cached') : 'Cached' }}
 
-		rouvenherzog-blog-edit-entry-form(entry="selected_entry")
+		rouvenherzog-blog-edit-entry-form(entry="entry")
 
 div.clearfix
