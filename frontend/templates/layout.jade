@@ -53,4 +53,19 @@ html
 		script(type="text/javascript", src="/static/admin/bower_components/angular-ui-select/dist/select.js")
 		script(type="text/javascript", src="/static/admin/bower_components/quill/dist/quill.js")
 		script(type="text/javascript", src="/static/admin/js/rouvenherzog.js")
+
+		script(type="text/javascript").
+			var _paq = _paq || [];
+			_paq.push(['trackPageView']);
+			_paq.push(['enableLinkTracking']);
+			(function() {
+			var u="//piwik.rouvenherzog.me/";
+			_paq.push(['setTrackerUrl', u+'piwik.php']);
+			_paq.push(['setSiteId', 4]);
+			var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+			g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+			})();
+		noscript
+			p
+				img(src="//piwik.rouvenherzog.me/piwik.php?idsite=4", style="border:0;", alt="")
 		block footer

@@ -10,7 +10,7 @@ var http = require('http');
 var querystring = require('querystring');
 var argv = require('optimist').argv;
 var mongoose = require('mongoose');
-mongoose.connect(argv.database || "mongodb://localhost/rouvenherzog");
+mongoose.connect(argv.database || "mongodb://localhost/blogrh");
 
 var commands = [];
 var RegisterCommand = function( name, args, description ) {
@@ -141,7 +141,7 @@ var ListAccounts = function() {
 RegisterCommand('createTag', 'accountid', 'Creates a Tag for the specified account.');
 var CreateTag = function( accountid ) {
 	if( !accountid )
-		return _Error("Specify an account id to create a user for.");
+		return _Error("Specify an account id to create a tag for.");
 
 	Account
 		.findById(accountid)

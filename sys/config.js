@@ -26,7 +26,7 @@ module.exports.configuration = configuration;
 module.exports.init = function( app, config ) {
 	config = _.extend({
 		uploadroot: '/static/uploads',
-		database: 'mongodb://localhost/rouvenherzog',
+		database: 'mongodb://localhost/blogrh',
 		redis: {
 			port: '6379',
 			host: 'localhost'
@@ -40,7 +40,7 @@ module.exports.init = function( app, config ) {
 
 	var throwError = function( error ) {
 		var text = error +
-			"\nHead over to https://github.com/rouvenherzog/rouvenherzog " +
+			"\nHead over to https://github.com/rouvenherzog/blogrh " +
 			"for more information.";
 
 		console.error(text);
