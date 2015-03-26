@@ -25,7 +25,7 @@ blogrh uses Redis as cache for piwik requests and sessions. Be sure to have [red
 By default all changes from the command line happen under `mongodb://localhost/blogrh`. Reading: The database blogrh on localhost. If you want to change the host and/or database add the parameter `--database <mongodb://host/database>` to your command. For instance:
     
     // To create an Account in the database mydatabase
-    rouveherzog createAccount --database mongodb://localhost/mydatabase
+    blogrh createAccount --database mongodb://localhost/mydatabase
     // To create a User in the database mydatabase
     blogrh createUser <accountid> --database mongodb://localhost/mydatabase
 
