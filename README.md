@@ -19,7 +19,7 @@ If you haven't set up an express app yet, check out the demo or head over to [ex
 
 Additionally, you'll have to have a mongodb available. This plugin uses mongodb to store users, blog entries and media. Instructions how to install mongodb are [here](http://docs.mongodb.org/manual/installation/).
 
-blogrh uses Redis as cache for piwik requests and sessions. Be sure to have [redis up and running](http://redis.io/topics/quickstart) before starting the app. By default the app connects to a redis instance running at `localhost:6379`. You can change the host and port in the [configs](#Configuration).
+blogrh uses Redis as cache for piwik requests and sessions. Be sure to have [redis up and running](http://redis.io/topics/quickstart) before starting the app. By default the app connects to a redis instance running at `localhost:6379`. You can change the host and port in the [configs](#configuration).
 
 ## Commandline
 By default all changes from the command line happen under `mongodb://localhost/blogrh`. Reading: The database blogrh on localhost. If you want to change the host and/or database add the parameter `--database <mongodb://host/database>` to your command. For instance:
@@ -35,7 +35,7 @@ Install the plugin from npm
 	npm install blogrh [--save]
 
 In order to login you need to create an account and at least one user first.
-blogrh offers a command line interface to do these tasks. [**Read the paragraph about the commandline first**](#Commandline) to make sure you're adding objects to the right database. Now navigate with a console
+blogrh offers a command line interface to do these tasks. [**Read the paragraph about the commandline first**](#commandline) to make sure you're adding objects to the right database. Now navigate with a console
 into your application directory and run the following commands. You will be prompted to insert the required information during the process. 
 
     blogrh createAccount // This outputs an account id ..
@@ -79,7 +79,7 @@ As stated above, `account` is the account id you generated. All objects created 
 | account || **required** The Stringified monogodb account id. Run `blogrh listAccounts` to find the account id you generated earlier if you followed the steps above.
 | uploaddir|| **required** The directory user uploaded files get stored in. Specify a directory you'll be able to serve those files from. For instance a subdirectoy of your `public` Folder.
 | uploadroot| /static/uploads | The URL prefix for uploaded documents. Media objects have `path` fields that concatenate this path with the filename.
-| piwik| `null` | The dashboard fetches recent data from piwik analytics if specified. *Google Analytics support might be avaialable in the future.*  [See below](#Piwik) for further information.
+| piwik| `null` | The dashboard fetches recent data from piwik analytics if specified. *Google Analytics support might be avaialable in the future.*  [See below](#piwik) for further information.
 | secrets || An object with two fields of type String: `session` and `cookie`. Those strings are secret keys the sessions and cookies get secured with. If not provided those keys get generated randomly. Only side effect of generated keys is that all users will get logged out on server restart since their sessions are not valid anymore.
 | redis || Two fields again: `host` and `port`. The combination has to point at the address and port your redis instance runs at. By default his is localhost:6379.
 
