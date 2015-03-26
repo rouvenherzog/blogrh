@@ -84,7 +84,7 @@ As stated above, `account` is the account id you generated. All objects created 
 | redis || Two fields again: `host` and `port`. The combination has to point at the address and port your redis instance runs at. By default his is localhost:6379.
 
 ## Further
-For furhter information head over to [the wiki](https://github.com/blogrh/blogrh/wiki/00-Home).
+For furhter information head over to [the wiki](https://github.com/rouvenherzog/blogrh/wiki/00-Home).
 
 ### Piwik
 If you track the visiters on your site you can fetch recent information and display them on the backends dashboard. [Piwik](http://www.piwik.org) is a free, open soure analytics tool that provides a variety of functionality to analyse user behaviour on your site.
