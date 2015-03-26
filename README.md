@@ -10,7 +10,7 @@ blogrh is a simple blogging cms that plugs into yourx express app and adds a bac
 
 blogrh is a simple, pluggable NodeJS blogging and gallery content management system. It's highly flexible as it plugs in a backend to handle a blog and gallery only. How you use the created entries is up to you.
 
-[Check out the Demo!](http://blogrh.rouvenherzog.me)
+[Check out the Demo!](http://demo.rouvenherzog.me)
 
 ## Prerequisite
 You have a Express Application set up. This is necesarry, since blogrh only plugs into your existing app. This gives you total flexibility how to use the created objects.
