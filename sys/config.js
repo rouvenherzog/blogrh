@@ -128,6 +128,7 @@ module.exports.init = function( app, config ) {
 		i18n.init( request, response );
 		if( request.user )
 			request.setLocale(request.user.locale);
+
 		next();
 	};
 	i18n.configure({

@@ -62,11 +62,18 @@ EntrySchema.statics.query = function( account, args ) {
 	var populate = args.populate;
 	delete args['populate'];
 
+	var sort = args.sort;
+	delete args['sort'];
+
 	var a = q.defer();
 	var query = Entry.find(args);
 	for( var index in populate ) {
 		query = query.populate(populate[index]);
 	}
+
+	if( sort )
+		query = query.sort(sort);
+
 	query.exec(function( err, result ) {
 			if( err )
 				return a.reject(err);

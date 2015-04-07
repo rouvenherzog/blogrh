@@ -38,14 +38,21 @@ var MediaSchema = new Schema({
 MediaSchema.statics.query = function( account, args ) {
 	if( !account ) throw(new Error("Account has to be given."));
 
+	var extract = function( key ) {
+		var temp = args[key];
+		delete args[key];
+		return temp;
+	};
+
 	args = args || {};
 	args = _.extend({
 		account: account,
 		populate: ['entry']
 	}, args);
 
-	var populate = args.populate;
-	delete args['populate'];
+	var populate = extract('populate');
+	var limit = extract('limit');
+	var skip = extract('skip');
 
 	var a = q.defer();
 	var query = Media.find(args);
@@ -53,15 +60,20 @@ MediaSchema.statics.query = function( account, args ) {
 	for( var index in populate )
 		query = query.populate(populate[index]);
 
+	if( skip )
+		query = query.skip(skip);
+	if( limit )
+		query = query.limit(limit);
+
 	query.exec(function( err, result ) {
-			if( err )
-				return a.reject(err);
+		if( err )
+			return a.reject(err);
 
-			if( args._id )
-				result = result.length ? result[0] : null;
+		if( args._id )
+			result = result.length ? result[0] : null;
 
-			a.resolve(result);
-		});
+		a.resolve(result);
+	});
 
 	return a.promise;
 };
